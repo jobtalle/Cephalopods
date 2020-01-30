@@ -2,12 +2,13 @@ const TIME_STEP_MAX = 0.1;
 
 const wrapper = document.getElementById("wrapper");
 const canvas = document.getElementById("renderer");
-const squids = new Squids(canvas);
+let squids = new Squids(canvas.width, canvas.height);
 let lastDate = new Date();
 
 const resize = () => {
     canvas.width = wrapper.offsetWidth;
     canvas.height = wrapper.offsetHeight;
+    squids = new Squids(canvas.width, canvas.height);
 };
 
 const update = timeStep => {

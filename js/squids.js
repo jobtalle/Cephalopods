@@ -1,4 +1,6 @@
-const Squids = function(canvas) {
+const Squids = function(width, height) {
+    const squids = new Array(Math.ceil(width * height * Squids.SQUIDS_PER_PIXEL));
+
     this.update = timeStep => {
 
     };
@@ -7,3 +9,5 @@ const Squids = function(canvas) {
 
     };
 };
+
+Squids.SQUIDS_PER_PIXEL = 0.00001;
