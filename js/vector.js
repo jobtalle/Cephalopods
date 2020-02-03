@@ -28,6 +28,26 @@ Vector.prototype.multiply = function(scalar) {
     return this;
 };
 
+Vector.prototype.subtract = function(vector) {
+    this.x -= vector.x;
+    this.y -= vector.y;
+
+    return this;
+};
+
+Vector.prototype.normalize = function() {
+    const iLength = 1 / this.length();
+
+    this.x *= iLength;
+    this.y *= iLength;
+
+    return this;
+};
+
+Vector.prototype.length = function() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+};
+
 Vector.prototype.add = function(vector) {
     this.x += vector.x;
     this.y += vector.y;
@@ -35,6 +55,10 @@ Vector.prototype.add = function(vector) {
     return this;
 };
 
-Vector.prototype.equals = function(vector) {
-    return this.x === vector.x && this.y === vector.y;
+Vector.prototype.dot = function(vector) {
+    return this.x * vector.x + this.y * vector.y;
+};
+
+Vector.prototype.isZero = function() {
+    return this.x === 0 || this.y === 0;
 };

@@ -30,5 +30,5 @@ const Squids = function(width, height) {
         squids[i] = makeSquid();
 };
 
-Squids.SQUIDS_PER_PIXEL = .000008;
+Squids.SQUIDS_PER_PIXEL = .000007;
 Squids.DEAD_ZONE = 256;
