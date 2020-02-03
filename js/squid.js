@@ -1,10 +1,11 @@
 const Squid = function(position, direction) {
     this.position = position;
     this.direction = direction;
-    this.velocity = direction.copy();
-    this.tail = new Segment(position.copy());
+    this.velocity = direction.copy().multiply(50);
+    this.wiggle = 0;
+    this.tailHead = this.tail = new Segment(position.copy());
 
-    for (let i = 0; i < 20; ++i)
+    for (let i = 0; i < 12; ++i)
         this.tail = new Segment(
             this.tail.position.copy().add(new Vector(Squid.TENTACLE_SPACING, 0)),
             Squid.TENTACLE_SPACING,
@@ -12,13 +13,20 @@ const Squid = function(position, direction) {
 };
 
 Squid.TENTACLE_SPACING = 20;
+Squid.WIGGLE_SPEED = 3;
 
 Squid.prototype.update = function(timeStep) {
-    this.tail.update(timeStep);
-
     this.position.x += this.velocity.x * timeStep;
     this.position.y += this.velocity.y * timeStep;
-    this.tail.getHead().position.set(this.position);
+    this.wiggle += Squid.WIGGLE_SPEED * timeStep;
+
+    if (this.wiggle > Math.PI + Math.PI)
+        this.wiggle -= Math.PI + Math.PI;
+
+    this.tailHead.lateral = Math.sin(this.wiggle);
+    this.tailHead.position.set(this.position);
+
+    this.tail.update(this.direction, timeStep);
 };
 
 Squid.prototype.draw = function(context) {
