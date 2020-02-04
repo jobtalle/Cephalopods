@@ -45,7 +45,7 @@ Vector.prototype.normalize = function() {
 };
 
 Vector.prototype.length = function() {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
+    return Math.sqrt(this.dot(this));
 };
 
 Vector.prototype.add = function(vector) {
@@ -55,8 +55,19 @@ Vector.prototype.add = function(vector) {
     return this;
 };
 
+Vector.prototype.negate = function() {
+    this.x = -this.x;
+    this.y = -this.y;
+
+    return this;
+};
+
 Vector.prototype.dot = function(vector) {
     return this.x * vector.x + this.y * vector.y;
+};
+
+Vector.prototype.angle = function() {
+    return Math.atan2(this.y, this.x);
 };
 
 Vector.prototype.isZero = function() {
