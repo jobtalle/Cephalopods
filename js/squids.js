@@ -24,6 +24,3 @@ const Squids = function(width, height) {
         squid.draw(context);
     };
 };
-
-Squids.SQUIDS_PER_PIXEL = .000007;
-Squids.DEAD_ZONE = 256;
