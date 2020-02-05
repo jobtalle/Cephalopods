@@ -1,12 +1,12 @@
+:root {
+    --gui-padding: 8px;
+}
+
 body {
     margin: 0;
 }
 
 #wrapper {
-    display: flex;
-    align-content: stretch;
-    align-items: stretch;
-    flex-direction: row;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -14,7 +14,8 @@ body {
 }
 
 #wrapper #viewport {
-    flex-grow: 1;
+    width: 100%;
+    height: 100%;
 }
 
 #wrapper #viewport #renderer {
@@ -22,12 +23,14 @@ body {
 }
 
 #wrapper #inspector {
-    flex-grow: 0;
+    position: absolute;
     background-color: white;
+    right: var(--gui-padding);
+    bottom: var(--gui-padding);
+    pointer-events: none;
 }
 
 #wrapper #inspector h2 {
     padding: 4px;
     margin: 0;
-    border-bottom: 1px solid black;
 }
