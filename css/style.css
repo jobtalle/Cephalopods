@@ -23,6 +23,11 @@ body {
 
 #wrapper #inspector {
     flex-grow: 0;
-    width: 300px;
     background-color: white;
+}
+
+#wrapper #inspector h2 {
+    padding: 4px;
+    margin: 0;
+    border-bottom: 1px solid black;
 }
