@@ -23,9 +23,9 @@ const Squid = function(position, direction) {
     }
 };
 
-Squid.TENTACLE_SPRING = 9;
-Squid.TENTACLE_SPACING = 20;
-Squid.WIGGLE_SPEED = 4;
+Squid.TENTACLE_SPRING = 8;
+Squid.TENTACLE_SPACING = 18;
+Squid.WIGGLE_SPEED = 13;
 
 Squid.prototype.update = function(timeStep) {
     this.position.x += this.velocity.x * timeStep;
@@ -33,14 +33,18 @@ Squid.prototype.update = function(timeStep) {
 
     if (!this.velocity.isZero())
         this.wiggle += Squid.WIGGLE_SPEED * timeStep;
+    else
+        this.wiggle += Squid.WIGGLE_SPEED * timeStep * .1;
 
     if (this.wiggle > Math.PI + Math.PI)
         this.wiggle -= Math.PI + Math.PI;
 
-    const wiggle = Math.cos(this.wiggle) * Math.PI * 0.5;
+    const wiggle = (.5 + .5 * Math.cos(this.wiggle)) * Math.PI * 0.5;
 
-    this.tailHeadLeft.setAnchor(this.position, new Vector().fromAngle(this.direction.angle() + wiggle));
-    this.tailHeadRight.setAnchor(this.position, new Vector().fromAngle(this.direction.angle() - wiggle));
+    this.tailHeadLeft.setAnchor(this.position, new Vector().fromAngle(
+        this.direction.angle() + wiggle));
+    this.tailHeadRight.setAnchor(this.position, new Vector().fromAngle(
+        this.direction.angle() - wiggle));
 
     this.tailLeft.update(timeStep);
     this.tailRight.update(timeStep);
