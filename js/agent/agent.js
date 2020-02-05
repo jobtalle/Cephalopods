@@ -1,22 +1,22 @@
-const Squid = function(position, direction) {
+const Agent = function(position, direction) {
     this.position = position;
     this.direction = direction;
     this.velocity = new Vector();
-    this.tentacles = new Tentacles(position, direction);
+    this.body = new Body(position, direction);
 };
 
-Squid.FRICTION = 1.5;
+Agent.FRICTION = 1.5;
 
-Squid.prototype.update = function(timeStep) {
-    this.tentacles.update(timeStep, this.position, this.direction, this.velocity);
+Agent.prototype.update = function(timeStep) {
+    this.body.update(timeStep, this.position, this.direction, this.velocity);
 
-    this.velocity.x -= this.velocity.x * Squid.FRICTION * timeStep;
-    this.velocity.y -= this.velocity.y * Squid.FRICTION * timeStep;
+    this.velocity.x -= this.velocity.x * Agent.FRICTION * timeStep;
+    this.velocity.y -= this.velocity.y * Agent.FRICTION * timeStep;
 
     this.position.add(this.velocity);
 };
 
-Squid.prototype.draw = function(context) {
+Agent.prototype.draw = function(context) {
     context.strokeStyle = "red";
 
     context.beginPath();
@@ -28,5 +28,5 @@ Squid.prototype.draw = function(context) {
     context.lineTo(this.position.x + this.direction.x * 20, this.position.y + this.direction.y * 20);
     context.stroke();
 
-    this.tentacles.draw(context);
+    this.body.draw(context);
 };

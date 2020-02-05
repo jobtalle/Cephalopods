@@ -1,6 +1,6 @@
 const Squids = function(width, height) {
     const makeSquid = () => {
-        return new Squid(
+        return new Agent(
             new Vector(width, height).multiply(.5),
             new Vector().fromAngle(Math.random() * Math.PI * 2));
     };
