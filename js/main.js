@@ -1,14 +1,14 @@
 const TIME_STEP_MAX = 0.1;
 
-const wrapper = document.getElementById("wrapper");
+const viewport = document.getElementById("viewport");
 const canvas = document.getElementById("renderer");
 let squids = new Squids(canvas.width, canvas.height);
 let lastDate = new Date();
 let mouseDown = false;
 
 const resize = () => {
-    canvas.width = wrapper.offsetWidth;
-    canvas.height = wrapper.offsetHeight;
+    canvas.width = viewport.offsetWidth;
+    canvas.height = viewport.offsetHeight;
     squids = new Squids(canvas.width, canvas.height);
 };
 
