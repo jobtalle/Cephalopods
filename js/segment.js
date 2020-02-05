@@ -62,7 +62,7 @@ Segment.prototype.draw = function(context) {
 
     this.parent.draw(context);
 
-    context.strokeStyle = "black";
+    context.strokeStyle = "white";
 
     context.beginPath();
     context.moveTo(this.position.x, this.position.y);

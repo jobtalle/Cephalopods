@@ -30,7 +30,7 @@ Squid.TENTACLE_SPRING = 8;
 Squid.TENTACLE_SPACING = 18;
 Squid.WIGGLE_SPEED = 4;
 Squid.FORCE_MULTIPLIER = 4;
-Squid.FRICTION = 2;
+Squid.FRICTION = 1.5;
 
 Squid.prototype.update = function(timeStep) {
     this.wiggle += Squid.WIGGLE_SPEED * timeStep;
@@ -54,6 +54,8 @@ Squid.prototype.update = function(timeStep) {
 };
 
 Squid.prototype.draw = function(context) {
+    context.strokeStyle = "red";
+
     context.beginPath();
     context.arc(this.position.x, this.position.y, 5, 0, Math.PI * 2);
     context.stroke();

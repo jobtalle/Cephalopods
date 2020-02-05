@@ -17,6 +17,7 @@ const update = timeStep => {
 
     const context = canvas.getContext("2d");
 
+    context.lineWidth = 2;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     squids.draw(context);
