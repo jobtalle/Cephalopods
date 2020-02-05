@@ -1,5 +1,6 @@
 const Segment = function(position, spring = 0, spacing = 0, parent = null) {
     this.position = position;
+    this.positionPrevious = position.copy();
     this.spring = spring;
     this.spacing = spacing;
     this.parent = parent;
@@ -18,11 +19,13 @@ Segment.prototype.getHead = function() {
         return this;
 };
 
-Segment.prototype.update = function(timeStep) {
+Segment.prototype.update = function(timeStep, velocity) {
     if (!this.parent)
         return;
 
-    this.parent.update(timeStep);
+    this.positionPrevious.set(this.position);
+
+    this.parent.update(timeStep, velocity);
     this.direction.set(this.parent.position).subtract(this.position).normalize();
     this.delta.set(this.direction).negate();
 
@@ -31,7 +34,8 @@ Segment.prototype.update = function(timeStep) {
         this.delta.y += this.direction.x * this.spring * timeStep;
     }
     else {
-        const force = this.spring * timeStep * (this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x);
+        const lateralDot = (this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x);
+        const force = this.spring * lateralDot * timeStep;
 
         this.delta.x += this.direction.y * force;
         this.delta.y -= this.direction.x * force;
@@ -43,6 +47,13 @@ Segment.prototype.update = function(timeStep) {
     }
     else
         this.position.set(this.parent.position).add(this.delta.multiply(this.spacing / this.delta.length()));
+
+    const dx = this.position.x - this.positionPrevious.x;
+    const dy = this.position.y - this.positionPrevious.y;
+    const dot = (this.direction.y * dx - this.direction.x * dy) * timeStep;
+
+    velocity.x -= this.direction.y * dot;
+    velocity.y += this.direction.x * dot;
 };
 
 Segment.prototype.draw = function(context) {

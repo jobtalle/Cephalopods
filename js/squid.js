@@ -6,17 +6,20 @@ const Squid = function(position, direction) {
     this.tailHeadLeft = this.tailLeft = new SegmentHead(position.copy());
     this.tailHeadRight = this.tailRight = new SegmentHead(position.copy());
 
-    for (let i = 0; i < 24; ++i) {
-        const spring = Squid.TENTACLE_SPRING * Math.pow(1 - (i / 24) * 0.35, 2);
+    const tentacleLength = 12;
+
+    for (let i = 0; i < tentacleLength; ++i) {
+        const spring = Squid.TENTACLE_SPRING * Math.pow(1 - (i / tentacleLength) * 0.35, 2);
+        const offset = direction.copy().negate().multiply(Squid.TENTACLE_SPACING);
 
         this.tailLeft = new Segment(
-            this.tailLeft.position.copy().add(new Vector(Squid.TENTACLE_SPACING, 0)),
+            this.tailLeft.position.copy().add(offset),
             spring,
             Squid.TENTACLE_SPACING,
             this.tailLeft);
 
         this.tailRight = new Segment(
-            this.tailRight.position.copy().add(new Vector(Squid.TENTACLE_SPACING, 0)),
+            this.tailRight.position.copy().add(offset),
             spring,
             Squid.TENTACLE_SPACING,
             this.tailRight);
@@ -25,29 +28,29 @@ const Squid = function(position, direction) {
 
 Squid.TENTACLE_SPRING = 8;
 Squid.TENTACLE_SPACING = 18;
-Squid.WIGGLE_SPEED = 13;
+Squid.WIGGLE_SPEED = 4;
+Squid.FORCE_MULTIPLIER = 4;
+Squid.FRICTION = 2;
 
 Squid.prototype.update = function(timeStep) {
-    this.position.x += this.velocity.x * timeStep;
-    this.position.y += this.velocity.y * timeStep;
-
-    if (!this.velocity.isZero())
-        this.wiggle += Squid.WIGGLE_SPEED * timeStep;
-    else
-        this.wiggle += Squid.WIGGLE_SPEED * timeStep * .1;
+    this.wiggle += Squid.WIGGLE_SPEED * timeStep;
 
     if (this.wiggle > Math.PI + Math.PI)
         this.wiggle -= Math.PI + Math.PI;
 
-    const wiggle = (.5 + .5 * Math.cos(this.wiggle)) * Math.PI * 0.5;
+    const wiggle = (.5 + .5 * Math.sin(this.wiggle)) * Math.PI * 0.5;
 
     this.tailHeadLeft.setAnchor(this.position, new Vector().fromAngle(
         this.direction.angle() + wiggle));
     this.tailHeadRight.setAnchor(this.position, new Vector().fromAngle(
         this.direction.angle() - wiggle));
 
-    this.tailLeft.update(timeStep);
-    this.tailRight.update(timeStep);
+    this.tailLeft.update(timeStep, this.velocity);
+    this.tailRight.update(timeStep, this.velocity);
+    this.velocity.x -= this.velocity.x * Squid.FRICTION * timeStep;
+    this.velocity.y -= this.velocity.y * Squid.FRICTION * timeStep;
+
+    this.position.add(this.velocity);
 };
 
 Squid.prototype.draw = function(context) {

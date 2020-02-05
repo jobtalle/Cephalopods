@@ -47,8 +47,6 @@ canvas.addEventListener("mousemove", event => {
 
 canvas.addEventListener("mouseup", event => {
     mouseDown = false;
-
-    squids.stopMoving();
 });
 
 resize();

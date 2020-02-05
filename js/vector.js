@@ -62,6 +62,12 @@ Vector.prototype.negate = function() {
     return this;
 };
 
+Vector.prototype.zero = function() {
+    this.x = this.y = 0;
+
+    return this;
+};
+
 Vector.prototype.dot = function(vector) {
     return this.x * vector.x + this.y * vector.y;
 };

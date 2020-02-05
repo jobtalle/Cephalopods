@@ -7,16 +7,13 @@ const Squids = function(width, height) {
 
     const squid = makeSquid();
 
-    this.stopMoving = () => {
-        squid.velocity.x = squid.velocity.y = 0;
-        squid.wiggle = Math.PI * 0.45;
-    };
+    squid.velocity.x = squid.velocity.y = 0;
+    squid.wiggle = Math.PI * 0.45;
 
     this.attract = (x, y) => {
         squid.direction.x = x;
         squid.direction.y = y;
         squid.direction.subtract(squid.position).normalize();
-        squid.velocity.set(squid.direction).multiply(130);
     };
 
     this.update = timeStep => {
