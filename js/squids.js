@@ -1,33 +1,31 @@
 const Squids = function(width, height) {
-    const squids = new Array(Math.ceil(width * height * Squids.SQUIDS_PER_PIXEL));
-
     const makeSquid = () => {
         return new Squid(
-            new Vector(Math.random() * width, Math.random() * height),
+            new Vector(width, height).multiply(.5),
             new Vector().fromAngle(Math.random() * Math.PI * 2));
     };
 
+    const squid = makeSquid();
+
+    this.stopMoving = () => {
+        squid.velocity.x = squid.velocity.y = 0;
+        squid.wiggle = Math.PI * 0.45;
+    };
+
+    this.attract = (x, y) => {
+        squid.direction.x = x;
+        squid.direction.y = y;
+        squid.direction.subtract(squid.position).normalize();
+        squid.velocity.set(squid.direction).multiply(130);
+    };
+
     this.update = timeStep => {
-        for (let i = 0; i < squids.length; ++i) {
-            const squid = squids[i];
-
-            squid.update(timeStep);
-
-            if (squid.position.x < -Squids.DEAD_ZONE ||
-                squid.position.y < -Squids.DEAD_ZONE ||
-                squid.position.x > width + Squids.DEAD_ZONE ||
-                squid.position.y > height + Squids.DEAD_ZONE)
-                squids[i] = makeSquid();
-        }
+        squid.update(timeStep);
     };
 
     this.draw = context => {
-        for (const squid of squids)
-            squid.draw(context);
+        squid.draw(context);
     };
-
-    for (let i = 0; i < squids.length; ++i)
-        squids[i] = makeSquid();
 };
 
 Squids.SQUIDS_PER_PIXEL = .000007;

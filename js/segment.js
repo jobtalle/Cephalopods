@@ -26,11 +26,16 @@ Segment.prototype.update = function(timeStep) {
     this.direction.set(this.parent.position).subtract(this.position).normalize();
     this.delta.set(this.direction).negate();
 
-    const dot = this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x;
-    const force = this.spring * Math.sign(this.direction.dot(this.parent.direction)) * timeStep * dot;
+    if (this.direction.dot(this.parent.direction) < 0) {
+        this.delta.x -= this.direction.y * this.spring * timeStep;
+        this.delta.y += this.direction.x * this.spring * timeStep;
+    }
+    else {
+        const force = this.spring * timeStep * (this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x);
 
-    this.delta.x += this.parent.direction.y * force;
-    this.delta.y -= this.parent.direction.x * force;
+        this.delta.x += this.direction.y * force;
+        this.delta.y -= this.direction.x * force;
+    }
 
     if (this.delta.isZero()) {
         this.position.x = this.parent.position.x + this.spacing;

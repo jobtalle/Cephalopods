@@ -1,13 +1,13 @@
 const Squid = function(position, direction) {
     this.position = position;
     this.direction = direction;
-    this.velocity = direction.copy().multiply(90);
+    this.velocity = new Vector();
     this.wiggle = 0;
     this.tailHeadLeft = this.tailLeft = new SegmentHead(position.copy());
     this.tailHeadRight = this.tailRight = new SegmentHead(position.copy());
 
-    for (let i = 0; i < 15; ++i) {
-        const spring = Squid.TENTACLE_SPRING * Math.pow(1 - i / 15, 2);
+    for (let i = 0; i < 24; ++i) {
+        const spring = Squid.TENTACLE_SPRING * Math.pow(1 - (i / 24) * 0.35, 2);
 
         this.tailLeft = new Segment(
             this.tailLeft.position.copy().add(new Vector(Squid.TENTACLE_SPACING, 0)),
@@ -23,20 +23,16 @@ const Squid = function(position, direction) {
     }
 };
 
-Squid.TENTACLE_SPRING = 8;
+Squid.TENTACLE_SPRING = 9;
 Squid.TENTACLE_SPACING = 20;
 Squid.WIGGLE_SPEED = 4;
 
 Squid.prototype.update = function(timeStep) {
-    if (Math.random() < 0.005) {
-        this.direction = new Vector().fromAngle(Math.random() * Math.PI * 2);
-        this.velocity = this.direction.copy().multiply(90);
-    }
-
     this.position.x += this.velocity.x * timeStep;
     this.position.y += this.velocity.y * timeStep;
 
-    this.wiggle += Squid.WIGGLE_SPEED * timeStep;
+    if (!this.velocity.isZero())
+        this.wiggle += Squid.WIGGLE_SPEED * timeStep;
 
     if (this.wiggle > Math.PI + Math.PI)
         this.wiggle -= Math.PI + Math.PI;
