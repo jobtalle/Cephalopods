@@ -2,14 +2,14 @@ const Agent = function(position, direction) {
     this.position = position;
     this.direction = direction;
     this.velocity = new Vector();
-    this.body = new Body(this.position, this.velocity, this.direction);
+    this.body = new Body(this.position, this.direction);
     this.impulse = new Vector();
     this.angularMomentum = 0;
 };
 
 Agent.FRICTION = .8;
-Agent.TORQUE = 5;
-Agent.ANGULAR_FRICTION = 9;
+Agent.TORQUE = 10;
+Agent.ANGULAR_FRICTION = 8;
 
 Agent.prototype.update = function(timeStep) {
     this.impulse.zero();

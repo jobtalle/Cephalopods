@@ -14,8 +14,8 @@ const Squids = function(width, height) {
     this.attract = (x, y) => {
         x -= width * .5;
         y -= height * .5;
-        x *= zoom;
-        y *= zoom;
+        x /= zoom;
+        y /= zoom;
 
         squid.direction.x = x;
         squid.direction.y = y;

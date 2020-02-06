@@ -1,6 +1,5 @@
-const Body = function(position, velocity, direction) {
+const Body = function(position, direction) {
     this.position = position;
-    this.velocity = velocity;
     this.direction = direction;
     this.tentacles = new Tentacles(this.position, this.direction);
     this.mouth = new Mouth();
@@ -26,7 +25,9 @@ Body.prototype.draw = function(context) {
 
     context.strokeStyle = "red";
     context.beginPath();
-    context.moveTo(this.position.x, this.position.y);
+    context.moveTo(
+        this.position.x - this.direction.x * this.radius,
+        this.position.y - this.direction.y * this.radius);
     context.lineTo(
         this.position.x + this.direction.x * this.radius,
         this.position.y + this.direction.y * this.radius);
