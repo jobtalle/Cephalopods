@@ -24,7 +24,6 @@ Segment.prototype.update = function(timeStep, velocity) {
         return;
 
     this.positionPrevious.set(this.position);
-
     this.parent.update(timeStep, velocity);
     this.direction.set(this.parent.position).subtract(this.position).normalize();
     this.delta.set(this.direction).negate();

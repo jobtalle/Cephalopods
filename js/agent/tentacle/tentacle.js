@@ -11,7 +11,6 @@ const Tentacle = function(position, offset, direction, length, spring, springPow
 };
 
 Tentacle.SPACING = 18;
-Tentacle.TORQUE = .5;
 
 Tentacle.prototype.update = function(timeStep, velocity) {
     this.tail.update(timeStep, velocity);

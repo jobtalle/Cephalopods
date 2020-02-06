@@ -8,8 +8,8 @@ const Body = function(position, velocity, direction) {
     this.radius = 20;
 };
 
-Body.prototype.update = function(timeStep) {
-    this.tentacles.update(timeStep, this.velocity);
+Body.prototype.update = function(timeStep, impulse) {
+    this.tentacles.update(timeStep, impulse);
     this.mouth.update(timeStep);
     this.eyes.update(timeStep);
 };
