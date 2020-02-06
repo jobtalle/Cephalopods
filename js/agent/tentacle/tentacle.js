@@ -8,26 +8,13 @@ const Tentacle = function(position, offset, direction, length, spring, springPow
     this.calculateDelta();
     this.head = new SegmentHead(position.copy().add(this.delta));
     this.tail = this.build();
-    this.impulse = new Vector();
 };
 
 Tentacle.SPACING = 18;
+Tentacle.TORQUE = .5;
 
 Tentacle.prototype.update = function(timeStep, velocity) {
-    this.impulse.zero();
-    this.tail.update(timeStep, this.impulse);
-
-    const forward = this.direction.dot(this.impulse);
-    const side = this.direction.x * this.impulse.y - this.direction.y * this.impulse.x;
-
-    velocity.x += this.direction.x * forward;
-    velocity.y += this.direction.y * forward;
-
-    const dxp = this.direction.x;
-    const a = side * .4;
-
-    this.direction.x += a * this.direction.y;
-    this.direction.y -= a * dxp;
+    this.tail.update(timeStep, velocity);
 };
 
 Tentacle.prototype.draw = function(context) {

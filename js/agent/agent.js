@@ -5,7 +5,7 @@ const Agent = function(position, direction) {
     this.body = new Body(this.position, this.velocity, this.direction);
 };
 
-Agent.FRICTION = .5;
+Agent.FRICTION = 1;
 
 Agent.prototype.update = function(timeStep) {
     this.body.update(timeStep);
