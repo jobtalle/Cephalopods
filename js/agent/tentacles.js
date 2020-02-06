@@ -1,13 +1,21 @@
 const Tentacles = function(position, direction) {
     this.position = position;
-
     this.tentacles = [
-        new Tentacle(position, new Vector(-20, -10), direction, 12, 8, 2),
-        new Tentacle(position, new Vector(-20, 10), direction, 12, 8, 2)
-        // new Tentacle(position, new Vector(-20, 0), direction, 12, 8, 2)
+        // new Tentacle(position, new Vector(-20, -10), direction, 24, 8, 2),
+        // new Tentacle(position, new Vector(-20, 10), direction, 24, 8, 2)
+        new Tentacle(position, new Vector(-20, 0), direction, 20, 8, 2)
     ];
 
     this.wiggle = 0;
+};
+
+Tentacles.prototype.getMass = function() {
+    let mass = 0;
+
+    for (const tentacle of this.tentacles)
+        mass += tentacle.getLength();
+
+    return mass;
 };
 
 Tentacles.prototype.update = function(timeStep, impulse) {

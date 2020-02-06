@@ -7,6 +7,8 @@ const Body = function(position, direction) {
     this.radius = 20;
 };
 
+Body.MASS_BASE = 20;
+
 Body.prototype.update = function(timeStep, impulse) {
     this.tentacles.update(timeStep, impulse);
     this.mouth.update(timeStep);
@@ -32,4 +34,8 @@ Body.prototype.draw = function(context) {
         this.position.x + this.direction.x * this.radius,
         this.position.y + this.direction.y * this.radius);
     context.stroke();
+};
+
+Body.prototype.getMass = function() {
+    return Body.MASS_BASE + this.tentacles.getMass();
 };

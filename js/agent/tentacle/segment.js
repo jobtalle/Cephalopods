@@ -19,6 +19,13 @@ Segment.prototype.getHead = function() {
         return this;
 };
 
+Segment.prototype.getLength = function() {
+    if (this.parent)
+        return 1 + this.parent.getLength();
+
+    return 0;
+};
+
 Segment.prototype.update = function(timeStep, velocity) {
     if (!this.parent)
         return;

@@ -20,6 +20,10 @@ Tentacle.prototype.draw = function(context) {
     this.tail.draw(context);
 };
 
+Tentacle.prototype.getLength = function() {
+    return this.tail.getLength();
+};
+
 Tentacle.prototype.calculateDelta = function() {
     this.delta.x = this.offset.x * this.direction.x - this.offset.y * this.direction.y;
     this.delta.y = this.offset.x * this.direction.y + this.offset.y * this.direction.x;

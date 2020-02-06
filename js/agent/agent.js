@@ -4,12 +4,13 @@ const Agent = function(position, direction) {
     this.velocity = new Vector();
     this.body = new Body(this.position, this.direction);
     this.impulse = new Vector();
+    this.mass = this.body.getMass();
     this.angularMomentum = 0;
 };
 
 Agent.FRICTION = .8;
 Agent.TORQUE = 10;
-Agent.ANGULAR_FRICTION = 8;
+Agent.ANGULAR_FRICTION = .5;
 
 Agent.prototype.update = function(timeStep) {
     this.impulse.zero();
@@ -22,7 +23,7 @@ Agent.prototype.update = function(timeStep) {
     this.velocity.y += this.direction.y * forward;
 
     this.angularMomentum += side * Agent.TORQUE * timeStep;
-    this.angularMomentum -= this.angularMomentum * Agent.ANGULAR_FRICTION * timeStep;
+    this.angularMomentum -= this.angularMomentum * Agent.ANGULAR_FRICTION * this.mass * timeStep;
 
     this.direction.fromAngle(this.direction.angle() + this.angularMomentum);
 
