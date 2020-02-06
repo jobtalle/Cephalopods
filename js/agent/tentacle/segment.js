@@ -1,5 +1,5 @@
 const Segment = function(position, spring = 0, spacing = 0, parent = null) {
-    this.position = position;
+    this.position = position.copy();
     this.positionPrevious = position.copy();
     this.spring = spring;
     this.spacing = spacing;
@@ -7,7 +7,7 @@ const Segment = function(position, spring = 0, spacing = 0, parent = null) {
     this.delta = new Vector();
 
     if (parent)
-        this.direction = this.position.copy().subtract(this.parent.position).normalize();
+        this.direction = this.parent.position.copy().subtract(this.position).normalize();
     else
         this.direction = new Vector();
 };

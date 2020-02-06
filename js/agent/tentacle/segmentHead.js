@@ -4,7 +4,7 @@ const SegmentHead = function(position) {
 
 SegmentHead.prototype = Object.create(Segment.prototype);
 
-SegmentHead.prototype.setAnchor = function(position, direction) {
-    this.position = position;
-    this.direction.set(direction);
+SegmentHead.prototype.setAnchor = function(position, angle) {
+    this.position.set(position);
+    this.direction.fromAngle(angle);
 };
