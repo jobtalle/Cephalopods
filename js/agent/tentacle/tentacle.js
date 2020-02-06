@@ -4,9 +4,9 @@ const Tentacle = function(position, offset, direction, length, spring, springPow
     this.length = length;
     this.spring = spring;
     this.springPower = springPower;
-    this.position = new Vector();
-    this.calculatePosition(position);
-    this.head = new SegmentHead(this.position);
+    this.delta = new Vector();
+    this.calculateDelta();
+    this.head = new SegmentHead(this.delta);
     this.tail = this.build();
 };
 
@@ -20,9 +20,11 @@ Tentacle.prototype.draw = function(context) {
     this.tail.draw(context);
 };
 
-Tentacle.prototype.calculatePosition = function(origin) {
-    this.position.x = origin.x + this.offset.x * this.direction.x - this.offset.y * this.direction.y;
-    this.position.y = origin.y + this.offset.x * this.direction.y + this.offset.y * this.direction.x;
+Tentacle.prototype.calculateDelta = function() {
+    this.delta.x = this.offset.x * this.direction.x - this.offset.y * this.direction.y;
+    this.delta.y = this.offset.x * this.direction.y + this.offset.y * this.direction.x;
+
+    return Math.atan2(-this.delta.y, -this.delta.x);
 };
 
 Tentacle.prototype.build = function() {
@@ -43,6 +45,7 @@ Tentacle.prototype.build = function() {
 };
 
 Tentacle.prototype.setAnchor = function(position, angle) {
-    this.calculatePosition(position);
-    this.head.setAnchor(this.position, this.direction.angle() + angle);
+    const deltaAngle = this.calculateDelta();
+
+    this.head.setAnchor(this.delta.add(position), deltaAngle + angle);
 };
