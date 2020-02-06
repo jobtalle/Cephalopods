@@ -6,7 +6,7 @@ const Tentacle = function(position, offset, direction, length, spring, springPow
     this.springPower = springPower;
     this.delta = new Vector();
     this.calculateDelta();
-    this.head = new SegmentHead(this.delta);
+    this.head = new SegmentHead(position.copy().add(this.delta));
     this.tail = this.build();
 };
 
@@ -29,13 +29,11 @@ Tentacle.prototype.calculateDelta = function() {
 
 Tentacle.prototype.build = function() {
     let tail = this.head;
-
     for (let i = 0; i < this.length; ++i) {
         const spring = this.spring * Math.pow(1 - (i / (this.length - 1)) * .35, this.springPower);
-        const offset = this.direction.copy().negate().multiply(Tentacle.SPACING);
 
         tail = new Segment(
-            tail.position.copy().add(offset),
+            tail.position.copy().add(this.delta.copy().normalize().multiply(Tentacle.SPACING)),
             spring,
             Tentacle.SPACING,
             tail);
