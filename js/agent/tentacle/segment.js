@@ -29,12 +29,15 @@ Segment.prototype.update = function(timeStep, velocity) {
     this.direction.set(this.parent.position).subtract(this.position).normalize();
     this.delta.set(this.direction).negate();
 
+    const lateralDot = (this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x);
+
     if (this.direction.dot(this.parent.direction) < 0) {
-        this.delta.x -= this.direction.y * this.spring * timeStep;
-        this.delta.y += this.direction.x * this.spring * timeStep;
+        const force = this.spring * Math.sign(lateralDot) * timeStep;
+
+        this.delta.x += this.direction.y * force;
+        this.delta.y -= this.direction.x * force;
     }
     else {
-        const lateralDot = (this.direction.x * this.parent.direction.y - this.direction.y * this.parent.direction.x);
         const force = this.spring * lateralDot * timeStep;
 
         this.delta.x += this.direction.y * force;

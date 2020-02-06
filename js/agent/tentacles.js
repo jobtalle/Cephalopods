@@ -13,7 +13,7 @@ Tentacles.prototype.update = function(timeStep, anchor, direction, velocity) {
     if (this.wiggle > Math.PI + Math.PI)
         this.wiggle -= Math.PI + Math.PI;
 
-    let wiggle = Math.sin(this.wiggle) * Math.PI * 0.6;
+    let wiggle = Math.sin(this.wiggle) * Math.PI * 0.5;
 
     for (const tentacle of this.tentacles) {
         tentacle.setAnchor(anchor, direction.angle() + wiggle);
