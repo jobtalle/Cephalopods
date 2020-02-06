@@ -3,6 +3,8 @@ const Tentacles = function(position, direction) {
     this.direction = direction;
 
     this.tentacles = [
+        // new Tentacle(position, new Vector(-20, -10), direction, 12, 8, 2),
+        // new Tentacle(position, new Vector(-20, 10), direction, 12, 8, 2),
         new Tentacle(position, new Vector(-20, 0), direction, 12, 8, 2)
     ];
 
@@ -23,6 +25,8 @@ Tentacles.prototype.update = function(timeStep, velocity) {
 
         wiggle = -wiggle;
     }
+
+    this.direction.normalize();
 };
 
 Tentacles.prototype.draw = function(context) {
