@@ -8,7 +8,7 @@ const Agent = function(position, direction) {
 };
 
 Agent.FRICTION = .8;
-Agent.TORQUE = 1;
+Agent.TORQUE = .5;
 Agent.ANGULAR_FRICTION = .5;
 Agent.IMPULSE = 50;
 
