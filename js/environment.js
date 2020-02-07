@@ -1,4 +1,5 @@
-const Environment = function(radius) {
+const Environment = function(radius, mutator = null) {
+    this.mutator = mutator;
     this.radius = radius;
     this.agents = [];
 
@@ -16,6 +17,9 @@ Environment.prototype.update = function(timeStep) {
         if (this.agents[i].position.dot(this.agents[i].position) > radiusSquared)
             this.agents.splice(i, 1);
     }
+
+    if (this.agents.length === 0)
+        this.nextGeneration();
 };
 
 Environment.prototype.draw = function(context) {
@@ -33,6 +37,14 @@ Environment.prototype.draw = function(context) {
 
     for (const agent of this.agents)
         agent.draw(context);
+};
+
+Environment.prototype.nextGeneration = function() {
+    this.agents.length = 0;
+
+    // TODO: Use mutator
+
+    this.initialize(7);
 };
 
 Environment.prototype.initialize = function(agentCount) {
