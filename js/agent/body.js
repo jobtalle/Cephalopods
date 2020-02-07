@@ -7,7 +7,7 @@ const Body = function(position, direction) {
     this.radius = 20;
 };
 
-Body.MASS_BASE = 20;
+Body.MASS_BASE = 50;
 
 Body.prototype.update = function(timeStep, impulse) {
     this.tentacles.update(timeStep, impulse);
@@ -20,11 +20,6 @@ Body.prototype.draw = function(context) {
     this.mouth.draw(context);
     this.eyes.draw(context);
 
-    context.strokeStyle = "white";
-    context.beginPath();
-    context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
-    context.stroke();
-
     context.strokeStyle = "red";
     context.beginPath();
     context.moveTo(
@@ -33,6 +28,11 @@ Body.prototype.draw = function(context) {
     context.lineTo(
         this.position.x + this.direction.x * this.radius,
         this.position.y + this.direction.y * this.radius);
+    context.stroke();
+
+    context.strokeStyle = "white";
+    context.beginPath();
+    context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
     context.stroke();
 };
 

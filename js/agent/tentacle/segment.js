@@ -1,6 +1,5 @@
 const Segment = function(position, spring = 0, spacing = 0, parent = null) {
     this.position = position.copy();
-    this.positionPrevious = position.copy();
     this.spring = spring;
     this.spacing = spacing;
     this.parent = parent;
@@ -30,7 +29,9 @@ Segment.prototype.update = function(timeStep, velocity) {
     if (!this.parent)
         return;
 
-    this.positionPrevious.set(this.position);
+    const xp = this.position.x;
+    const yp = this.position.y;
+
     this.parent.update(timeStep, velocity);
     this.direction.set(this.parent.position).subtract(this.position).normalize();
     this.delta.set(this.direction).negate();
@@ -57,9 +58,9 @@ Segment.prototype.update = function(timeStep, velocity) {
     else
         this.position.set(this.parent.position).add(this.delta.multiply(this.spacing / this.delta.length()));
 
-    const dx = this.position.x - this.positionPrevious.x;
-    const dy = this.position.y - this.positionPrevious.y;
-    const dot = (this.direction.y * dx - this.direction.x * dy) * timeStep;
+    const dx = this.position.x - xp;
+    const dy = this.position.y - yp;
+    const dot = (this.direction.y * dx - this.direction.x * dy);
 
     velocity.x -= this.direction.y * dot;
     velocity.y += this.direction.x * dot;
