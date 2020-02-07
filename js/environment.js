@@ -1,11 +1,11 @@
 const Environment = function(radius) {
     this.radius = radius;
-    this.agents = [
-        new Agent(
-            new Vector().multiply(.5),
-            new Vector().fromAngle(Math.random() * Math.PI * 2))
-    ];
+    this.agents = [];
+
+    this.initialize(7);
 };
+
+Environment.SPAWN_INSET = 128;
 
 Environment.prototype.update = function(timeStep) {
     const radiusSquared = this.radius * this.radius;
@@ -21,8 +21,8 @@ Environment.prototype.update = function(timeStep) {
 Environment.prototype.draw = function(context) {
     const gradient = context.createRadialGradient(0, 0, this.radius * .1, 0, 0, this.radius);
 
-    gradient.addColorStop(0, "#434343");
-    gradient.addColorStop(1, "black");
+    gradient.addColorStop(0, "#4b4b4b");
+    gradient.addColorStop(1, "#343434");
 
     context.strokeStyle = "white";
     context.fillStyle = gradient;
@@ -33,4 +33,14 @@ Environment.prototype.draw = function(context) {
 
     for (const agent of this.agents)
         agent.draw(context);
+};
+
+Environment.prototype.initialize = function(agentCount) {
+    for (let agent = 0; agent < agentCount; ++agent) {
+        const angle = agent * Math.PI * 2 / agentCount;
+
+        this.agents.push(new Agent(
+            new Vector().fromAngle(angle + Math.PI).multiply(this.radius - Environment.SPAWN_INSET),
+            new Vector().fromAngle(angle)));
+    }
 };
