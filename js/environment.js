@@ -1,9 +1,10 @@
-const Environment = function(radius, mutator = null) {
+const Environment = function(radius, agentCount, mutator = null) {
     this.mutator = mutator;
     this.radius = radius;
+    this.agentCount = agentCount;
     this.agents = [];
 
-    this.initialize(7);
+    this.nextGeneration();
 };
 
 Environment.SPAWN_INSET = 128;
@@ -44,7 +45,7 @@ Environment.prototype.nextGeneration = function() {
 
     // TODO: Use mutator
 
-    this.initialize(7);
+    this.initialize(this.agentCount);
 };
 
 Environment.prototype.initialize = function(agentCount) {

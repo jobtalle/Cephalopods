@@ -22,6 +22,11 @@ body {
     position: absolute;
 }
 
+#wrapper .gui h2 {
+    padding: 4px;
+    margin: 0;
+}
+
 #wrapper #inspector {
     position: absolute;
     background-color: white;
@@ -30,7 +35,9 @@ body {
     pointer-events: none;
 }
 
-#wrapper #inspector h2 {
-    padding: 4px;
-    margin: 0;
+#wrapper #controls {
+    position: absolute;
+    background-color: white;
+    left: var(--gui-padding);
+    top: var(--gui-padding);
 }
