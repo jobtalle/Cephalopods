@@ -1,9 +1,9 @@
 const Tentacles = function(position, direction) {
     this.position = position;
     this.tentacles = [
-        new Tentacle(position, new Vector().fromAngle(Math.PI - .9).multiply(20), direction, 14, 8, 2),
-        new Tentacle(position, new Vector().fromAngle(Math.PI + .9).multiply(20), direction, 14, 8, 2)
-        // new Tentacle(position, new Vector(-20, 0), direction, 20, 8, 2)
+        // new Tentacle(position, new Vector().fromAngle(Math.PI - .9).multiply(20), direction, 14, 8, 2),
+        // new Tentacle(position, new Vector().fromAngle(Math.PI + .9).multiply(20), direction, 14, 8, 2)
+        new Tentacle(position, new Vector(-20, 0), direction, Math.round(20 * (.3 + .7 * Math.random())), 8, 2)
     ];
 
     this.wiggle = 0;

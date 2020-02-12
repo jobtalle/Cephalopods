@@ -1,5 +1,5 @@
 const Squids = function(width, height) {
-    const environment = new Environment(1000, 8, new Mutator());
+    const environment = new Environment(1000, 13, new Mutator());
     let zoom = .7;
 
     this.update = timeStep => {
