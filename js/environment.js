@@ -1,13 +1,21 @@
-const Environment = function(radius, agentCount, mutator = null) {
-    this.mutator = mutator;
+const Environment = function(
+    radius,
+    mutator = null,
+    agentCount = Environment.DEFAULT_AGENT_COUNT,
+    simTime = Environment.DEFAULT_SIM_TIME) {
     this.radius = radius;
+    this.mutator = mutator;
     this.agentCount = agentCount;
+    this.simTime = simTime;
     this.agents = [];
+    this.time = 0;
 
     this.nextGeneration();
 };
 
 Environment.SPAWN_INSET = 128;
+Environment.DEFAULT_AGENT_COUNT = 8;
+Environment.DEFAULT_SIM_TIME = 16;
 
 Environment.prototype.update = function(timeStep) {
     const radiusSquared = this.radius * this.radius;
@@ -19,7 +27,9 @@ Environment.prototype.update = function(timeStep) {
             this.agents.splice(i, 1);
     }
 
-    if (this.agents.length === 0)
+    this.time += timeStep;
+
+    if (this.agents.length === 0 || this.time > this.simTime)
         this.nextGeneration();
 };
 
@@ -42,6 +52,7 @@ Environment.prototype.draw = function(context) {
 
 Environment.prototype.nextGeneration = function() {
     this.agents.length = 0;
+    this.time = 0;
 
     // TODO: Use mutator
 
