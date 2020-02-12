@@ -2,17 +2,6 @@ const Squids = function(width, height) {
     const environment = new Environment(1000, 8, new Mutator());
     let zoom = .7;
 
-    this.attract = (x, y) => {
-        x -= width * .5;
-        y -= height * .5;
-        x /= zoom;
-        y /= zoom;
-
-        // squid.direction.x = x;
-        // squid.direction.y = y;
-        // squid.direction.subtract(squid.position).normalize();
-    };
-
     this.update = timeStep => {
         environment.update(timeStep);
     };

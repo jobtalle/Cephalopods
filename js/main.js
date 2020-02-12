@@ -4,7 +4,6 @@ const viewport = document.getElementById("viewport");
 const canvas = document.getElementById("renderer");
 let squids = new Squids(canvas.width, canvas.height);
 let lastDate = new Date();
-let mouseDown = false;
 
 const resize = () => {
     canvas.width = viewport.offsetWidth;
@@ -32,22 +31,6 @@ const loopFunction = () => {
 };
 
 window.onresize = resize;
-
-canvas.addEventListener("mousedown", event => {
-    mouseDown = true;
-});
-
-canvas.addEventListener("mousemove", event => {
-    if (mouseDown) {
-        const rect = canvas.getBoundingClientRect();
-
-        squids.attract(event.clientX - rect.left, event.clientY - rect.top);
-    }
-});
-
-canvas.addEventListener("mouseup", event => {
-    mouseDown = false;
-});
 
 resize();
 requestAnimationFrame(loopFunction);
