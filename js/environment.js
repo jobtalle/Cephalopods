@@ -30,8 +30,6 @@ Environment.MAX_ITERATION_TIME = 1 / 60;
 Environment.WARP_STEP = .1;
 
 Environment.prototype.simulate = function(timeStep) {
-    const radiusSquared = this.radius * this.radius;
-
     for (const agent of this.agents)
         agent.update(timeStep);
 

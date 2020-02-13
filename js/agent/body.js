@@ -1,10 +1,10 @@
 const Body = function(dna, position, direction) {
     this.position = position;
     this.direction = direction;
-    this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction);
     this.mouth = new Mouth(dna.mouth);
     this.eyes = new Eyes(dna.eyes);
     this.radius = dna.radius;
+    this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
 };
 
 Body.MASS_BASE = 50;

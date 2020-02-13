@@ -1,5 +1,5 @@
-const Tentacle = function(dna, position, offset, direction) {
-    this.offset = offset;
+const Tentacle = function(dna, position, direction, radius) {
+    this.offset = new Vector().fromAngle(dna.angle).multiply(-radius);
     this.direction = direction;
     this.length = dna.length;
     this.spring = dna.spring;

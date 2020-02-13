@@ -1,9 +1,13 @@
-const Tentacles = function(dna, position, direction) {
+const Tentacles = function(dna, position, direction, radius) {
     this.position = position;
     this.tentacles = new Array(dna.tentacles.length);
 
     for (let tentacle = 0; tentacle < dna.tentacles.length; ++tentacle)
-        this.tentacles[tentacle] = new Tentacle(dna.tentacles[tentacle], position, new Vector(-20, 0), direction);
+        this.tentacles[tentacle] = new Tentacle(
+            dna.tentacles[tentacle],
+            position,
+            direction,
+            radius);
 
     this.wiggle = 0;
 };
