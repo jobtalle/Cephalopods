@@ -1,7 +1,10 @@
 const Cephalopods = function(width, height) {
     this.width = width;
     this.height = height;
-    this.environment = new Environment(1000, new Mutator());
+    this.environment = new Environment(
+        1000,
+        new Selector(new Rater()),
+        new Mutator());
     this.zoom = .7;
 };
 

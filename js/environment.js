@@ -1,5 +1,6 @@
 const Environment = function(
     radius,
+    selector = null,
     mutator = null,
     agentCount = Environment.DEFAULT_AGENT_COUNT,
     simTime = Environment.DEFAULT_SIM_TIME) {
@@ -7,15 +8,16 @@ const Environment = function(
     this.onNextGen = null;
 
     this.radius = radius;
+    this.selector = selector;
     this.mutator = mutator;
     this.agentCount = agentCount;
     this.simTime = simTime;
-    this.generation = -1;
+    this.generation = 0;
     this.agents = [];
     this.time = 0;
     this.warp = false;
 
-    this.nextGeneration();
+    this.initialize(this.agentCount);
 };
 
 Environment.SPAWN_INSET = 128;
@@ -71,25 +73,30 @@ Environment.prototype.draw = function(context) {
         agent.draw(context);
 };
 
+Environment.prototype.getInitialPosition = function(index) {
+    return new Vector().fromAngle(index * Math.PI * 2 / this.agentCount + Math.PI).multiply(
+        this.radius - Environment.SPAWN_INSET);
+};
+
+Environment.prototype.getInitialDirection = function(index) {
+    return new Vector().fromAngle(index * Math.PI * 2 / this.agentCount);
+};
+
 Environment.prototype.nextGeneration = function() {
-    this.agents.length = 0;
     this.time = 0;
     this.generation++;
-
-    // TODO: Use mutator
-
-    this.initialize(this.agentCount);
+    this.agents = this.selector.createNextGeneration(
+        this.agents,
+        this.getInitialPosition.bind(this),
+        this.getInitialDirection.bind(this));
 
     if (this.onNextGen)
         this.onNextGen(this);
 };
 
-Environment.prototype.initialize = function(agentCount) {
-    for (let agent = 0; agent < agentCount; ++agent) {
-        const angle = agent * Math.PI * 2 / agentCount;
-
+Environment.prototype.initialize = function(count) {
+    for (let agent = 0; agent < count; ++agent)
         this.agents.push(new Agent(
-            new Vector().fromAngle(angle + Math.PI).multiply(this.radius - Environment.SPAWN_INSET),
-            new Vector().fromAngle(angle)));
-    }
+            this.getInitialPosition(agent),
+            this.getInitialDirection(agent)));
 };
