@@ -1,5 +1,6 @@
 :root {
     --gui-padding: 8px;
+    --gui-line-spacing: 4px;
 }
 
 body {
@@ -22,14 +23,27 @@ body {
     position: absolute;
 }
 
-#wrapper .gui h2 {
+#wrapper .gui {
+    background-color: black;
+    color: white;
+    border-left: 1px solid white;
     padding: 4px;
-    margin: 0;
+}
+
+#wrapper .gui button {
+    cursor: pointer;
+    margin-top: var(--gui-line-spacing);
+    margin-bottom: var(--gui-line-spacing);
+}
+
+#wrapper .gui .line {
+    display: block;
+    margin-top: var(--gui-line-spacing);
+    margin-bottom: var(--gui-line-spacing);
 }
 
 #wrapper #inspector {
     position: absolute;
-    background-color: white;
     right: var(--gui-padding);
     bottom: var(--gui-padding);
     pointer-events: none;
@@ -37,7 +51,6 @@ body {
 
 #wrapper #controls {
     position: absolute;
-    background-color: white;
     left: var(--gui-padding);
     top: var(--gui-padding);
 }

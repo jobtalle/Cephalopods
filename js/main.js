@@ -2,23 +2,29 @@ const TIME_STEP_MAX = 0.1;
 
 const viewport = document.getElementById("viewport");
 const canvas = document.getElementById("renderer");
-let squids = new Squids(canvas.width, canvas.height);
+let cephalopods = null;
+let gui = null;
 let lastDate = new Date();
+
+const reset = () => {
+    cephalopods = new Cephalopods(canvas.width, canvas.height);
+    gui = new Gui(cephalopods, reset);
+};
 
 const resize = () => {
     canvas.width = viewport.offsetWidth;
     canvas.height = viewport.offsetHeight;
-    squids = new Squids(canvas.width, canvas.height);
+    cephalopods.resize(canvas.width, canvas.height);
 };
 
 const update = timeStep => {
-    squids.update(Math.min(timeStep, TIME_STEP_MAX));
+    cephalopods.update(Math.min(timeStep, TIME_STEP_MAX));
 
     const context = canvas.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    squids.draw(context);
+    cephalopods.draw(context);
 };
 
 const loopFunction = () => {
@@ -32,5 +38,6 @@ const loopFunction = () => {
 
 window.onresize = resize;
 
+reset();
 resize();
 requestAnimationFrame(loopFunction);

@@ -3,10 +3,14 @@ const Environment = function(
     mutator = null,
     agentCount = Environment.DEFAULT_AGENT_COUNT,
     simTime = Environment.DEFAULT_SIM_TIME) {
+    this.onUpdate = null;
+    this.onNextGen = null;
+
     this.radius = radius;
     this.mutator = mutator;
     this.agentCount = agentCount;
     this.simTime = simTime;
+    this.generation = -1;
     this.agents = [];
     this.time = 0;
 
@@ -31,6 +35,9 @@ Environment.prototype.update = function(timeStep) {
 
     if (this.agents.length === 0 || this.time > this.simTime)
         this.nextGeneration();
+
+    if (this.onUpdate)
+        this.onUpdate(this);
 };
 
 Environment.prototype.draw = function(context) {
@@ -53,10 +60,14 @@ Environment.prototype.draw = function(context) {
 Environment.prototype.nextGeneration = function() {
     this.agents.length = 0;
     this.time = 0;
+    this.generation++;
 
     // TODO: Use mutator
 
     this.initialize(this.agentCount);
+
+    if (this.onNextGen)
+        this.onNextGen(this);
 };
 
 Environment.prototype.initialize = function(agentCount) {
