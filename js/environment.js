@@ -32,20 +32,16 @@ Environment.WARP_STEP = .1;
 Environment.prototype.simulate = function(timeStep) {
     const radiusSquared = this.radius * this.radius;
 
-    for (let i = this.agents.length; i-- > 0;) {
-        this.agents[i].update(timeStep);
-
-        if (this.agents[i].position.dot(this.agents[i].position) > radiusSquared)
-            this.agents.splice(i, 1);
-    }
+    for (const agent of this.agents)
+        agent.update(timeStep);
 
     this.time += timeStep;
 
-    if (this.agents.length === 0 || this.time > this.simTime)
-        this.nextGeneration();
-
     if (this.onUpdate)
         this.onUpdate(this);
+
+    if (this.agents.length === 0 || this.time > this.simTime)
+        this.nextGeneration();
 };
 
 Environment.prototype.update = function(timeStep) {
