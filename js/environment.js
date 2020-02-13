@@ -13,6 +13,7 @@ const Environment = function(
     this.generation = -1;
     this.agents = [];
     this.time = 0;
+    this.warp = false;
 
     this.nextGeneration();
 };
@@ -20,8 +21,10 @@ const Environment = function(
 Environment.SPAWN_INSET = 128;
 Environment.DEFAULT_AGENT_COUNT = 8;
 Environment.DEFAULT_SIM_TIME = 16;
+Environment.MAX_ITERATION_TIME = 1 / 60;
+Environment.WARP_STEP = .1;
 
-Environment.prototype.update = function(timeStep) {
+Environment.prototype.simulate = function(timeStep) {
     const radiusSquared = this.radius * this.radius;
 
     for (let i = this.agents.length; i-- > 0;) {
@@ -38,6 +41,17 @@ Environment.prototype.update = function(timeStep) {
 
     if (this.onUpdate)
         this.onUpdate(this);
+};
+
+Environment.prototype.update = function(timeStep) {
+    if (this.warp) {
+        const startTime = new Date();
+
+        while ((new Date() - startTime) * .001 < Environment.MAX_ITERATION_TIME)
+            this.simulate(Environment.WARP_STEP);
+    }
+    else
+        this.simulate(timeStep);
 };
 
 Environment.prototype.draw = function(context) {

@@ -1,6 +1,6 @@
 :root {
     --gui-padding: 8px;
-    --gui-line-spacing: 4px;
+    --gui-button-spacing: 4px;
 }
 
 body {
@@ -24,22 +24,23 @@ body {
 }
 
 #wrapper .gui {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border-left: 1px solid white;
+    font-family: monospace;
+    font-size: 12pt;
     padding: 4px;
 }
 
 #wrapper .gui button {
+    display: block;
     cursor: pointer;
-    margin-top: var(--gui-line-spacing);
-    margin-bottom: var(--gui-line-spacing);
+    margin-top: var(--gui-button-spacing);
+    margin-bottom: var(--gui-button-spacing);
 }
 
 #wrapper .gui .line {
     display: block;
-    margin-top: var(--gui-line-spacing);
-    margin-bottom: var(--gui-line-spacing);
 }
 
 #wrapper #inspector {
