@@ -12,11 +12,25 @@ const Buttons = function(element, cephalopods, onReset) {
         }
     });
 
-    this.buttonReset = new Button("Reset", onReset);
+    this.buttonPause = new ToggleButton(["Pause", "Resume"], state => {
+        switch (state) {
+            case "Pause":
+                cephalopods.environment.paused = true;
+
+                break;
+            case "Resume":
+                cephalopods.environment.paused = false;
+
+                break;
+        }
+    });
+
+    this.buttonReset = new Button("Reset simulation", onReset);
 
     while (element.firstChild)
         element.removeChild(element.firstChild);
 
     element.appendChild(this.buttonSpeed.element);
+    element.appendChild(this.buttonPause.element);
     element.appendChild(this.buttonReset.element);
 };

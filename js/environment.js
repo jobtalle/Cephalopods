@@ -16,6 +16,7 @@ const Environment = function(
     this.agents = [];
     this.time = 0;
     this.warp = false;
+    this.paused = false;
 
     this.initialize(this.agentCount);
 };
@@ -46,6 +47,9 @@ Environment.prototype.simulate = function(timeStep) {
 };
 
 Environment.prototype.update = function(timeStep) {
+    if (this.paused)
+        return;
+
     if (this.warp) {
         const startTime = new Date();
 
