@@ -25,7 +25,7 @@ const Buttons = function(element, cephalopods, onReset) {
         }
     });
 
-    this.buttonReset = new Button("Reset simulation", onReset);
+    this.buttonReset = new Button("Reset", onReset);
 
     while (element.firstChild)
         element.removeChild(element.firstChild);

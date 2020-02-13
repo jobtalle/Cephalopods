@@ -12,10 +12,6 @@ Agent.TORQUE = .5;
 Agent.ANGULAR_FRICTION = .5;
 Agent.IMPULSE = 50;
 
-Agent.prototype.copy = function(position, direction) {
-    return new Agent(position, direction);
-};
-
 Agent.prototype.update = function(timeStep) {
     this.velocity.x -= this.velocity.x * Agent.FRICTION * timeStep;
     this.velocity.y -= this.velocity.y * Agent.FRICTION * timeStep;

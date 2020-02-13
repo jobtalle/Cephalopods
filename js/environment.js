@@ -1,7 +1,8 @@
 const Environment = function(
     radius,
-    selector = null,
-    mutator = null,
+    selector,
+    rater,
+    mutator,
     agentCount = Environment.DEFAULT_AGENT_COUNT,
     simTime = Environment.DEFAULT_SIM_TIME) {
     this.onUpdate = null;
@@ -9,6 +10,7 @@ const Environment = function(
 
     this.radius = radius;
     this.selector = selector;
+    this.rater = rater;
     this.mutator = mutator;
     this.agentCount = agentCount;
     this.simTime = simTime;
@@ -91,6 +93,8 @@ Environment.prototype.nextGeneration = function() {
     this.generation++;
     this.agents = this.selector.createNextGeneration(
         this.agents,
+        this.rater,
+        this.mutator,
         this.getInitialPosition.bind(this),
         this.getInitialDirection.bind(this));
 

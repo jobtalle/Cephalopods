@@ -1,16 +1,18 @@
-const Selector = function(rater) {
-    this.rater = rater;
+const Selector = function() {
+
 };
 
 Selector.prototype.createNextGeneration = function(
     agents,
+    rater,
+    mutator,
     getInitialPosition,
     getInitialDirection) {
     let bestAgent = null;
     let bestScore = -1;
 
     for (const agent of agents) {
-        const score = this.rater.rate(agent);
+        const score = rater.rate(agent);
 
         if (score > bestScore) {
             bestScore = score;
@@ -21,7 +23,7 @@ Selector.prototype.createNextGeneration = function(
     const nextGeneration = new Array(agents.length);
 
     for (let agent = 0; agent < agents.length; ++agent)
-        nextGeneration[agent] = bestAgent.copy(
+        nextGeneration[agent] = new Agent(
             getInitialPosition(agent),
             getInitialDirection(agent));
 
