@@ -24,6 +24,7 @@ Selector.prototype.createNextGeneration = function(
 
     for (let agent = 0; agent < agents.length; ++agent)
         nextGeneration[agent] = new Agent(
+            mutator.mutate(agents[agent].dna.copy()),
             getInitialPosition(agent),
             getInitialDirection(agent));
 

@@ -2,6 +2,6 @@ const Mutator = function() {
 
 };
 
-Mutator.prototype.mutate = function(agent) {
-    return agent;
+Mutator.prototype.mutate = function(dna) {
+    return dna;
 };

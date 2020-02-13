@@ -1,10 +1,10 @@
-const Body = function(position, direction) {
+const Body = function(dna, position, direction) {
     this.position = position;
     this.direction = direction;
-    this.tentacles = new Tentacles(this.position, this.direction);
-    this.mouth = new Mouth();
-    this.eyes = new Eyes();
-    this.radius = 20;
+    this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction);
+    this.mouth = new Mouth(dna.mouth);
+    this.eyes = new Eyes(dna.eyes);
+    this.radius = dna.radius;
 };
 
 Body.MASS_BASE = 50;

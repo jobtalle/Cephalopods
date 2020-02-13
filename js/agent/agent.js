@@ -1,8 +1,9 @@
-const Agent = function(position, direction) {
+const Agent = function(dna, position, direction) {
+    this.dna = dna;
     this.position = position;
     this.direction = direction;
     this.velocity = new Vector();
-    this.body = new Body(this.position, this.direction);
+    this.body = new Body(dna.body, this.position, this.direction);
     this.impulse = new Vector();
     this.mass = this.body.getMass();
 };

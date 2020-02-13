@@ -1,9 +1,9 @@
-const Tentacle = function(position, offset, direction, length, spring, springPower) {
+const Tentacle = function(dna, position, offset, direction) {
     this.offset = offset;
     this.direction = direction;
-    this.length = length;
-    this.spring = spring;
-    this.springPower = springPower;
+    this.length = dna.length;
+    this.spring = dna.spring;
+    this.springPower = dna.springPower;
     this.delta = new Vector();
     this.calculateDelta();
     this.head = new SegmentHead(position.copy().add(this.delta));

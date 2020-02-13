@@ -1,4 +1,4 @@
-const Mouth = function() {
+const Mouth = function(dna) {
 
 };
 

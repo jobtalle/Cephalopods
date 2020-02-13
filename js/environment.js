@@ -105,6 +105,7 @@ Environment.prototype.nextGeneration = function() {
 Environment.prototype.initialize = function(count) {
     for (let agent = 0; agent < count; ++agent)
         this.agents.push(new Agent(
+            new DNA(),
             this.getInitialPosition(agent),
             this.getInitialDirection(agent)));
 };

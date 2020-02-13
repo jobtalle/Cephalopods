@@ -1,4 +1,4 @@
-const Eyes = function() {
+const Eyes = function(dna) {
 
 };
 
