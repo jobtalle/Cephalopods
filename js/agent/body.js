@@ -1,6 +1,7 @@
 const Body = function(dna, position, direction) {
     this.position = position;
     this.direction = direction;
+    this.brain = new Brain(dna.brain);
     this.mouth = new Mouth(dna.mouth);
     this.eyes = new Eyes(dna.eyes);
     this.radius = dna.radius;

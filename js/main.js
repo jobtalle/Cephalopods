@@ -38,6 +38,10 @@ const loopFunction = () => {
 
 window.onresize = resize;
 
+window.addEventListener("mousedown", event => {
+    cephalopods.click(new Vector(event.clientX, event.clientY));
+});
+
 reset();
 resize();
 requestAnimationFrame(loopFunction);
