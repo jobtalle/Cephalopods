@@ -34,10 +34,12 @@ body {
 
 #wrapper .gui.left {
     border-left: var(--gui-border);
+    text-align: left;
 }
 
 #wrapper .gui.right {
     border-right: var(--gui-border);
+    text-align: right;
 }
 
 #wrapper .gui button {

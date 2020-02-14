@@ -1,6 +1,6 @@
 const Gui = function(cephalopods, onReset) {
-    this.simulationInfo = new SimulationInfo(document.getElementById(Gui.ID_SIMULATION_INFO), cephalopods);
-    this.agentInfo = new AgentInfo(document.getElementById(Gui.ID_AGENT_INFO), cephalopods);
+    this.simulationInfo = new SimulationInfo(document.getElementById(Gui.ID_SIMULATION_INFO));
+    this.agentInfo = new AgentInfo(document.getElementById(Gui.ID_AGENT_INFO));
     this.buttons = new Buttons(document.getElementById(Gui.ID_BUTTONS), cephalopods, onReset);
 
     cephalopods.environment.onNextGen = environment => {
@@ -9,9 +9,7 @@ const Gui = function(cephalopods, onReset) {
 
     cephalopods.environment.onUpdate = environment => {
         this.simulationInfo.onUpdate(environment);
-
-        if (environment.selected)
-            this.agentInfo.onUpdate(environment);
+        this.agentInfo.onUpdate(environment);
     };
 
     cephalopods.environment.onSelect = environment => {

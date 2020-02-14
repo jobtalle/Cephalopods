@@ -1,4 +1,4 @@
-const SimulationInfo = function(element, cephalopods) {
+const SimulationInfo = function(element) {
     this.lineGeneration = new Line("Generation #");
     this.lineTime = new Line("Time: ", "s");
 
@@ -7,9 +7,6 @@ const SimulationInfo = function(element, cephalopods) {
 
     element.appendChild(this.lineGeneration.element);
     element.appendChild(this.lineTime.element);
-
-    this.onNextGen(cephalopods.environment);
-    this.onUpdate(cephalopods.environment);
 };
 
 SimulationInfo.prototype.onNextGen = function(environment) {
