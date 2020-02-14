@@ -32,5 +32,12 @@ Brain.prototype.getNeuron = function(axonIndex) {
 };
 
 Brain.prototype.update = function(timeStep) {
+    for (const neuron of this.neurons)
+        neuron.update(timeStep);
 
+    for (const output of this.outputs)
+        output.update(timeStep);
+
+    for (const axon of this.axons)
+        axon.update(timeStep);
 };

@@ -11,6 +11,7 @@ const Body = function(dna, position, direction) {
 Body.MASS_BASE = 50;
 
 Body.prototype.update = function(timeStep, impulse) {
+    this.brain.update(timeStep);
     this.tentacles.update(timeStep, impulse);
     this.mouth.update(timeStep);
     this.eyes.update(timeStep);
