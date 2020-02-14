@@ -1,12 +1,10 @@
 const Neuron = function(dna) {
     this.decay = dna.decay;
-    this.state = 0;
+    this.activation = 0;
 };
 
-Neuron.DEFAULT_DECAY = 1;
-
 Neuron.prototype.update = function(timeStep) {
-    this.state -= this.state * this.decay * timeStep;
+    this.state -= this.state * Math.min(this.decay * timeStep, 1);
 };
 
 Neuron.prototype.getOutput = function() {

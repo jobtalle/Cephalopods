@@ -20,6 +20,8 @@ const Gui = function(cephalopods, onReset) {
 
         this.agentInfo.onSelect(environment);
     };
+
+    this.simulationInfo.onNextGen(cephalopods.environment);
 };
 
 Gui.ID_INSPECTOR = "inspector";

@@ -1,6 +1,5 @@
-const Axon = function(
-    weight = Axon.DEFAULT_WEIGHT) {
-    this.weight = weight;
+const Axon = function(dna, from, to) {
+    this.weight = dna.weight;
+    this.from = from;
+    this.to = to;
 };
-
-Axon.DEFAULT_WEIGHT = 0;
