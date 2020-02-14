@@ -15,10 +15,13 @@
         <div id="viewport">
             <canvas id="renderer"></canvas>
             <div id="controls" class="gui">
-                <div id="info"></div>
+                <div id="simulation-info"></div>
                 <div id="buttons"></div>
             </div>
-            <div id="inspector" class="gui"></div>
+            <div id="inspector" class="gui">
+                <div id="agent-info"></div>
+                <div id="brain"></div>
+            </div>
         </div>
     </div>
     <script src="js/vector.js"></script>
@@ -26,6 +29,8 @@
     <script src="js/agent/dna/dnaEyes.js"></script>
     <script src="js/agent/dna/dnaTentacle.js"></script>
     <script src="js/agent/dna/dnaTentacles.js"></script>
+    <script src="js/agent/dna/dnaNeuron.js"></script>
+    <script src="js/agent/dna/dnaAxon.js"></script>
     <script src="js/agent/dna/dnaBrain.js"></script>
     <script src="js/agent/dna/dnaBody.js"></script>
     <script src="js/agent/dna/dna.js"></script>
@@ -48,7 +53,8 @@
     <script src="js/gui/line.js"></script>
     <script src="js/gui/button.js"></script>
     <script src="js/gui/toggleButton.js"></script>
-    <script src="js/gui/info.js"></script>
+    <script src="js/gui/simulationInfo.js"></script>
+    <script src="js/gui/agentInfo.js"></script>
     <script src="js/gui/buttons.js"></script>
     <script src="js/gui/gui.js"></script>
     <script src="js/main.js"></script>

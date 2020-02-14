@@ -1,5 +1,5 @@
 const Brain = function(dna) {
-    this.state = new Array(Brain.WIDTH * Brain.DEPTH);
+    this.neurons = new Array(Brain.WIDTH * Brain.DEPTH).fill(null);
 };
 
 Brain.WIDTH = 8;

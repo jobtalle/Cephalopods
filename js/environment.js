@@ -7,6 +7,7 @@ const Environment = function(
     simTime = Environment.DEFAULT_SIM_TIME) {
     this.onUpdate = null;
     this.onNextGen = null;
+    this.onSelect = null;
 
     this.radius = radius;
     this.selector = selector;
@@ -19,6 +20,7 @@ const Environment = function(
     this.time = 0;
     this.warp = false;
     this.paused = false;
+    this.selected = null;
 
     this.initialize(this.agentCount);
 };
@@ -71,6 +73,40 @@ Environment.prototype.draw = function(context) {
 
     for (const agent of this.agents)
         agent.draw(context);
+
+    if (this.selected) {
+        context.strokeStyle = "green";
+        context.beginPath();
+        context.arc(
+            this.selected.position.x,
+            this.selected.position.y,
+            76,
+            0,
+            Math.PI + Math.PI);
+        context.stroke();
+    }
+};
+
+Environment.prototype.click = function(x, y) {
+    this.selected = null;
+
+    if (this.onSelect)
+        this.onSelect(this);
+
+    for (const agent of this.agents) {
+        const dx = x - agent.position.x;
+        const dy = y - agent.position.y;
+        const squaredRadius = agent.body.radius * agent.body.radius;
+
+        if (dx * dx + dy * dy < squaredRadius) {
+            this.selected = agent;
+
+            if (this.onSelect)
+                this.onSelect(this);
+
+            break;
+        }
+    }
 };
 
 Environment.prototype.getInitialPosition = function(index) {
@@ -83,6 +119,11 @@ Environment.prototype.getInitialDirection = function(index) {
 };
 
 Environment.prototype.nextGeneration = function() {
+    this.selected = null;
+
+    if (this.onSelect)
+        this.onSelect(this);
+
     this.time = 0;
     this.generation++;
     this.agents = this.selector.createNextGeneration(

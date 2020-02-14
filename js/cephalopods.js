@@ -30,5 +30,10 @@ Cephalopods.prototype.resize = function(width, height) {
 };
 
 Cephalopods.prototype.click = function(x, y) {
+    x -= this.width * .5;
+    y -= this.height * .5;
+    x /= this.zoom;
+    y /= this.zoom;
 
+    this.environment.click(x, y);
 };

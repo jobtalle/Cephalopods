@@ -44,6 +44,7 @@ body {
 }
 
 #wrapper #inspector {
+    display: none;
     position: absolute;
     right: var(--gui-padding);
     bottom: var(--gui-padding);

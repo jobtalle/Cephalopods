@@ -38,8 +38,8 @@ const loopFunction = () => {
 
 window.onresize = resize;
 
-window.addEventListener("mousedown", event => {
-    cephalopods.click(new Vector(event.clientX, event.clientY));
+canvas.addEventListener("mousedown", event => {
+    cephalopods.click(event.clientX, event.clientY);
 });
 
 reset();
