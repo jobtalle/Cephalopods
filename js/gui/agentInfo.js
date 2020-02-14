@@ -2,6 +2,9 @@ const AgentInfo = function(element) {
     this.lineMass = new Line("Mass: ");
     this.lineVelocity = new Line("Velocity: ", "p/s");
 
+    while (element.firstChild)
+        element.removeChild(element.firstChild);
+
     element.appendChild(this.lineMass.element);
     element.appendChild(this.lineVelocity.element);
 };
