@@ -3,7 +3,11 @@ const Brain = function(dna) {
 };
 
 Brain.WIDTH = 8;
-Brain.DEPTH = 4;
+Brain.DEPTH = 3;
+
+Brain.getIndex = function(x, y) {
+    return Brain.WIDTH * y + x;
+};
 
 Brain.prototype.setInput = function(neuronIndex) {
 

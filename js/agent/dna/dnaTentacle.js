@@ -12,7 +12,7 @@ const DNATentacle = function(
 DNATentacle.DEFAULT_ANGLE = 0;
 DNATentacle.DEFAULT_LENGTH = 16;
 DNATentacle.DEFAULT_SPRING = 8;
-DNATentacle.DEFAULT_SPRING_POWER = 2;
+DNATentacle.DEFAULT_SPRING_POWER = 3;
 
 DNATentacle.prototype.copy = function() {
     return new DNATentacle(
