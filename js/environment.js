@@ -30,6 +30,7 @@ Environment.DEFAULT_AGENT_COUNT = 8;
 Environment.DEFAULT_SIM_TIME = 16;
 Environment.MAX_ITERATION_TIME = 1 / 60;
 Environment.WARP_STEP = .1;
+Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
 Environment.prototype.simulate = function(timeStep) {
     for (const agent of this.agents)
@@ -80,7 +81,7 @@ Environment.prototype.draw = function(context) {
         context.arc(
             this.selected.position.x,
             this.selected.position.y,
-            76,
+            this.selected.body.radius * Environment.SELECT_RADIUS_MULTIPLIER,
             0,
             Math.PI + Math.PI);
         context.stroke();
@@ -96,7 +97,7 @@ Environment.prototype.click = function(x, y) {
     for (const agent of this.agents) {
         const dx = x - agent.position.x;
         const dy = y - agent.position.y;
-        const squaredRadius = agent.body.radius * agent.body.radius;
+        const squaredRadius = (agent.body.radius * Environment.SELECT_RADIUS_MULTIPLIER) ** 2;
 
         if (dx * dx + dy * dy < squaredRadius) {
             this.selected = agent;
