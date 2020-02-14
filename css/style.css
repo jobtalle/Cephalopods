@@ -1,6 +1,7 @@
 :root {
     --gui-padding: 8px;
     --gui-button-spacing: 4px;
+    --gui-border: 1px solid white;
 }
 
 body {
@@ -26,10 +27,17 @@ body {
 #wrapper .gui {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    border-left: 1px solid white;
     font-family: monospace;
     font-size: 12pt;
     padding: 4px;
+}
+
+#wrapper .gui.left {
+    border-left: var(--gui-border);
+}
+
+#wrapper .gui.right {
+    border-right: var(--gui-border);
 }
 
 #wrapper .gui button {

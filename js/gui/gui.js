@@ -9,7 +9,9 @@ const Gui = function(cephalopods, onReset) {
 
     cephalopods.environment.onUpdate = environment => {
         this.simulationInfo.onUpdate(environment);
-        this.agentInfo.onUpdate(environment);
+
+        if (environment.selected)
+            this.agentInfo.onUpdate(environment);
     };
 
     cephalopods.environment.onSelect = environment => {

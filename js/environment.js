@@ -75,7 +75,7 @@ Environment.prototype.draw = function(context) {
         agent.draw(context);
 
     if (this.selected) {
-        context.strokeStyle = "green";
+        context.strokeStyle = "yellow";
         context.beginPath();
         context.arc(
             this.selected.position.x,
