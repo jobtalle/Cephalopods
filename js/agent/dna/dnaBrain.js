@@ -9,7 +9,7 @@ const DNABrain = function(
     this.axons = axons;
 };
 
-DNABrain.DEFAULT_NEURON_COUNT = 9;
+DNABrain.DEFAULT_NEURON_COUNT = 6;
 DNABrain.DEFAULT_AXON_CHANCE = 1;
 
 DNABrain.makeNeurons = function(count) {
@@ -47,9 +47,26 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
 };
 
 DNABrain.prototype.copy = function() {
+    const inputs = [];
+    const neurons = [];
+    const outputs = [];
+    const axons = [];
+
+    for (const input of this.inputs)
+        inputs.push(input.copy());
+
+    for (const neuron of this.neurons)
+        neurons.push(neuron.copy());
+
+    for (const output of this.outputs)
+        outputs.push(output.copy());
+
+    for (const axon of this.axons)
+        axons.push(axon.copy());
+
     return new DNABrain(
-        this.inputs,
-        this.neurons,
-        this.outputs,
-        this.axons);
+        inputs,
+        neurons,
+        outputs,
+        axons);
 };

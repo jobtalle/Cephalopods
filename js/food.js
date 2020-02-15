@@ -21,8 +21,8 @@ const Food = function(environmentRadius) {
 };
 
 Food.RADIUS = 5;
-Food.DISTRIBUTION_POWER = 2;
-Food.DISTRIBUTION_DEADZONE = .4;
+Food.DISTRIBUTION_POWER = 1;
+Food.DISTRIBUTION_DEADZONE = .5;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "green";

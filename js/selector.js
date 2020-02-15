@@ -21,12 +21,21 @@ Selector.prototype.createNextGeneration = function(
     }
 
     const nextGeneration = new Array(agents.length);
+    const spawnOffset = Math.floor(Math.random() * agents.length);
 
-    for (let agent = 0; agent < agents.length; ++agent)
-        nextGeneration[agent] = new Agent(
-            mutator.mutate(agents[agent].dna.copy()),
-            getInitialPosition(agent),
-            getInitialDirection(agent));
+    nextGeneration[spawnOffset] = new Agent(
+        bestAgent.dna.copy(),
+        getInitialPosition(spawnOffset),
+        getInitialDirection(spawnOffset));
+
+    for (let agent = 1; agent < agents.length; ++agent) {
+        const index = (agent + spawnOffset) % agents.length;
+
+        nextGeneration[index] = new Agent(
+            mutator.mutate(bestAgent.dna.copy()),
+            getInitialPosition(index),
+            getInitialDirection(index));
+    }
 
     return nextGeneration;
 };
