@@ -14,6 +14,7 @@ AgentInfo.prototype.onUpdate = function(environment) {
         return;
 
     this.lineVelocity.update(environment.selected.velocity.length());
+    // console.log(environment.selected.body.brain.outputs[0].output);
 };
 
 AgentInfo.prototype.onSelect = function(environment) {

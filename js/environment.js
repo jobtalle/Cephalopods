@@ -25,7 +25,7 @@ const Environment = function(
     this.initialize(this.agentCount);
 };
 
-Environment.SPAWN_INSET = 128;
+Environment.SPAWN_INSET = 400;
 Environment.DEFAULT_AGENT_COUNT = 8;
 Environment.DEFAULT_SIM_TIME = 16;
 Environment.MAX_ITERATION_TIME = 1 / 60;

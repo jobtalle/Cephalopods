@@ -8,8 +8,6 @@ const Tentacles = function(dna, position, direction, radius) {
             position,
             direction,
             radius);
-
-    this.wiggle = 0;
 };
 
 Tentacles.prototype.getMass = function() {
@@ -21,19 +19,10 @@ Tentacles.prototype.getMass = function() {
     return mass;
 };
 
-Tentacles.prototype.update = function(timeStep, impulse) {
-    this.wiggle += 1 * timeStep;
-
-    if (this.wiggle > 1)
-        this.wiggle -= 1;
-
-    let wiggle = Math.sin(Math.pow(this.wiggle, 1) * Math.PI * 2) * Math.PI * 0.5;
-
+Tentacles.prototype.update = function(timeStep, impulse, outputs) {
     for (const tentacle of this.tentacles) {
-        tentacle.setAnchor(this.position, wiggle);
+        tentacle.setAnchor(this.position, outputs[0].output * 2 - 1);
         tentacle.update(timeStep, impulse);
-
-        wiggle = -wiggle;
     }
 };
 

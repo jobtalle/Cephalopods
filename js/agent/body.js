@@ -12,7 +12,7 @@ Body.MASS_BASE = 50;
 
 Body.prototype.update = function(timeStep, impulse) {
     this.brain.update(timeStep);
-    this.tentacles.update(timeStep, impulse);
+    this.tentacles.update(timeStep, impulse, this.brain.outputs);
     this.mouth.update(timeStep);
     this.eyes.update(timeStep);
 };
