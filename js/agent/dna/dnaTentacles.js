@@ -1,5 +1,5 @@
 const DNATentacles = function(
-    tentacles = [new DNATentacle(-1), new DNATentacle(1)]) {
+    tentacles = [new DNATentacle(-1.5, 9), new DNATentacle(1.5, 9)]) {
     this.tentacles = tentacles;
 };
 

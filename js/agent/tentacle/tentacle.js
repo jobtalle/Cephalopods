@@ -1,6 +1,6 @@
 const Tentacle = function(dna, position, direction, radius) {
     this.offset = new Vector().fromAngle(dna.angle).multiply(-radius);
-    this.sign = Math.sign(dna.angle);
+    this.sign = dna.angle === 0 ? 1 : Math.sign(dna.angle);
     this.direction = direction;
     this.length = dna.length;
     this.spring = dna.spring;

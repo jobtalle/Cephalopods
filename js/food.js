@@ -22,11 +22,11 @@ const Food = function(environmentRadius) {
 
 Food.RADIUS = 5;
 Food.DISTRIBUTION_POWER = 2;
-Food.DISTRIBUTION_DEADZONE = 0;
+Food.DISTRIBUTION_DEADZONE = .2;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "green";
-Food.UNITS_PER_PIXEL = .0003;
+Food.UNITS_PER_PIXEL = .0004;
 
 Food.prototype.update = function(timeStep, agents) {
     for (let agent = 0; agent < agents.length; ++agent) {
