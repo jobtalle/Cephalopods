@@ -19,4 +19,5 @@ BrainView.prototype.onSelect = function(environment) {
         return;
 
     this.plot.select(environment.selected.body.brain);
+    this.plot.update();
 };

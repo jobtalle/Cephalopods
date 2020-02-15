@@ -25,6 +25,8 @@ const Gui = function(cephalopods, onReset) {
     };
 
     this.simulationInfo.onNextGen(cephalopods.environment);
+
+    document.getElementById(Gui.ID_INSPECTOR).style.display = "none";
 };
 
 Gui.ID_INSPECTOR = "inspector";

@@ -6,6 +6,7 @@ const Agent = function(dna, position, direction) {
     this.body = new Body(dna.body, this.position, this.direction);
     this.impulse = new Vector();
     this.mass = this.body.getMass();
+    this.eaten = 0;
 };
 
 Agent.FRICTION = .8;

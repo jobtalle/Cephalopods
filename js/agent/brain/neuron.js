@@ -5,7 +5,17 @@ const Neuron = function(dna) {
 };
 
 Neuron.prototype.update = function(timeStep) {
-    this.output = Math.pow(1 / (1 + Math.exp(-this.activation)), 4); // Logistic function
+    const d = .2;
+    let a = this.activation;
+
+    if (a < -d)
+        a = a + d;
+    else if (a > d)
+        a = a - d;
+    else
+        a = 0;
+
+    this.output = 1 / (1 + Math.exp(-a)); // Logistic function
     // this.output = Math.tanh(this.activation); // Tanh
 
     // Linear decay

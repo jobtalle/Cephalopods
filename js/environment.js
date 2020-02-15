@@ -9,6 +9,7 @@ const Environment = function(
     this.onNextGen = null;
     this.onSelect = null;
 
+    this.food = new Food(radius);
     this.radius = radius;
     this.selector = selector;
     this.rater = rater;
@@ -27,12 +28,14 @@ const Environment = function(
 
 Environment.SPAWN_INSET = 400;
 Environment.DEFAULT_AGENT_COUNT = 8;
-Environment.DEFAULT_SIM_TIME = 16;
+Environment.DEFAULT_SIM_TIME = 20;
 Environment.MAX_ITERATION_TIME = 1 / 60;
 Environment.WARP_STEP = .1;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
 Environment.prototype.simulate = function(timeStep) {
+    this.food.update(timeStep, this.agents);
+
     for (const agent of this.agents)
         agent.update(timeStep);
 
@@ -71,6 +74,8 @@ Environment.prototype.draw = function(context) {
     context.arc(0, 0, this.radius, 0, Math.PI * 2);
     context.fill();
     context.stroke();
+
+    this.food.draw(context);
 
     for (const agent of this.agents)
         agent.draw(context);
@@ -121,6 +126,7 @@ Environment.prototype.getInitialDirection = function(index) {
 
 Environment.prototype.nextGeneration = function() {
     this.selected = null;
+    this.food = new Food(this.radius);
 
     if (this.onSelect)
         this.onSelect(this);

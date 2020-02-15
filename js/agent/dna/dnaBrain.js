@@ -9,7 +9,8 @@ const DNABrain = function(
     this.axons = axons;
 };
 
-DNABrain.DEFAULT_NEURON_COUNT = 10;
+DNABrain.DEFAULT_NEURON_COUNT = 9;
+DNABrain.DEFAULT_AXON_CHANCE = 1;
 
 DNABrain.makeNeurons = function(count) {
     const neurons = new Array(count);
@@ -26,6 +27,9 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
     for (let neuron = 0; neuron < neuronCount; ++neuron) {
         for (let other = 0; other < neuronCount; ++other) {
             if (other === neuron)
+                continue;
+
+            if (Math.random() > DNABrain.DEFAULT_AXON_CHANCE)
                 continue;
 
             axons.push(new DNAAxon(
