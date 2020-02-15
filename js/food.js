@@ -3,7 +3,7 @@ const Food = function(environmentRadius) {
     this.gridSize = Math.ceil(environmentRadius * 2 / Food.GRID_SPACING);
     this.grid = new Array(this.gridSize * this.gridSize);
 
-    const foods = new Array(Math.round(Math.PI * environmentRadius * environmentRadius * Food.UNITS_PER_PIXEL));
+    const foods = new Array(Math.round(Math.PI * Math.pow(environmentRadius * (1 - Food.DISTRIBUTION_DEADZONE), 2) * Food.UNITS_PER_PIXEL));
 
     for (let food = 0; food < foods.length; ++food) {
         const angle = Math.random() * (Math.PI + Math.PI);
@@ -21,12 +21,12 @@ const Food = function(environmentRadius) {
 };
 
 Food.RADIUS = 5;
-Food.DISTRIBUTION_POWER = 1;
-Food.DISTRIBUTION_DEADZONE = .5;
+Food.DISTRIBUTION_POWER = 2;
+Food.DISTRIBUTION_DEADZONE = 0;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "green";
-Food.UNITS_PER_PIXEL = .0001;
+Food.UNITS_PER_PIXEL = .0003;
 
 Food.prototype.update = function(timeStep, agents) {
     for (let agent = 0; agent < agents.length; ++agent) {

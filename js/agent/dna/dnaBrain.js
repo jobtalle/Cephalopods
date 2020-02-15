@@ -1,8 +1,8 @@
 const DNABrain = function(
     inputs = [],
     neurons = DNABrain.makeNeurons(DNABrain.DEFAULT_NEURON_COUNT),
-    outputs = [new DNANeuron()],
-    axons = DNABrain.makeAxons(DNABrain.DEFAULT_NEURON_COUNT, 1)) {
+    outputs = [new DNANeuron(), new DNANeuron()],
+    axons = DNABrain.makeAxons(DNABrain.DEFAULT_NEURON_COUNT, 2)) {
     this.inputs = inputs;
     this.neurons = neurons;
     this.outputs = outputs;

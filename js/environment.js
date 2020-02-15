@@ -27,10 +27,10 @@ const Environment = function(
 };
 
 Environment.SPAWN_INSET = 400;
-Environment.DEFAULT_AGENT_COUNT = 8;
-Environment.DEFAULT_SIM_TIME = 20;
+Environment.DEFAULT_AGENT_COUNT = 14;
+Environment.DEFAULT_SIM_TIME = 15;
 Environment.MAX_ITERATION_TIME = 1 / 60;
-Environment.WARP_STEP = .1;
+Environment.WARP_STEP = .05;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
 Environment.prototype.simulate = function(timeStep) {

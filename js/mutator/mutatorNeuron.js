@@ -1,6 +1,6 @@
 Mutator.prototype.mutateNeuron = function(dna) {
     // const decayMin = 0;
-    // const decayMax = 5;
+    // const decayMax = 2;
     //
     // dna.decay += (-1 + 2 * Math.random()) * .05;
     //

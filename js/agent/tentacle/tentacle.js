@@ -1,5 +1,6 @@
 const Tentacle = function(dna, position, direction, radius) {
     this.offset = new Vector().fromAngle(dna.angle).multiply(-radius);
+    this.sign = Math.sign(dna.angle);
     this.direction = direction;
     this.length = dna.length;
     this.spring = dna.spring;
@@ -33,6 +34,7 @@ Tentacle.prototype.calculateDelta = function() {
 
 Tentacle.prototype.build = function() {
     let tail = this.head;
+
     for (let i = 0; i < this.length; ++i) {
         const spring = this.spring * Math.pow(1 - (i / (this.length - 1)) * .35, this.springPower);
 
@@ -49,5 +51,5 @@ Tentacle.prototype.build = function() {
 Tentacle.prototype.setAnchor = function(position, angle) {
     const deltaAngle = this.calculateDelta();
 
-    this.head.setAnchor(this.delta.add(position), deltaAngle + angle);
+    this.head.setAnchor(this.delta.add(position), deltaAngle + angle * this.sign);
 };

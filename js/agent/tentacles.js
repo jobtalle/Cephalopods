@@ -20,9 +20,9 @@ Tentacles.prototype.getMass = function() {
 };
 
 Tentacles.prototype.update = function(timeStep, impulse, outputs) {
-    for (const tentacle of this.tentacles) {
-        tentacle.setAnchor(this.position, outputs[0].output * 2 - 1);
-        tentacle.update(timeStep, impulse);
+    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle) {
+        this.tentacles[tentacle].setAnchor(this.position, 2 * outputs[tentacle].output - 1);
+        this.tentacles[tentacle].update(timeStep, impulse);
     }
 };
 

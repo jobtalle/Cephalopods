@@ -58,7 +58,6 @@ body {
     position: absolute;
     right: var(--gui-padding);
     bottom: var(--gui-padding);
-    pointer-events: none;
 }
 
 #wrapper #controls {
