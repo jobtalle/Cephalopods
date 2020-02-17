@@ -14,7 +14,7 @@ const Segment = function(position, spring = 0, spacing = 0, parent = null) {
     this.directionPrevious = this.direction.copy();
 };
 
-Segment.PUSH_POWER = 3;
+Segment.PUSH_POWER = 2.5;
 
 Segment.prototype.getHead = function() {
     if (this.parent)

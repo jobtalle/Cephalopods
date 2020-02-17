@@ -28,6 +28,7 @@ Agent.prototype.update = function() {
     this.body.update(this.impulse);
 
     this.velocity.add(this.impulse.copy().multiply(Agent.IMPULSE / this.mass));
+    // this.velocity.add(this.direction.copy().multiply(this.direction.dot(this.impulse) * Agent.IMPULSE / this.mass));
     this.direction.subtract(this.impulse.copy().multiply(Agent.TORQUE / this.mass));
     this.direction.normalize();
 };

@@ -10,7 +10,7 @@ const BrainPlot = function() {
 
 BrainPlot.WIDTH = 300;
 BrainPlot.HEIGHT = 300;
-BrainPlot.RADIUS_INSET = 2;
+BrainPlot.RADIUS_INSET = .1;
 BrainPlot.COLOR_NEURON_INPUT = "lime";
 BrainPlot.COLOR_NEURON = "orange";
 BrainPlot.COLOR_NEURON_OUTPUT = "aqua";
@@ -39,7 +39,7 @@ BrainPlot.prototype.drawNeuron = function(context, x, y, activation, color) {
     context.globalAlpha = activation;
     context.fillStyle = color;
     context.beginPath();
-    context.arc(x, y, this.cellRadius - BrainPlot.RADIUS_INSET, 0, Math.PI + Math.PI);
+    context.arc(x, y, this.cellRadius * (1 - BrainPlot.RADIUS_INSET), 0, Math.PI + Math.PI);
     context.fill();
     context.globalAlpha = 1;
     context.stroke();
