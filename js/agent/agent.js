@@ -9,13 +9,12 @@ const Agent = function(dna, position, direction) {
     this.eaten = 0;
 };
 
-Agent.FRICTION = .8;
+Agent.FRICTION = 1;
 Agent.TORQUE = .5;
 Agent.IMPULSE = 150;
 
 Agent.prototype.update = function(timeStep) {
-    this.velocity.x -= this.velocity.x * Agent.FRICTION * timeStep;
-    this.velocity.y -= this.velocity.y * Agent.FRICTION * timeStep;
+    this.velocity.divide(1 + Agent.FRICTION * timeStep);
 
     this.position.x += this.velocity.x * timeStep;
     this.position.y += this.velocity.y * timeStep;

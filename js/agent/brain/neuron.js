@@ -29,5 +29,6 @@ Neuron.prototype.update = function(timeStep) {
     // }
 
     // Quadratic decay
-    this.activation -= this.activation * Math.min(this.decay * timeStep, 1);
+    this.activation /= 1 + this.decay * timeStep;
+    // this.activation -= this.activation * Math.min(this.decay * timeStep, 1);
 };

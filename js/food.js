@@ -26,7 +26,7 @@ Food.DISTRIBUTION_DEADZONE = .2;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "gray";
-Food.UNITS_PER_PIXEL = .0004;
+Food.UNITS_PER_PIXEL = .0007;
 
 Food.prototype.update = function(timeStep, agents) {
     for (let agent = 0; agent < agents.length; ++agent) {
