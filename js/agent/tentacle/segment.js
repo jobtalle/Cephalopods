@@ -60,10 +60,10 @@ Segment.prototype.update = function(timeStep, velocity) {
 
     const dx = this.position.x - xp;
     const dy = this.position.y - yp;
-    const dot = (this.direction.y * dx - this.direction.x * dy);
+    const push = (this.direction.y * dx - this.direction.x * dy) * lateralDot * lateralDot;
 
-    velocity.x -= this.direction.y * dot;
-    velocity.y += this.direction.x * dot;
+    velocity.x -= this.direction.y * push;
+    velocity.y += this.direction.x * push;
 };
 
 Segment.prototype.draw = function(context) {

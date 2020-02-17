@@ -10,7 +10,7 @@ const DNATentacle = function(
 };
 
 DNATentacle.DEFAULT_ANGLE = 0;
-DNATentacle.DEFAULT_LENGTH = 3;
+DNATentacle.DEFAULT_LENGTH = 9;
 DNATentacle.DEFAULT_SPRING = 10;
 DNATentacle.DEFAULT_SPRING_POWER = 3;
 
