@@ -16,7 +16,7 @@ BrainPlot.COLOR_NEURON = "orange";
 BrainPlot.COLOR_NEURON_OUTPUT = "aqua";
 BrainPlot.COLOR_EDGE = "white";
 
-BrainPlot.prototype.update = function() {
+BrainPlot.prototype.update = function(environment) {
     const context = this.element.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -25,7 +25,7 @@ BrainPlot.prototype.update = function() {
         .5 * (this.element.width - this.cellRadius * 2 * this.columns),
         .5 * (this.element.height - this.cellRadius * 2 * this.rows));
 
-    this.draw(context);
+    this.draw(context, environment.getFrameProgression());
 
     context.restore();
 };
@@ -45,13 +45,17 @@ BrainPlot.prototype.drawNeuron = function(context, x, y, activation, color) {
     context.stroke();
 };
 
-BrainPlot.prototype.draw = function(context) {
+BrainPlot.prototype.getOutput = function(neuron, f) {
+    return neuron.outputPrevious + (neuron.output - neuron.outputPrevious) * f;
+};
+
+BrainPlot.prototype.draw = function(context, f) {
     for (let input = 0; input < this.brain.inputs.length; ++input)
         this.drawNeuron(
             context,
             this.cellRadius * (1 + 2 * input),
             this.cellRadius,
-            this.brain.inputs[input].output,
+            this.getOutput(this.brain.inputs[input], f),
             BrainPlot.COLOR_NEURON_INPUT);
 
     let row = 1;
@@ -62,7 +66,7 @@ BrainPlot.prototype.draw = function(context) {
             context,
             this.cellRadius * (1 + 2 * column),
             this.cellRadius * (1 + 2 * row),
-            this.brain.neurons[neuron].output,
+            this.getOutput(this.brain.neurons[neuron], f),
             BrainPlot.COLOR_NEURON);
 
         if (++column === this.columns) {
@@ -79,7 +83,7 @@ BrainPlot.prototype.draw = function(context) {
             context,
             this.cellRadius * (1 + 2 * output),
             this.cellRadius * (1 + 2 * row),
-            this.brain.outputs[output].output,
+            this.getOutput(this.brain.outputs[output], f),
             BrainPlot.COLOR_NEURON_OUTPUT);
 };
 

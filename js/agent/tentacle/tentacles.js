@@ -19,14 +19,14 @@ Tentacles.prototype.getMass = function() {
     return mass;
 };
 
-Tentacles.prototype.update = function(timeStep, impulse, outputs) {
+Tentacles.prototype.update = function(impulse, outputs) {
     for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle) {
         this.tentacles[tentacle].setAnchor(this.position, 2 * outputs[tentacle].output - 1);
-        this.tentacles[tentacle].update(timeStep, impulse);
+        this.tentacles[tentacle].update(impulse);
     }
 };
 
-Tentacles.prototype.draw = function(context) {
+Tentacles.prototype.draw = function(context, f) {
     for (const tentacle of this.tentacles)
-        tentacle.draw(context);
+        tentacle.draw(context, f);
 };

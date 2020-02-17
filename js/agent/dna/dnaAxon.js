@@ -1,7 +1,7 @@
 const DNAAxon = function(
     from,
     to,
-    weight = (-.5 + Math.random()) * 50) {
+    weight = (-.5 + Math.random()) * 2) {
     this.from = from;
     this.to = to;
     this.weight = weight;

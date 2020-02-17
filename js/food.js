@@ -28,7 +28,7 @@ Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "gray";
 Food.UNITS_PER_PIXEL = .0007;
 
-Food.prototype.update = function(timeStep, agents) {
+Food.prototype.update = function(agents) {
     for (let agent = 0; agent < agents.length; ++agent) {
         const distance = agents[agent].body.radius + Food.RADIUS;
         const xStart = Math.floor((agents[agent].position.x + this.environmentRadius - distance) * Food.GRID_SPACING_INVERSE);

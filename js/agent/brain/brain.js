@@ -31,13 +31,13 @@ Brain.prototype.getNeuron = function(axonIndex) {
     }
 };
 
-Brain.prototype.update = function(timeStep) {
+Brain.prototype.update = function() {
     for (const neuron of this.neurons)
-        neuron.update(timeStep);
+        neuron.update();
 
     for (const output of this.outputs)
-        output.update(timeStep);
+        output.update();
 
     for (const axon of this.axons)
-        axon.update(timeStep);
+        axon.update();
 };

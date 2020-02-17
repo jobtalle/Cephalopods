@@ -11,7 +11,7 @@ BrainView.prototype.onUpdate = function(environment) {
     if (!environment.selected)
         return;
 
-    this.plot.update();
+    this.plot.update(environment);
 };
 
 BrainView.prototype.onSelect = function(environment) {
@@ -19,5 +19,5 @@ BrainView.prototype.onSelect = function(environment) {
         return;
 
     this.plot.select(environment.selected.body.brain);
-    this.plot.update();
+    this.plot.update(environment);
 };

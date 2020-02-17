@@ -1,10 +1,15 @@
 const Neuron = function(dna) {
     this.decay = dna.decay;
     this.activation = .5;
+    this.activationPrevious = this.activation;
     this.output = 0;
+    this.outputPrevious = this.output;
 };
 
-Neuron.prototype.update = function(timeStep) {
+Neuron.prototype.update = function() {
+    this.activationPrevious = this.activation;
+    this.outputPrevious = this.output;
+
     const d = .2;
     let a = this.activation;
 
@@ -16,19 +21,7 @@ Neuron.prototype.update = function(timeStep) {
         a = 0;
 
     this.output = 1 / (1 + Math.exp(-a)); // Logistic function
-    // this.output = Math.tanh(a * .1); // Tanh
-
-    // Linear decay
-    // if (this.activation > 0) {
-    //     if ((this.activation -= this.decay * timeStep) < 0)
-    //         this.activation = 0;
-    // }
-    // else {
-    //     if ((this.activation += this.decay * timeStep) > 0)
-    //         this.activation = 0;
-    // }
 
     // Quadratic decay
-    this.activation /= 1 + this.decay * timeStep;
-    // this.activation -= this.activation * Math.min(this.decay * timeStep, 1);
+    this.activation *= this.decay;
 };

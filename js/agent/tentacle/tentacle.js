@@ -13,12 +13,12 @@ const Tentacle = function(dna, position, direction, radius) {
 
 Tentacle.SPACING = 18;
 
-Tentacle.prototype.update = function(timeStep, velocity) {
-    this.tail.update(timeStep, velocity);
+Tentacle.prototype.update = function(velocity) {
+    this.tail.update(velocity);
 };
 
-Tentacle.prototype.draw = function(context) {
-    this.tail.draw(context);
+Tentacle.prototype.draw = function(context, f) {
+    this.tail.draw(context, f);
 };
 
 Tentacle.prototype.getLength = function() {
@@ -36,7 +36,7 @@ Tentacle.prototype.build = function() {
     let tail = this.head;
 
     for (let i = 0; i < this.length; ++i) {
-        const spring = this.spring * Math.pow(1 - (i / (this.length - 1)) * .35, this.springPower);
+        const spring = this.spring * Math.pow(1 - (i / (this.length - 1)) * 0.35, this.springPower);
 
         tail = new Segment(
             tail.position.copy().add(this.delta.copy().normalize().multiply(Tentacle.SPACING)),

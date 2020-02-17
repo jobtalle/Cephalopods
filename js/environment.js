@@ -22,30 +22,45 @@ const Environment = function(
     this.warp = false;
     this.paused = false;
     this.selected = null;
+    this.timeToFrame = 0;
 
     this.initialize(this.agentCount);
 };
 
+Environment.FRAME_TIME = .065;
 Environment.SPAWN_INSET = 400;
 Environment.DEFAULT_AGENT_COUNT = 14;
-Environment.DEFAULT_SIM_TIME = 15;
-Environment.MAX_ITERATION_TIME = 1 / 60;
-Environment.WARP_STEP = .1;
+Environment.DEFAULT_SIM_TIME = 20;
+Environment.MAX_FRAME_TIME = 1 / 60;
+Environment.WARP_STEP = Environment.FRAME_TIME * 10;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
-Environment.prototype.simulate = function(timeStep) {
-    this.food.update(timeStep, this.agents);
+Environment.prototype.getFrameProgression = function() {
+    return this.timeToFrame / Environment.FRAME_TIME;
+};
 
+Environment.prototype.step = function() {
     for (const agent of this.agents)
-        agent.update(timeStep);
+        agent.update();
 
-    this.time += timeStep;
-
-    if (this.onUpdate)
-        this.onUpdate(this);
+    this.food.update(this.agents);
 
     if (this.agents.length === 0 || this.time > this.simTime)
         this.nextGeneration();
+};
+
+Environment.prototype.simulate = function(timeStep) {
+    this.timeToFrame += timeStep;
+    this.time += timeStep;
+
+    while (this.timeToFrame > Environment.FRAME_TIME) {
+        this.timeToFrame -= Environment.FRAME_TIME;
+
+        this.step();
+    }
+
+    if (this.onUpdate)
+        this.onUpdate(this);
 };
 
 Environment.prototype.update = function(timeStep) {
@@ -55,7 +70,7 @@ Environment.prototype.update = function(timeStep) {
     if (this.warp) {
         const startTime = new Date();
 
-        while ((new Date() - startTime) * .001 < Environment.MAX_ITERATION_TIME)
+        while ((new Date() - startTime) * .001 < Environment.MAX_FRAME_TIME)
             this.simulate(Environment.WARP_STEP);
     }
     else
@@ -63,6 +78,7 @@ Environment.prototype.update = function(timeStep) {
 };
 
 Environment.prototype.draw = function(context) {
+    const frameProgression = this.getFrameProgression();
     const gradient = context.createRadialGradient(0, 0, this.radius * .1, 0, 0, this.radius);
 
     gradient.addColorStop(0, "#4b4b4b");
@@ -78,14 +94,17 @@ Environment.prototype.draw = function(context) {
     this.food.draw(context);
 
     for (const agent of this.agents)
-        agent.draw(context);
+        agent.draw(context, frameProgression);
 
     if (this.selected) {
+        const x = this.selected.positionPrevious.x + (this.selected.position.x - this.selected.positionPrevious.x) * frameProgression;
+        const y = this.selected.positionPrevious.y + (this.selected.position.y - this.selected.positionPrevious.y) * frameProgression;
+
         context.strokeStyle = "yellow";
         context.beginPath();
         context.arc(
-            this.selected.position.x,
-            this.selected.position.y,
+            x,
+            y,
             this.selected.body.radius * Environment.SELECT_RADIUS_MULTIPLIER,
             0,
             Math.PI + Math.PI);
@@ -102,9 +121,9 @@ Environment.prototype.click = function(x, y) {
     for (const agent of this.agents) {
         const dx = x - agent.position.x;
         const dy = y - agent.position.y;
-        const squaredRadius = (agent.body.radius * Environment.SELECT_RADIUS_MULTIPLIER) ** 2;
+        const radius = agent.body.radius * Environment.SELECT_RADIUS_MULTIPLIER;
 
-        if (dx * dx + dy * dy < squaredRadius) {
+        if (dx * dx + dy * dy < radius * radius) {
             this.selected = agent;
 
             if (this.onSelect)

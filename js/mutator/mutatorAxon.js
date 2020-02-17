@@ -1,12 +1,12 @@
 Mutator.AXON_MODIFY_CHANCE = .65;
-Mutator.AXON_MODIFY_AMPLITUDE = 20;
+Mutator.AXON_MODIFY_AMPLITUDE = .6;
 
 Mutator.prototype.mutateAxon = function(dna) {
     if (Math.random() > Mutator.AXON_MODIFY_CHANCE)
         return;
 
-    const weightMax = 100;
-    const weightMin = -100;
+    const weightMax = 40;
+    const weightMin = -40;
 
     dna.weight += (-1 + 2 * Math.random()) * Mutator.AXON_MODIFY_AMPLITUDE;
 

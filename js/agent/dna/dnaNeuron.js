@@ -3,7 +3,7 @@ const DNANeuron = function(
     this.decay = decay;
 };
 
-DNANeuron.DEFAULT_DECAY = 1;
+DNANeuron.DEFAULT_DECAY = .95;
 
 DNANeuron.prototype.copy = function() {
     return new DNANeuron(

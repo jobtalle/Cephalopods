@@ -1,32 +1,37 @@
 const Agent = function(dna, position, direction) {
     this.dna = dna;
     this.position = position;
+    this.positionPrevious = this.position.copy();
     this.direction = direction;
+    this.directionPrevious = this.direction.copy();
     this.velocity = new Vector();
-    this.body = new Body(dna.body, this.position, this.direction);
+    this.body = new Body(dna.body, this.position, this.positionPrevious, this.direction, this.directionPrevious);
     this.impulse = new Vector();
     this.mass = this.body.getMass();
     this.eaten = 0;
 };
 
-Agent.FRICTION = 1;
-Agent.TORQUE = .5;
-Agent.IMPULSE = 150;
+Agent.FRICTION = .88;
+Agent.TORQUE = .65;
+Agent.IMPULSE = 20;
 
-Agent.prototype.update = function(timeStep) {
-    this.velocity.divide(1 + Agent.FRICTION * timeStep);
+Agent.prototype.update = function() {
+    this.positionPrevious.set(this.position);
+    this.directionPrevious.set(this.direction);
 
-    this.position.x += this.velocity.x * timeStep;
-    this.position.y += this.velocity.y * timeStep;
+    this.velocity.multiply(Agent.FRICTION);
+
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
 
     this.impulse.zero();
-    this.body.update(timeStep, this.impulse);
+    this.body.update(this.impulse);
 
     this.velocity.add(this.impulse.copy().multiply(Agent.IMPULSE / this.mass));
-    this.direction.add(this.impulse.copy().multiply(Agent.TORQUE / this.mass));
+    this.direction.subtract(this.impulse.copy().multiply(Agent.TORQUE / this.mass));
     this.direction.normalize();
 };
 
-Agent.prototype.draw = function(context) {
-    this.body.draw(context);
+Agent.prototype.draw = function(context, f) {
+    this.body.draw(context, f);
 };

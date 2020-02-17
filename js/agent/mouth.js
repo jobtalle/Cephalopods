@@ -2,7 +2,7 @@ const Mouth = function(dna) {
 
 };
 
-Mouth.prototype.update = function(timeStep) {
+Mouth.prototype.update = function() {
 
 };
 

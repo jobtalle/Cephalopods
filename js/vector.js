@@ -28,10 +28,6 @@ Vector.prototype.multiply = function(scalar) {
     return this;
 };
 
-Vector.prototype.divide = function(scalar) {
-    return this.multiply(1 / scalar);
-};
-
 Vector.prototype.subtract = function(vector) {
     this.x -= vector.x;
     this.y -= vector.y;
