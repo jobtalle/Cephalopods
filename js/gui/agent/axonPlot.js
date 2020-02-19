@@ -23,7 +23,7 @@ AxonPlot.DASH = [
     AxonPlot.DASH_STRIDE * .5];
 AxonPlot.OUTPUT_THRESHOLD = .01;
 AxonPlot.ACTIVITY_THRESHOLD = .01;
-AxonPlot.DASH_SPEED = .5;
+AxonPlot.DASH_SPEED = 1.2;
 
 AxonPlot.prepareContext = function(context) {
     context.strokeStyle = AxonPlot.LINE_COLOR;
