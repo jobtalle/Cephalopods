@@ -25,6 +25,7 @@ AxonPlot.DASH = [
     AxonPlot.DASH_STRIDE * .5];
 AxonPlot.OUTPUT_THRESHOLD = .01;
 AxonPlot.ACTIVITY_THRESHOLD = .01;
+AxonPlot.DASH_SPEED = .5;
 
 AxonPlot.prepareContext = function(context) {
     context.strokeStyle = AxonPlot.LINE_COLOR;
@@ -72,5 +73,5 @@ AxonPlot.prototype.draw = function(context, f) {
     context.lineTo(this.xEnd, this.yEnd);
     context.stroke();
 
-    this.dashOffset -= activity * Math.sign(this.axon.weight);
+    this.dashOffset -= activity * Math.sign(this.axon.weight) * AxonPlot.DASH_SPEED;
 };
