@@ -13,8 +13,6 @@ const AxonPlot = function(axon, neuronPlots, cellRadius) {
     this.xEnd = this.to.x - dxn * cellRadius;
     this.yEnd = this.to.y - dyn * cellRadius;
     this.dashOffset = 0;
-
-    this.applyOffset(dyn, -dxn);
 };
 
 AxonPlot.LINE_COLOR = "white";
@@ -33,18 +31,6 @@ AxonPlot.prepareContext = function(context) {
     context.setLineDash(AxonPlot.DASH);
 };
 
-AxonPlot.prototype.applyOffset = function(dx, dy) {
-    if (this.axon.weight < 0) {
-        dx = -dx;
-        dy = -dy;
-    }
-
-    this.xStart += dx * AxonPlot.LINE_WIDTH * .5;
-    this.yStart += dy * AxonPlot.LINE_WIDTH * .5;
-    this.xEnd += dx * AxonPlot.LINE_WIDTH * .5;
-    this.yEnd += dy * AxonPlot.LINE_WIDTH * .5;
-};
-
 AxonPlot.prototype.findNeuronPlot = function(neuron, neuronPlots) {
     for (const plot of neuronPlots) if (neuron === plot.neuron)
         return plot;
@@ -60,8 +46,7 @@ AxonPlot.prototype.draw = function(context, f) {
     if (this.axon.from.output < AxonPlot.OUTPUT_THRESHOLD)
         return;
 
-    const effect = Math.abs(this.axon.to.activation - this.axon.to.activationPrevious);
-    const activity = effect * this.axon.from.output * (Math.abs(this.axon.weight) / Axon.WEIGHT_MAX);
+    const activity = 1 * this.axon.from.output * (Math.abs(this.axon.weight) / Axon.WEIGHT_MAX);
 
     if (activity < AxonPlot.ACTIVITY_THRESHOLD)
         return;
