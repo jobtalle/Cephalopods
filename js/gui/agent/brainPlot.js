@@ -2,74 +2,94 @@ const BrainPlot = function() {
     this.element = document.createElement("canvas");
     this.element.width = BrainPlot.WIDTH;
     this.element.height = BrainPlot.HEIGHT;
-    this.cellRadius = 0;
-    this.columns = 0;
-    this.rows = 0;
-    this.brain = null;
+    this.neurons = [];
+    this.axons = [];
 };
 
 BrainPlot.WIDTH = 300;
 BrainPlot.HEIGHT = 300;
-BrainPlot.RADIUS_INSET = .1;
-BrainPlot.COLOR_NEURON_INPUT = "lime";
-BrainPlot.COLOR_NEURON = "orange";
-BrainPlot.COLOR_NEURON_OUTPUT = "aqua";
-BrainPlot.COLOR_EDGE = "white";
+BrainPlot.RADIUS_MAX = 32;
+BrainPlot.RADIUS_INSET = .3;
+BrainPlot.LINE_WIDTH = 2;
 
 BrainPlot.prototype.update = function(environment) {
+    const progress = environment.getFrameProgression();
     const context = this.element.getContext("2d");
 
+    for (const neuron of this.neurons)
+        neuron.update(progress);
+
+    for (const axon of this.axons)
+        axon.update(progress);
+
+    context.lineWidth = BrainPlot.LINE_WIDTH;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.save();
-    context.translate(
-        .5 * (this.element.width - this.cellRadius * 2 * this.columns),
-        .5 * (this.element.height - this.cellRadius * 2 * this.rows));
 
-    this.draw(context, environment.getFrameProgression());
-
-    context.restore();
+    this.draw(context, progress);
 };
 
 BrainPlot.prototype.select = function(brain) {
     this.build(brain);
 };
 
-BrainPlot.prototype.drawNeuron = function(context, x, y, activation, color) {
-    context.strokeStyle = BrainPlot.COLOR_EDGE;
-    context.globalAlpha = activation;
-    context.fillStyle = color;
-    context.beginPath();
-    context.arc(x, y, this.cellRadius * (1 - BrainPlot.RADIUS_INSET), 0, Math.PI + Math.PI);
-    context.fill();
-    context.globalAlpha = 1;
-    context.stroke();
-};
-
-BrainPlot.prototype.getOutput = function(neuron, f) {
-    return neuron.outputPrevious + (neuron.output - neuron.outputPrevious) * f;
-};
-
 BrainPlot.prototype.draw = function(context, f) {
-    for (let input = 0; input < this.brain.inputs.length; ++input)
-        this.drawNeuron(
-            context,
-            this.cellRadius * (1 + 2 * input),
-            this.cellRadius,
-            this.getOutput(this.brain.inputs[input], f),
-            BrainPlot.COLOR_NEURON_INPUT);
+    context.save();
 
-    let row = 1;
+    NeuronPlot.prepareContext(context);
+
+    for (const neuron of this.neurons)
+        neuron.draw(context, f);
+
+    context.restore();
+    context.save();
+
+    AxonPlot.prepareContext(context);
+
+    for (const axon of this.axons)
+        axon.draw(context, f);
+
+    context.restore();
+};
+
+BrainPlot.prototype.build = function(brain) {
+    const columns = Math.max(
+        Math.ceil(Math.sqrt(brain.neurons.length)),
+        Math.max(brain.inputs.length, brain.outputs.length));
+    const rows = Math.floor(Math.sqrt(brain.neurons.length)) +
+        (brain.inputs.length !== 0) +
+        (brain.outputs.length !== 0);
+    const cellRadius = Math.min(
+        BrainPlot.RADIUS_MAX,
+        .5 * Math.min(this.element.width / columns, this.element.height / rows));
+    const cellRadiusDraw = cellRadius * (1 - BrainPlot.RADIUS_INSET);
+    const xStart = (this.element.width - columns * cellRadius * 2) * .5;
+    const yStart = (this.element.height - rows * cellRadius * 2) * .5;
+    let row = 0;
     let column = 0;
 
-    for (let neuron = 0; neuron < this.brain.neurons.length; ++neuron) {
-        this.drawNeuron(
-            context,
-            this.cellRadius * (1 + 2 * column),
-            this.cellRadius * (1 + 2 * row),
-            this.getOutput(this.brain.neurons[neuron], f),
-            BrainPlot.COLOR_NEURON);
+    this.neurons.length = 0;
+    this.axons.length = 0;
 
-        if (++column === this.columns) {
+    for (let input = 0; input < brain.inputs.length; ++input)
+        this.neurons.push(new NeuronPlot(
+            brain.inputs[input],
+            NeuronPlot.TYPE_INPUT,
+            xStart + cellRadius * (1 + 2 * input),
+            yStart + cellRadius,
+            cellRadiusDraw));
+
+    if (brain.inputs.length !== 0)
+        ++row;
+
+    for (let neuron = 0; neuron < brain.neurons.length; ++neuron) {
+        this.neurons.push(new NeuronPlot(
+            brain.neurons[neuron],
+            NeuronPlot.TYPE_NEURON,
+            xStart + cellRadius * (1 + 2 * column),
+            yStart + cellRadius * (1 + 2 * row),
+            cellRadiusDraw));
+
+        if (++column === columns) {
             column = 0;
             ++row;
         }
@@ -78,21 +98,14 @@ BrainPlot.prototype.draw = function(context, f) {
     if (column !== 0)
         ++row;
 
-    for (let output = 0; output < this.brain.outputs.length; ++output)
-        this.drawNeuron(
-            context,
-            this.cellRadius * (1 + 2 * output),
-            this.cellRadius * (1 + 2 * row),
-            this.getOutput(this.brain.outputs[output], f),
-            BrainPlot.COLOR_NEURON_OUTPUT);
-};
+    for (let output = 0; output < brain.outputs.length; ++output)
+        this.neurons.push(new NeuronPlot(
+            brain.outputs[output],
+            NeuronPlot.TYPE_OUTPUT,
+            xStart + cellRadius * (1 + 2 * output),
+            yStart + cellRadius * (1 + 2 * row),
+            cellRadiusDraw));
 
-BrainPlot.prototype.build = function(brain) {
-    this.columns = Math.max(
-        Math.ceil(Math.sqrt(brain.neurons.length)),
-        Math.max(brain.inputs.length, brain.outputs.length));
-    this.rows = this.columns + 2;
-
-    this.cellRadius = .5 * Math.min(this.element.width / this.columns, this.element.height / this.rows);
-    this.brain = brain;
+    for (const axon of brain.axons)
+        this.axons.push(new AxonPlot(axon, this.neurons, cellRadiusDraw));
 };
