@@ -46,7 +46,7 @@ BrainPlot.prototype.draw = function(context, f) {
     AxonPlot.prepareContext(context);
 
     for (const axon of this.axons)
-        axon.draw(context, f);
+        axon.draw(context);
 
     context.restore();
 };

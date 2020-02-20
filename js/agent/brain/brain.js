@@ -4,14 +4,14 @@ const Brain = function(dna) {
     this.outputs = [];
     this.axons = [];
 
-    for (const dnaInput of dna.inputs)
-        this.inputs.push(new Neuron(dnaInput));
+    for (let input = 0; input < dna.inputs; ++input)
+        this.inputs.push(new Neuron());
 
-    for (const dnaNeuron of dna.neurons)
-        this.neurons.push(new Neuron(dnaNeuron));
+    for (let neuron = 0; neuron < dna.neurons; ++neuron)
+        this.neurons.push(new Neuron());
 
-    for (const dnaOutput of dna.outputs)
-        this.outputs.push(new Neuron(dnaOutput));
+    for (let output = 0; output < dna.outputs; ++output)
+        this.outputs.push(new Neuron());
 
     for (const dnaAxon of dna.axons)
         this.axons.push(new Axon(

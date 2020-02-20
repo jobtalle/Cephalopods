@@ -1,27 +1,24 @@
-const Neuron = function(dna) {
-    this.decay = dna.decay;
+const Neuron = function() {
     this.activation = .5;
-    this.activationPrevious = this.activation;
     this.output = 0;
     this.outputPrevious = this.output;
 };
 
+Neuron.DECAY = .95;
+Neuron.ACTIVATION_THRESHOLD = .2;
+
 Neuron.prototype.update = function() {
-    this.activationPrevious = this.activation;
     this.outputPrevious = this.output;
 
-    const d = .2;
     let a = this.activation;
 
-    if (a < -d)
-        a = a + d;
-    else if (a > d)
-        a = a - d;
+    if (a < -Neuron.ACTIVATION_THRESHOLD)
+        a = a + Neuron.ACTIVATION_THRESHOLD;
+    else if (a > Neuron.ACTIVATION_THRESHOLD)
+        a = a - Neuron.ACTIVATION_THRESHOLD;
     else
         a = 0;
 
-    this.output = 1 / (1 + Math.exp(-a)); // Logistic function
-
-    // Quadratic decay
-    this.activation *= this.decay;
+    this.output = 1 / (1 + Math.exp(-a));
+    this.activation *= Neuron.DECAY;
 };

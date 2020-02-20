@@ -21,8 +21,7 @@ AxonPlot.DASH_STRIDE = 14;
 AxonPlot.DASH = [
     AxonPlot.DASH_STRIDE * .5,
     AxonPlot.DASH_STRIDE * .5];
-AxonPlot.OUTPUT_THRESHOLD = .01;
-AxonPlot.ACTIVITY_THRESHOLD = .01;
+AxonPlot.ACTIVITY_THRESHOLD = .05;
 AxonPlot.DASH_SPEED = 1.2;
 
 AxonPlot.prepareContext = function(context) {
@@ -42,11 +41,8 @@ AxonPlot.prototype.update = function(f) {
 
 };
 
-AxonPlot.prototype.draw = function(context, f) {
-    if (this.axon.from.output < AxonPlot.OUTPUT_THRESHOLD)
-        return;
-
-    const activity = 1 * this.axon.from.output * (Math.abs(this.axon.weight) / Axon.WEIGHT_MAX);
+AxonPlot.prototype.draw = function(context) {
+    const activity = this.axon.from.output * (Math.abs(this.axon.weight) / Axon.WEIGHT_MAX);
 
     if (activity < AxonPlot.ACTIVITY_THRESHOLD)
         return;
