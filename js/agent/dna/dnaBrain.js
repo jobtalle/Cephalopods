@@ -22,7 +22,7 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
             if (other === neuron)
                 continue;
 
-            if (Math.random() > DNABrain.DEFAULT_AXON_CHANCE)
+            if (Math.random() < DNABrain.DEFAULT_AXON_CHANCE)
                 continue;
 
             axons.push(new DNAAxon(
@@ -30,10 +30,14 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
                 other | DNAAxon.FLAG_NEURON));
         }
 
-        for (let output = 0; output < outputCount; ++output)
+        for (let output = 0; output < outputCount; ++output) {
+            if (Math.random() < DNABrain.DEFAULT_AXON_CHANCE)
+                continue;
+
             axons.push(new DNAAxon(
                 neuron | DNAAxon.FLAG_NEURON,
                 output | DNAAxon.FLAG_OUTPUT));
+        }
     }
 
     return axons;

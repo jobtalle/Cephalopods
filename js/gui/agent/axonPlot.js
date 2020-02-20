@@ -21,7 +21,7 @@ AxonPlot.DASH_STRIDE = 14;
 AxonPlot.DASH = [
     AxonPlot.DASH_STRIDE * .5,
     AxonPlot.DASH_STRIDE * .5];
-AxonPlot.ACTIVITY_THRESHOLD = .05;
+AxonPlot.ACTIVITY_THRESHOLD = .02;
 AxonPlot.DASH_SPEED = 1.2;
 
 AxonPlot.prepareContext = function(context) {

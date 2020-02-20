@@ -4,7 +4,7 @@ const Neuron = function() {
     this.outputPrevious = this.output;
 };
 
-Neuron.DECAY = .95;
+Neuron.DECAY = .9;
 Neuron.ACTIVATION_THRESHOLD = .2;
 
 Neuron.prototype.update = function() {

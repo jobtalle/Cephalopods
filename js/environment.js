@@ -29,7 +29,7 @@ const Environment = function(
 
 Environment.FRAME_TIME = .065;
 Environment.SPAWN_INSET = 400;
-Environment.DEFAULT_AGENT_COUNT = 14;
+Environment.DEFAULT_AGENT_COUNT = 20;
 Environment.DEFAULT_SIM_TIME = 20;
 Environment.MAX_FRAME_TIME = 1 / 60;
 Environment.WARP_STEP = Environment.FRAME_TIME * 10;

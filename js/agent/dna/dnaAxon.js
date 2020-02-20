@@ -7,7 +7,6 @@ const DNAAxon = function(
     this.weight = weight;
 };
 
-DNAAxon.DEFAULT_WEIGHT = .1;
 DNAAxon.INDEX_MASK = 0x0FFFFFFF;
 DNAAxon.FLAG_INPUT = 0x10000000;
 DNAAxon.FLAG_NEURON = 0x20000000;
