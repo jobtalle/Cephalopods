@@ -55,7 +55,7 @@ BrainPlot.prototype.build = function(brain) {
     const columns = Math.max(
         Math.ceil(Math.sqrt(brain.neurons.length)),
         Math.max(brain.inputs.length, brain.outputs.length));
-    const rows = Math.floor(Math.sqrt(brain.neurons.length)) +
+    const rows = Math.ceil(brain.neurons.length / columns) +
         (brain.inputs.length !== 0) +
         (brain.outputs.length !== 0);
     const cellRadius = Math.min(
