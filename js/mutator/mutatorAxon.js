@@ -5,7 +5,7 @@ Mutator.prototype.mutateAxon = function(dna) {
     if (Math.random() > Mutator.AXON_MODIFY_CHANCE)
         return;
 
-    dna.weight += (-1 + 2 * Math.random()) * Mutator.AXON_MODIFY_AMPLITUDE;
+    dna.weight += (2 * Math.random() - 1) * Mutator.AXON_MODIFY_AMPLITUDE;
 
     if (dna.weight > Axon.WEIGHT_MAX)
         dna.weight = Axon.WEIGHT_MAX;

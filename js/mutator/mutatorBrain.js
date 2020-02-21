@@ -38,7 +38,7 @@ Mutator.prototype.removeNeuron = function(dna, index) {
     --dna.neurons;
 };
 
-Mutator.prototype.mutateBrain = function(dna) {
+Mutator.prototype.mutateBrain = function(dna, bodyRadius) {
     const newAxons = [];
 
     for (let axon = dna.axons.length; axon-- > 0;)
@@ -79,4 +79,9 @@ Mutator.prototype.mutateBrain = function(dna) {
     for (let neuron = dna.neurons; neuron-- > 0;)
         if (Math.random() < Mutator.NEURON_REMOVE_CHANCE)
             this.removeNeuron(dna, neuron);
+
+    const allowedNeurons = Body.getAllowedNeurons(bodyRadius);
+
+    while (dna.neurons > allowedNeurons)
+        this.removeNeuron(dna, Math.floor(Math.random() * dna.neurons));
 };

@@ -12,6 +12,7 @@ const Tentacle = function(dna, position, direction, radius) {
 };
 
 Tentacle.SPACING = 18;
+Tentacle.MASS_PER_SEGMENT = 1.5;
 
 Tentacle.prototype.update = function(velocity) {
     this.tail.update(velocity);
@@ -23,6 +24,10 @@ Tentacle.prototype.draw = function(context, f) {
 
 Tentacle.prototype.getLength = function() {
     return this.tail.getLength();
+};
+
+Tentacle.prototype.getMass = function() {
+    return this.getLength() * Tentacle.MASS_PER_SEGMENT;
 };
 
 Tentacle.prototype.calculateDelta = function() {

@@ -14,7 +14,7 @@ Tentacles.prototype.getMass = function() {
     let mass = 0;
 
     for (const tentacle of this.tentacles)
-        mass += tentacle.getLength();
+        mass += tentacle.getMass();
 
     return mass;
 };

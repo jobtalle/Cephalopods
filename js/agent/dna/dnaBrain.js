@@ -1,8 +1,8 @@
 const DNABrain = function(
     inputs = DNABrain.DEFAULT_INPUTS,
-    neurons = DNABrain.DEFAULT_NEURONS,
+    neurons = Body.getAllowedNeurons(Body.RADIUS_MIN),
     outputs = DNABrain.DEFAULT_OUTPUTS,
-    axons = DNABrain.makeAxons(DNABrain.DEFAULT_NEURONS, DNABrain.DEFAULT_OUTPUTS)) {
+    axons = DNABrain.makeAxons(neurons, DNABrain.DEFAULT_OUTPUTS)) {
     this.inputs = inputs;
     this.neurons = neurons;
     this.outputs = outputs;
@@ -10,7 +10,6 @@ const DNABrain = function(
 };
 
 DNABrain.DEFAULT_INPUTS = 0;
-DNABrain.DEFAULT_NEURONS = 6;
 DNABrain.DEFAULT_OUTPUTS = 2;
 DNABrain.DEFAULT_AXON_CHANCE = .7;
 
@@ -22,7 +21,7 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
             if (other === neuron)
                 continue;
 
-            if (Math.random() < DNABrain.DEFAULT_AXON_CHANCE)
+            if (Math.random() > DNABrain.DEFAULT_AXON_CHANCE)
                 continue;
 
             axons.push(new DNAAxon(
@@ -31,7 +30,7 @@ DNABrain.makeAxons = function(neuronCount, outputCount) {
         }
 
         for (let output = 0; output < outputCount; ++output) {
-            if (Math.random() < DNABrain.DEFAULT_AXON_CHANCE)
+            if (Math.random() > DNABrain.DEFAULT_AXON_CHANCE)
                 continue;
 
             axons.push(new DNAAxon(

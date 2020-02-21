@@ -1,5 +1,5 @@
 const DNABody = function(
-    radius = DNABody.DEFAULT_RADIUS,
+    radius = Body.RADIUS_MIN,
     tentacles = new DNATentacles(),
     mouth = new DNAMouth(),
     eyes = new DNAEyes(),
@@ -10,8 +10,6 @@ const DNABody = function(
     this.eyes = eyes;
     this.brain = brain;
 };
-
-DNABody.DEFAULT_RADIUS = 20;
 
 DNABody.prototype.copy = function() {
     return new DNABody(

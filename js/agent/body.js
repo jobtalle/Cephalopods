@@ -11,6 +11,13 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
 };
 
 Body.MASS_PER_AREA = .05;
+Body.NEURONS_PER_AREA = .007;
+Body.RADIUS_MIN = 15;
+Body.RADIUS_MAX = 100;
+
+Body.getAllowedNeurons = function(radius) {
+    return Math.floor(Math.PI * radius * radius * Body.NEURONS_PER_AREA);
+};
 
 Body.prototype.update = function(impulse) {
     this.brain.update();
