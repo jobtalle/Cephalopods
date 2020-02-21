@@ -10,7 +10,7 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
     this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
 };
 
-Body.MASS_BASE = 50;
+Body.MASS_PER_AREA = .05;
 
 Body.prototype.update = function(impulse) {
     this.brain.update();
@@ -46,5 +46,5 @@ Body.prototype.draw = function(context, f) {
 };
 
 Body.prototype.getMass = function() {
-    return Body.MASS_BASE + this.tentacles.getMass();
+    return Math.PI * this.radius * this.radius * Body.MASS_PER_AREA + this.tentacles.getMass();
 };
