@@ -1,8 +1,8 @@
 Mutator.AXON_CREATE_CHANCE = .03;
 Mutator.AXON_REMOVE_CHANCE = Mutator.AXON_CREATE_CHANCE;
-Mutator.NEURON_CREATE_CHANCE = .01;
+Mutator.NEURON_CREATE_CHANCE = .02;
 Mutator.NEURON_REMOVE_CHANCE = Mutator.NEURON_CREATE_CHANCE;
-Mutator.NEURON_COUNT_MIN = 3;
+Mutator.NEURON_COUNT_MIN = 5;
 
 Mutator.prototype.hasAxon = function(dna, from, to) {
     for (const axon of dna.axons)
