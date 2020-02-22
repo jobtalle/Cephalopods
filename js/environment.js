@@ -28,7 +28,7 @@ const Environment = function(
 };
 
 Environment.FRAME_TIME = .065;
-Environment.SPAWN_INSET = 400;
+Environment.SPAWN_INSET = .05;
 Environment.DEFAULT_AGENT_COUNT = 20;
 Environment.DEFAULT_SIM_TIME = 20;
 Environment.MAX_FRAME_TIME = 1 / 60;
@@ -136,7 +136,7 @@ Environment.prototype.click = function(x, y) {
 
 Environment.prototype.getInitialPosition = function(index) {
     return new Vector().fromAngle(index * Math.PI * 2 / this.agentCount + Math.PI).multiply(
-        this.radius - Environment.SPAWN_INSET);
+        this.radius * (1 - Environment.SPAWN_INSET));
 };
 
 Environment.prototype.getInitialDirection = function(index) {

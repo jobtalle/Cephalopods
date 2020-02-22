@@ -10,7 +10,7 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
     this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
 };
 
-Body.MASS_PER_AREA = .05;
+Body.MASS_PER_AREA = .025;
 Body.NEURONS_PER_AREA = .007;
 Body.RADIUS_MIN = 15;
 Body.RADIUS_MAX = 100;

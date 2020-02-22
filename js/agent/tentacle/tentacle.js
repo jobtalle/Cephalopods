@@ -12,7 +12,7 @@ const Tentacle = function(dna, position, direction, radius) {
 };
 
 Tentacle.SPACING = 18;
-Tentacle.MASS_PER_SEGMENT = 1.5;
+Tentacle.MASS_PER_SEGMENT = 2.5;
 
 Tentacle.prototype.update = function(velocity) {
     this.tail.update(velocity);
