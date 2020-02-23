@@ -12,18 +12,15 @@ Mutator.prototype.hasAxon = function(dna, from, to) {
     return false;
 };
 
-Mutator.prototype.shiftAxonConnection = function(dna, connection, threshold) {
-    if ((connection & DNAAxon.FLAG_NEURON) !== DNAAxon.FLAG_NEURON)
-        return connection;
-
+Mutator.prototype.shiftAxonConnections = function(dna, connection, threshold, delta) {
     if ((connection & DNAAxon.INDEX_MASK) > threshold)
-        return DNAAxon.FLAG_NEURON | ((connection & DNAAxon.INDEX_MASK) - 1);
+        return (connection & ~DNAAxon.INDEX_MASK) | ((connection & DNAAxon.INDEX_MASK) + delta);
 
     return connection;
 };
 
-Mutator.prototype.removeNeuron = function(dna, index) {
-    const neuron = DNAAxon.FLAG_NEURON | index;
+Mutator.prototype.removeNeuron = function(dna, flag, index) {
+    const neuron = flag | index;
 
     for (let axon = dna.axons.length; axon-- > 0;) {
         if (dna.axons[axon].from === neuron || dna.axons[axon].to === neuron) {
@@ -32,8 +29,11 @@ Mutator.prototype.removeNeuron = function(dna, index) {
             continue;
         }
 
-        dna.axons[axon].from = this.shiftAxonConnection(dna, dna.axons[axon].from, index);
-        dna.axons[axon].to = this.shiftAxonConnection(dna, dna.axons[axon].to, index);
+        if ((dna.axons[axon].from & flag) === flag)
+            dna.axons[axon].from = this.shiftAxonConnections(dna, dna.axons[axon].from, index, -1);
+
+        if ((dna.axons[axon].to & flag) === flag)
+            dna.axons[axon].to = this.shiftAxonConnections(dna, dna.axons[axon].to, index, -1);
     }
 
     --dna.neurons;
@@ -79,10 +79,10 @@ Mutator.prototype.mutateBrain = function(dna, bodyRadius) {
 
     for (let neuron = dna.neurons; neuron-- > 0;)
         if (Math.random() < Mutator.NEURON_REMOVE_CHANCE && dna.neurons > Mutator.NEURON_COUNT_MIN)
-            this.removeNeuron(dna, neuron);
+            this.removeNeuron(dna, DNAAxon.FLAG_NEURON, neuron);
 
     const allowedNeurons = Body.getAllowedNeurons(bodyRadius);
 
     while (dna.neurons > allowedNeurons)
-        this.removeNeuron(dna, Math.floor(Math.random() * dna.neurons));
+        this.removeNeuron(dna, DNAAxon.FLAG_NEURON, Math.floor(Math.random() * dna.neurons));
 };
