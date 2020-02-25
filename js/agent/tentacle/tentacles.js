@@ -1,13 +1,22 @@
 const Tentacles = function(dna, position, direction, radius) {
     this.position = position;
-    this.tentacles = new Array(dna.tentacles.length);
+    this.tentacles = [];
 
-    for (let tentacle = 0; tentacle < dna.tentacles.length; ++tentacle)
-        this.tentacles[tentacle] = new Tentacle(
+    for (let tentacle = 0; tentacle < dna.tentacles.length; ++tentacle) {
+        this.tentacles.push(new Tentacle(
             dna.tentacles[tentacle],
             position,
             direction,
-            radius);
+            radius));
+
+        if (dna.tentacles[tentacle].angle !== 0 && dna.tentacles[tentacle].angle !== Math.PI)
+            this.tentacles.push(new Tentacle(
+                dna.tentacles[tentacle],
+                position,
+                direction,
+                radius,
+                true));
+    }
 };
 
 Tentacles.prototype.getMass = function() {
