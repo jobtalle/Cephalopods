@@ -5,20 +5,10 @@ const Neuron = function() {
 };
 
 Neuron.DECAY = .9;
-Neuron.ACTIVATION_THRESHOLD = .2;
+Neuron.ACTIVATION_THRESHOLD = 0;
 
 Neuron.prototype.update = function() {
     this.outputPrevious = this.output;
-
-    let a = this.activation;
-
-    if (a < -Neuron.ACTIVATION_THRESHOLD)
-        a = a + Neuron.ACTIVATION_THRESHOLD;
-    else if (a > Neuron.ACTIVATION_THRESHOLD)
-        a = a - Neuron.ACTIVATION_THRESHOLD;
-    else
-        a = 0;
-
-    this.output = 1 / (1 + Math.exp(-a));
+    this.output = 1 / (1 + Math.exp(-this.activation));
     this.activation *= Neuron.DECAY;
 };

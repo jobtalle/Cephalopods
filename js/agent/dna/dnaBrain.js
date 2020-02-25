@@ -1,16 +1,14 @@
 const DNABrain = function(
-    inputs = DNABrain.DEFAULT_INPUTS,
+    inputs,
+    outputs,
     neurons = Body.getAllowedNeurons(Body.RADIUS_MIN),
-    outputs = DNABrain.DEFAULT_OUTPUTS,
-    axons = DNABrain.makeAxons(neurons, DNABrain.DEFAULT_OUTPUTS)) {
+    axons = DNABrain.makeAxons(neurons, outputs)) {
     this.inputs = inputs;
     this.neurons = neurons;
     this.outputs = outputs;
     this.axons = axons;
 };
 
-DNABrain.DEFAULT_INPUTS = 0;
-DNABrain.DEFAULT_OUTPUTS = 2;
 DNABrain.DEFAULT_AXON_CHANCE = .7;
 
 DNABrain.makeAxons = function(neuronCount, outputCount) {
@@ -50,7 +48,7 @@ DNABrain.prototype.copy = function() {
 
     return new DNABrain(
         this.inputs,
-        this.neurons,
         this.outputs,
+        this.neurons,
         axons);
 };

@@ -1,7 +1,7 @@
 const DNABody = function(
     radius = Body.RADIUS_MIN,
-    appendages = [new DNATentacle(1.5)],
-    brain = new DNABrain()) {
+    appendages = [new DNATentacle(0)],
+    brain = new DNABrain(0, 1)) {
     this.radius = radius;
     this.appendages = appendages;
     this.brain = brain;
