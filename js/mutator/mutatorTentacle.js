@@ -1,6 +1,6 @@
 Mutator.TENTACLE_LENGTH_MUTATE_CHANCE = .2;
-Mutator.TENTACLE_LENGTH_MUTATE_POWER = 2;
-Mutator.TENTACLE_LENGTH_MUTATE_AMPLITUDE = 2;
+Mutator.TENTACLE_LENGTH_MUTATE_POWER = 4;
+Mutator.TENTACLE_LENGTH_MUTATE_AMPLITUDE = 6;
 
 Mutator.prototype.mutateTentacle = function(dna) {
     if (Math.random() < Mutator.TENTACLE_LENGTH_MUTATE_CHANCE) {

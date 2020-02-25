@@ -21,12 +21,12 @@ const Food = function(environmentRadius) {
 };
 
 Food.RADIUS = 5;
-Food.DISTRIBUTION_POWER = 3;
+Food.DISTRIBUTION_POWER = 2.5;
 Food.DISTRIBUTION_DEADZONE = .1;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;
 Food.COLOR = "gray";
-Food.UNITS_PER_PIXEL = .0007;
+Food.UNITS_PER_PIXEL = .0006;
 
 Food.prototype.update = function(agents) {
     for (let agent = 0; agent < agents.length; ++agent) {

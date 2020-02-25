@@ -9,7 +9,7 @@ const Tentacle = function(dna, position, direction, radius, flip = false) {
 };
 
 Tentacle.SPACING = 18;
-Tentacle.MASS_PER_SEGMENT = 4;
+Tentacle.MASS_PER_SEGMENT = 5;
 Tentacle.LENGTH_MIN = 3;
 Tentacle.LENGTH_MAX = 20;
 
