@@ -23,7 +23,7 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
     }
 };
 
-Body.MASS_PER_AREA = .025;
+Body.MASS_PER_AREA = .04;
 Body.NEURONS_PER_AREA = .007;
 Body.RADIUS_MIN = 16.5;
 Body.RADIUS_MAX = 100;

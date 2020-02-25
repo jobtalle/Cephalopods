@@ -1,4 +1,4 @@
-Mutator.AXON_MODIFY_CHANCE = .3;
+Mutator.AXON_MODIFY_CHANCE = .2;
 Mutator.AXON_MODIFY_AMPLITUDE = .2;
 
 Mutator.prototype.mutateAxon = function(dna) {
