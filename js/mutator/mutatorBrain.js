@@ -36,7 +36,39 @@ Mutator.prototype.removeNeuron = function(dna, flag, index) {
             dna.axons[axon].to = this.shiftAxonConnections(dna, dna.axons[axon].to, index, -1);
     }
 
-    --dna.neurons;
+    switch (flag) {
+        case DNAAxon.FLAG_INPUT:
+            --dna.inputs;
+
+            break;
+        case DNAAxon.FLAG_NEURON:
+            --dna.neurons;
+
+            break;
+        case DNAAxon.FLAG_OUTPUT:
+            --dna.outputs;
+
+            break;
+    }
+};
+
+Mutator.prototype.copyAxons = function(dna, flag, source, target) {
+    const neuronSource = flag | source;
+    const neuronTarget = flag | target;
+
+    for (let axon = dna.axons.length; axon-- > 0;) {
+        if (dna.axons[axon].to === neuronSource)
+            dna.axons.push(new DNAAxon(
+                dna.axons[axon].from,
+                neuronTarget,
+                dna.axons[axon].weight));
+
+        if (dna.axons[axon].from === neuronSource)
+            dna.axons.push(new DNAAxon(
+                neuronTarget,
+                dna.axons[axon].to,
+                dna.axons[axon].weight));
+    }
 };
 
 Mutator.prototype.mutateBrain = function(dna, bodyRadius) {

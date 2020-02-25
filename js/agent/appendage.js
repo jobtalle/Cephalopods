@@ -1,8 +1,8 @@
-const Appendage = function(dna, inputs, outputs, position, direction, radius, flip) {
+const Appendage = function(dna, position, direction, radius, flip) {
     const angle = flip ? -dna.angle : dna.angle;
 
-    this.inputs = inputs;
-    this.outputs = outputs;
+    this.inputs = dna.inputs;
+    this.outputs = dna.outputs;
     this.offset = new Vector().fromAngle(angle).multiply(-radius);
     this.position = position;
     this.direction = direction;
@@ -12,7 +12,7 @@ const Appendage = function(dna, inputs, outputs, position, direction, radius, fl
     this.calculateDelta();
 };
 
-Appendage.ANGLE_ALIGN_THRESHOLD = .1;
+Appendage.ANGLE_ALIGN_THRESHOLD = .5;
 
 Appendage.instantiate = function(object, dna) {
     const args = [...arguments].slice(2);

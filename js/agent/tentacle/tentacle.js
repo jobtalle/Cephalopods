@@ -1,5 +1,5 @@
 const Tentacle = function(dna, position, direction, radius, flip = false) {
-    Appendage.call(this, dna, 1, 0, position, direction, radius, flip);
+    Appendage.call(this, dna, position, direction, radius, flip);
 
     this.length = dna.length;
     this.spring = dna.spring;
@@ -12,6 +12,8 @@ Tentacle.SPACING = 18;
 Tentacle.MASS_PER_SEGMENT = 5;
 Tentacle.LENGTH_MIN = 3;
 Tentacle.LENGTH_MAX = 20;
+Tentacle.INPUTS = 1;
+Tentacle.OUTPUTS = 0;
 
 Tentacle.prototype = Object.create(Appendage.prototype);
 

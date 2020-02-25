@@ -12,7 +12,7 @@ const Agent = function(dna, position, direction) {
 };
 
 Agent.FRICTION = .88;
-Agent.TORQUE = .8;
+Agent.TORQUE = 1.1;
 Agent.IMPULSE = 20;
 
 Agent.prototype.update = function() {
