@@ -1,20 +1,17 @@
 const Tentacle = function(dna, position, direction, radius, flip = false) {
-    const angle = flip ? -dna.angle : dna.angle;
+    Appendage.call(this, dna, direction, radius, flip);
 
-    this.offset = new Vector().fromAngle(angle).multiply(-radius);
-    this.sign = angle === 0 ? 1 : Math.sign(angle);
-    this.direction = direction;
     this.length = dna.length;
     this.spring = dna.spring;
     this.springPower = dna.springPower;
-    this.delta = new Vector();
-    this.calculateDelta();
     this.head = new SegmentHead(position.copy().add(this.delta));
     this.tail = this.build();
 };
 
 Tentacle.SPACING = 18;
 Tentacle.MASS_PER_SEGMENT = 2.5;
+
+Tentacle.prototype = Object.create(Appendage.prototype);
 
 Tentacle.prototype.update = function(velocity) {
     this.tail.update(velocity);
@@ -30,13 +27,6 @@ Tentacle.prototype.getLength = function() {
 
 Tentacle.prototype.getMass = function() {
     return this.getLength() * Tentacle.MASS_PER_SEGMENT;
-};
-
-Tentacle.prototype.calculateDelta = function() {
-    this.delta.x = this.offset.x * this.direction.x - this.offset.y * this.direction.y;
-    this.delta.y = this.offset.x * this.direction.y + this.offset.y * this.direction.x;
-
-    return Math.atan2(-this.delta.y, -this.delta.x);
 };
 
 Tentacle.prototype.build = function() {

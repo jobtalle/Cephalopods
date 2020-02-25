@@ -7,7 +7,17 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
     this.mouth = new Mouth(dna.mouth);
     this.eyes = new Eyes(dna.eyes);
     this.radius = dna.radius;
-    this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
+    // this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
+
+    this.tentacles = [];
+
+    for (let tentacle = 0; tentacle < dna.tentacles.length; ++tentacle)
+        this.tentacles.push(...Appendage.instantiate(
+            Tentacle,
+            dna.tentacles[tentacle],
+            this.position,
+            this.direction,
+            this.radius));
 };
 
 Body.MASS_PER_AREA = .025;
@@ -21,7 +31,14 @@ Body.getAllowedNeurons = function(radius) {
 
 Body.prototype.update = function(impulse) {
     this.brain.update();
-    this.tentacles.update(impulse, this.brain.outputs);
+
+    let output = 0;
+
+    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle) {
+        this.tentacles[tentacle].setAnchor(this.position, 2 * this.brain.outputs[output++].output - 1);
+        this.tentacles[tentacle].update(impulse);
+    }
+
     this.mouth.update();
     this.eyes.update();
 };
@@ -32,7 +49,9 @@ Body.prototype.draw = function(context, f) {
     const dx = this.directionPrevious.x + (this.direction.x - this.directionPrevious.x) * f;
     const dy = this.directionPrevious.y + (this.direction.y - this.directionPrevious.y) * f;
 
-    this.tentacles.draw(context, f);
+    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle)
+        this.tentacles[tentacle].draw(context, f);
+
     this.mouth.draw(context);
     this.eyes.draw(context);
 
@@ -53,5 +72,10 @@ Body.prototype.draw = function(context, f) {
 };
 
 Body.prototype.getMass = function() {
-    return Math.PI * this.radius * this.radius * Body.MASS_PER_AREA + this.tentacles.getMass();
+    let tentacleMass = 0;
+
+    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle)
+        tentacleMass += this.tentacles[tentacle].getMass();
+
+    return Math.PI * this.radius * this.radius * Body.MASS_PER_AREA + tentacleMass;
 };
