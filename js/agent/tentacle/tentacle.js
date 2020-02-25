@@ -1,5 +1,5 @@
 const Tentacle = function(dna, position, direction, radius, flip = false) {
-    Appendage.call(this, dna, direction, radius, flip);
+    Appendage.call(this, dna, 1, 0, position, direction, radius, flip);
 
     this.length = dna.length;
     this.spring = dna.spring;
@@ -13,8 +13,13 @@ Tentacle.MASS_PER_SEGMENT = 2.5;
 
 Tentacle.prototype = Object.create(Appendage.prototype);
 
-Tentacle.prototype.update = function(velocity) {
-    this.tail.update(velocity);
+Tentacle.prototype.setInput = function(value) {
+    this.head.setAnchor(this.position, this.delta, this.calculateDelta() + (2 * value - 1) * this.sign);
+    // TODO: Make muscle amplitude mutable
+};
+
+Tentacle.prototype.update = function(impulse) {
+    this.tail.update(impulse);
 };
 
 Tentacle.prototype.draw = function(context, f) {
@@ -43,10 +48,4 @@ Tentacle.prototype.build = function() {
     }
 
     return tail;
-};
-
-Tentacle.prototype.setAnchor = function(position, angle) {
-    const deltaAngle = this.calculateDelta();
-
-    this.head.setAnchor(this.delta.add(position), deltaAngle + angle * this.sign);
 };

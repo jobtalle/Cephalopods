@@ -1,7 +1,10 @@
-const Appendage = function(dna, direction, radius, flip = false) {
+const Appendage = function(dna, inputs, outputs, position, direction, radius, flip) {
     const angle = flip ? -dna.angle : dna.angle;
 
+    this.inputs = inputs;
+    this.outputs = outputs;
     this.offset = new Vector().fromAngle(angle).multiply(-radius);
+    this.position = position;
     this.direction = direction;
     this.sign = angle === 0 ? 1 : Math.sign(angle);
     this.delta = new Vector();

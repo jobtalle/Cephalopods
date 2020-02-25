@@ -3,7 +3,7 @@ const DNATentacle = function(
     length = DNATentacle.DEFAULT_LENGTH,
     spring = DNATentacle.DEFAULT_SPRING,
     springPower = DNATentacle.DEFAULT_SPRING_POWER) {
-    DNAAppendage.call(this, angle);
+    DNAAppendage.call(this, angle, DNATentacle);
 
     this.length = length;
     this.spring = spring;

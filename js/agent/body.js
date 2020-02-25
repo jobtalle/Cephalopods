@@ -4,20 +4,22 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
     this.direction = direction;
     this.directionPrevious = directionPrevious;
     this.brain = new Brain(dna.brain);
-    this.mouth = new Mouth(dna.mouth);
-    this.eyes = new Eyes(dna.eyes);
     this.radius = dna.radius;
-    // this.tentacles = new Tentacles(dna.tentacles, this.position, this.direction, this.radius);
 
-    this.tentacles = [];
+    this.appendages = [];
 
-    for (let tentacle = 0; tentacle < dna.tentacles.length; ++tentacle)
-        this.tentacles.push(...Appendage.instantiate(
-            Tentacle,
-            dna.tentacles[tentacle],
-            this.position,
-            this.direction,
-            this.radius));
+    for (let appendage = 0; appendage < dna.appendages.length; ++appendage)
+        switch (dna.appendages[appendage].object) {
+            case DNATentacle:
+                this.appendages.push(...Appendage.instantiate(
+                    Tentacle,
+                    dna.appendages[appendage],
+                    this.position,
+                    this.direction,
+                    this.radius));
+
+                break;
+        }
 };
 
 Body.MASS_PER_AREA = .025;
@@ -32,15 +34,18 @@ Body.getAllowedNeurons = function(radius) {
 Body.prototype.update = function(impulse) {
     this.brain.update();
 
+    let input = 0;
     let output = 0;
 
-    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle) {
-        this.tentacles[tentacle].setAnchor(this.position, 2 * this.brain.outputs[output++].output - 1);
-        this.tentacles[tentacle].update(impulse);
-    }
+    for (const appendage of this.appendages) {
+        for (let i = 0; i < appendage.inputs; ++i)
+            appendage.setInput(this.brain.outputs[output++].output, i);
 
-    this.mouth.update();
-    this.eyes.update();
+        for (let i = 0; i < appendage.outputs; ++i)
+            this.brain.inputs[input++].activation += appendage.getOutput(i);
+
+        appendage.update(impulse);
+    }
 };
 
 Body.prototype.draw = function(context, f) {
@@ -49,11 +54,8 @@ Body.prototype.draw = function(context, f) {
     const dx = this.directionPrevious.x + (this.direction.x - this.directionPrevious.x) * f;
     const dy = this.directionPrevious.y + (this.direction.y - this.directionPrevious.y) * f;
 
-    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle)
-        this.tentacles[tentacle].draw(context, f);
-
-    this.mouth.draw(context);
-    this.eyes.draw(context);
+    for (const appendage of this.appendages)
+        appendage.draw(context, f);
 
     context.strokeStyle = "red";
     context.beginPath();
@@ -72,10 +74,10 @@ Body.prototype.draw = function(context, f) {
 };
 
 Body.prototype.getMass = function() {
-    let tentacleMass = 0;
+    let appendagesMass = 0;
 
-    for (let tentacle = 0; tentacle < this.tentacles.length; ++tentacle)
-        tentacleMass += this.tentacles[tentacle].getMass();
+    for (const appendage of this.appendages)
+        appendagesMass += appendage.getMass();
 
-    return Math.PI * this.radius * this.radius * Body.MASS_PER_AREA + tentacleMass;
+    return Math.PI * this.radius * this.radius * Body.MASS_PER_AREA + appendagesMass;
 };

@@ -1,26 +1,20 @@
 const DNABody = function(
     radius = Body.RADIUS_MIN,
-    tentacles = [new DNATentacle(1.5)],
-    mouth = new DNAMouth(),
-    eyes = new DNAEyes(),
+    appendages = [new DNATentacle(1.5)],
     brain = new DNABrain()) {
     this.radius = radius;
-    this.tentacles = tentacles;
-    this.mouth = mouth;
-    this.eyes = eyes;
+    this.appendages = appendages;
     this.brain = brain;
 };
 
 DNABody.prototype.copy = function() {
-    const tentacles = new Array(this.tentacles.length);
+    const appendages = new Array(this.appendages.length);
 
-    for (let tentacle = 0; tentacle < tentacles.length; ++tentacle)
-        tentacles[tentacle] = this.tentacles[tentacle].copy();
+    for (let appendage = 0; appendage < appendages.length; ++appendage)
+        appendages[appendage] = this.appendages[appendage].copy();
 
     return new DNABody(
         this.radius,
-        tentacles,
-        this.mouth.copy(),
-        this.eyes.copy(),
+        appendages,
         this.brain.copy());
 };
