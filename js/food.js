@@ -21,7 +21,7 @@ const Food = function(environmentRadius) {
 };
 
 Food.RADIUS = 5;
-Food.DISTRIBUTION_POWER = 2;
+Food.DISTRIBUTION_POWER = 3;
 Food.DISTRIBUTION_DEADZONE = .1;
 Food.GRID_SPACING = 128;
 Food.GRID_SPACING_INVERSE = 1 / Food.GRID_SPACING;

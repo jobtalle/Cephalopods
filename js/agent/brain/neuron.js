@@ -4,8 +4,8 @@ const Neuron = function() {
     this.outputPrevious = this.output;
 };
 
-Neuron.INITIAL_ACTIVATION_MIN = -3;
-Neuron.INITIAL_ACTIVATION_MAX = 3;
+Neuron.INITIAL_ACTIVATION_MIN = -1;
+Neuron.INITIAL_ACTIVATION_MAX = 1;
 Neuron.DECAY = .9;
 Neuron.ACTIVATION_THRESHOLD = 0;
 

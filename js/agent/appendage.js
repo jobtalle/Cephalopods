@@ -12,6 +12,8 @@ const Appendage = function(dna, inputs, outputs, position, direction, radius, fl
     this.calculateDelta();
 };
 
+Appendage.ANGLE_ALIGN_THRESHOLD = .1;
+
 Appendage.instantiate = function(object, dna) {
     const args = [...arguments].slice(2);
 

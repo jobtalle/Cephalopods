@@ -8,18 +8,19 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
 
     this.appendages = [];
 
-    for (let appendage = 0; appendage < dna.appendages.length; ++appendage)
-        switch (dna.appendages[appendage].object) {
+    for (const appendage of dna.appendages) {
+        switch (appendage.object) {
             case DNATentacle:
                 this.appendages.push(...Appendage.instantiate(
                     Tentacle,
-                    dna.appendages[appendage],
+                    appendage,
                     this.position,
                     this.direction,
                     this.radius));
 
                 break;
         }
+    }
 };
 
 Body.MASS_PER_AREA = .025;
