@@ -3,6 +3,7 @@ Mutator.AXON_REMOVE_CHANCE = Mutator.AXON_CREATE_CHANCE;
 Mutator.NEURON_CREATE_CHANCE = .015;
 Mutator.NEURON_REMOVE_CHANCE = Mutator.NEURON_CREATE_CHANCE;
 Mutator.NEURON_COUNT_MIN = 5;
+Mutator.NEURON_AXON_CHANCE = .35;
 
 Mutator.prototype.hasAxon = function(dna, from, to) {
     for (const axon of dna.axons)
@@ -71,6 +72,47 @@ Mutator.prototype.copyAxons = function(dna, flag, source, target) {
     }
 };
 
+Mutator.prototype.addNeuron = function(dna, flag) {
+    switch (flag) {
+        case DNAAxon.FLAG_INPUT:
+            for (let neuron = 0; neuron < dna.neurons; ++neuron)
+                if (Math.random() < Mutator.NEURON_AXON_CHANCE)
+                    dna.axons.push(new DNAAxon(
+                        DNAAxon.FLAG_INPUT | dna.inputs,
+                        DNAAxon.FLAG_NEURON | neuron));
+
+            ++dna.inputs;
+
+            break;
+        case DNAAxon.FLAG_NEURON:
+            for (let neuron = 0; neuron < dna.neurons; ++neuron) {
+                if (Math.random() < Mutator.NEURON_AXON_CHANCE)
+                    dna.axons.push(new DNAAxon(
+                        DNAAxon.FLAG_NEURON | neuron,
+                        DNAAxon.FLAG_NEURON | dna.neurons));
+
+                if (Math.random() < Mutator.NEURON_AXON_CHANCE)
+                    dna.axons.push(new DNAAxon(
+                        DNAAxon.FLAG_NEURON | dna.neurons,
+                        DNAAxon.FLAG_NEURON | neuron));
+            }
+
+            ++dna.neurons;
+
+            break;
+        case DNAAxon.FLAG_OUTPUT:
+            for (let neuron = 0; neuron < dna.neurons; ++neuron)
+                if (Math.random() < Mutator.NEURON_AXON_CHANCE)
+                    dna.axons.push(new DNAAxon(
+                        DNAAxon.FLAG_NEURON | neuron,
+                        DNAAxon.FLAG_OUTPUT | dna.outputs));
+
+            ++dna.outputs;
+
+            break;
+    }
+};
+
 Mutator.prototype.mutateBrain = function(dna, bodyRadius) {
     const newAxons = [];
 
@@ -106,8 +148,8 @@ Mutator.prototype.mutateBrain = function(dna, bodyRadius) {
     for (const axon of dna.axons)
         this.mutateAxon(axon);
 
-    if (Math.random() < dna.neurons * Mutator.NEURON_CREATE_CHANCE)
-        ++dna.neurons;
+    for (let i = 0; i < dna.neurons; ++i) if (Math.random() < Mutator.NEURON_CREATE_CHANCE)
+        this.addNeuron(dna, DNAAxon.FLAG_NEURON);
 
     for (let neuron = dna.neurons; neuron-- > 0;)
         if (Math.random() < Mutator.NEURON_REMOVE_CHANCE && dna.neurons > Mutator.NEURON_COUNT_MIN)

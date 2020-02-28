@@ -1,5 +1,5 @@
 const DNATentacle = function(
-    angle = DNATentacle.DEFAULT_ANGLE,
+    angle = DNAAppendage.makeRandomAngle(),
     length = DNATentacle.DEFAULT_LENGTH,
     spring = DNATentacle.DEFAULT_SPRING,
     springPower = DNATentacle.DEFAULT_SPRING_POWER) {
@@ -10,7 +10,6 @@ const DNATentacle = function(
     this.springPower = springPower;
 };
 
-DNATentacle.DEFAULT_ANGLE = 0;
 DNATentacle.DEFAULT_LENGTH = 3;
 DNATentacle.DEFAULT_SPRING = .7;
 DNATentacle.DEFAULT_SPRING_POWER = 2;

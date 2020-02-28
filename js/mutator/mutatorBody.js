@@ -2,7 +2,7 @@ Mutator.BODY_RADIUS_CHANCE = .3;
 Mutator.BODY_RADIUS_POWER = 4;
 Mutator.BODY_RADIUS_AMPLITUDE = 10;
 Mutator.APPENDAGE_CREATE_CHANCE = .02;
-Mutator.APPENDAGE_REMOVE_CHANCE = Mutator.APPENDAGE_CREATE_CHANCE;
+Mutator.APPENDAGE_REMOVE_CHANCE = .02;
 
 Mutator.prototype.createAppendage = function() {
     switch (Math.floor(Math.random())) {
@@ -12,9 +12,16 @@ Mutator.prototype.createAppendage = function() {
 };
 
 Mutator.prototype.addAppendage = function(dna, appendage) {
+    const inputs = appendage.getRequiredInputs();
+    const outputs = appendage.getRequiredOutputs();
+
     dna.appendages.push(appendage);
-    dna.brain.outputs += appendage.getRequiredInputs();
-    dna.brain.inputs += appendage.getRequiredOutputs();
+
+    for (let i = 0; i < inputs; ++i)
+        this.addNeuron(dna.brain, DNAAxon.FLAG_OUTPUT);
+
+    for (let i = 0; i < outputs; ++i)
+        this.addNeuron(dna.brain, DNAAxon.FLAG_INPUT);
 };
 
 Mutator.prototype.mutateBody = function(dna) {
@@ -32,18 +39,15 @@ Mutator.prototype.mutateBody = function(dna) {
     let input = 0;
     let output = 0;
 
-    for (let appendage = dna.appendages.length; appendage-- > 0;) {
+    for (let appendage = 0; appendage < dna.appendages.length; ++appendage) {
         if (Math.random() < Mutator.APPENDAGE_REMOVE_CHANCE) {
-            const inputs = dna.appendages[appendage].getRequiredInputs();
-            const outputs = dna.appendages[appendage].getRequiredOutputs();
-
-            for (let i = 0; i < inputs; ++i)
+            for (let i = 0; i < dna.appendages[appendage].getRequiredInputs(); ++i)
                 this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output);
 
-            for (let i = 0; i < outputs; ++i)
+            for (let i = 0; i < dna.appendages[appendage].getRequiredOutputs(); ++i)
                 this.removeNeuron(dna.brain, DNAAxon.FLAG_INPUT, input);
 
-            dna.appendages.splice(appendage, 1);
+            dna.appendages.splice(appendage--, 1);
 
             continue;
         }
@@ -95,6 +99,6 @@ Mutator.prototype.mutateBody = function(dna) {
         }
     }
 
-    if (Math.random() < Mutator.APPENDAGE_CREATE_CHANCE * dna.appendages.length)
+    if (Math.random() < Mutator.APPENDAGE_CREATE_CHANCE)
         this.addAppendage(dna, this.createAppendage());
 };

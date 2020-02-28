@@ -9,7 +9,7 @@ const DNABrain = function(
     this.axons = axons;
 };
 
-DNABrain.DEFAULT_AXON_CHANCE = .7;
+DNABrain.DEFAULT_AXON_CHANCE = .5;
 
 DNABrain.makeAxons = function(neuronCount, outputCount) {
     const axons = [];
