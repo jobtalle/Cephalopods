@@ -1,7 +1,7 @@
 Mutator.BODY_RADIUS_CHANCE = .3;
 Mutator.BODY_RADIUS_POWER = 4;
 Mutator.BODY_RADIUS_AMPLITUDE = 10;
-Mutator.APPENDAGE_CREATE_CHANCE = .02;
+Mutator.APPENDAGE_CREATE_CHANCE = .05;
 Mutator.APPENDAGE_REMOVE_CHANCE = .05;
 
 Mutator.prototype.createAppendage = function() {
@@ -41,11 +41,11 @@ Mutator.prototype.mutateBody = function(dna) {
 
     for (let appendage = 0; appendage < dna.appendages.length; ++appendage) {
         if (Math.random() < Mutator.APPENDAGE_REMOVE_CHANCE) {
-            for (let i = 0; i < dna.appendages[appendage].getRequiredInputs(); ++i)
-                this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output);
+            for (let i = dna.appendages[appendage].getRequiredInputs(); i-- > 0;)
+                this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output + i);
 
-            for (let i = 0; i < dna.appendages[appendage].getRequiredOutputs(); ++i)
-                this.removeNeuron(dna.brain, DNAAxon.FLAG_INPUT, input);
+            for (let i = dna.appendages[appendage].getRequiredOutputs(); i-- > 0;)
+                this.removeNeuron(dna.brain, DNAAxon.FLAG_INPUT, input + i);
 
             dna.appendages.splice(appendage--, 1);
 
