@@ -1,11 +1,9 @@
 const Neuron = function() {
-    this.activation = Neuron.INITIAL_ACTIVATION_MIN + (Neuron.INITIAL_ACTIVATION_MAX - Neuron.INITIAL_ACTIVATION_MIN) * Math.random();
+    this.activation = 0;
     this.output = 0;
     this.outputPrevious = this.output;
 };
 
-Neuron.INITIAL_ACTIVATION_MIN = -1;
-Neuron.INITIAL_ACTIVATION_MAX = 1;
 Neuron.DECAY = .9;
 Neuron.ACTIVATION_THRESHOLD = 0;
 

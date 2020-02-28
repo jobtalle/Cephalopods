@@ -2,7 +2,7 @@ Mutator.BODY_RADIUS_CHANCE = .3;
 Mutator.BODY_RADIUS_POWER = 4;
 Mutator.BODY_RADIUS_AMPLITUDE = 10;
 Mutator.APPENDAGE_CREATE_CHANCE = .02;
-Mutator.APPENDAGE_REMOVE_CHANCE = .02;
+Mutator.APPENDAGE_REMOVE_CHANCE = .05;
 
 Mutator.prototype.createAppendage = function() {
     switch (Math.floor(Math.random())) {
