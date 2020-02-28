@@ -1,6 +1,21 @@
 Mutator.BODY_RADIUS_CHANCE = .3;
 Mutator.BODY_RADIUS_POWER = 4;
 Mutator.BODY_RADIUS_AMPLITUDE = 10;
+Mutator.APPENDAGE_CREATE_CHANCE = .02;
+Mutator.APPENDAGE_REMOVE_CHANCE = Mutator.APPENDAGE_CREATE_CHANCE;
+
+Mutator.prototype.createAppendage = function() {
+    switch (Math.floor(Math.random())) {
+        case 0:
+            return new DNATentacle();
+    }
+};
+
+Mutator.prototype.addAppendage = function(dna, appendage) {
+    dna.appendages.push(appendage);
+    dna.brain.outputs += appendage.getRequiredInputs();
+    dna.brain.inputs += appendage.getRequiredOutputs();
+};
 
 Mutator.prototype.mutateBody = function(dna) {
     if (Math.random() < Mutator.BODY_RADIUS_CHANCE) {
@@ -17,47 +32,69 @@ Mutator.prototype.mutateBody = function(dna) {
     let input = 0;
     let output = 0;
 
-    for (const appendage of dna.appendages) {
-        const inputsPrevious = appendage.getRequiredInputs();
-        const outputsPrevious = appendage.getRequiredOutputs();
+    for (let appendage = dna.appendages.length; appendage-- > 0;) {
+        if (Math.random() < Mutator.APPENDAGE_REMOVE_CHANCE) {
+            const inputs = dna.appendages[appendage].getRequiredInputs();
+            const outputs = dna.appendages[appendage].getRequiredOutputs();
 
-        this.mutateAppendage(appendage);
+            for (let i = 0; i < inputs; ++i)
+                this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output);
 
-        const inputs = appendage.getRequiredInputs();
-        const outputs = appendage.getRequiredOutputs();
+            for (let i = 0; i < outputs; ++i)
+                this.removeNeuron(dna.brain, DNAAxon.FLAG_INPUT, input);
+
+            dna.appendages.splice(appendage, 1);
+
+            continue;
+        }
+
+        const inputsPrevious = dna.appendages[appendage].getRequiredInputs();
+        const outputsPrevious = dna.appendages[appendage].getRequiredOutputs();
+
+        this.mutateAppendage(dna.appendages[appendage]);
+
+        const inputs = dna.appendages[appendage].getRequiredInputs();
+        const outputs = dna.appendages[appendage].getRequiredOutputs();
         const inputsDelta = inputs - inputsPrevious;
         const outputsDelta = outputs - outputsPrevious;
 
         if (inputsDelta !== 0) {
             if (inputsDelta < 0) {
                 for (let i = 0; i < -inputsDelta; ++i)
-                    this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output + appendage.inputs + i);
+                    this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output + dna.appendages[appendage].inputs + i);
             }
             else {
                 dna.brain.outputs += inputsDelta;
 
                 for (let i = 0; i < inputsDelta; ++i)
-                    this.copyAxons(dna.brain, DNAAxon.FLAG_OUTPUT, output + i, output + appendage.inputs + i);
+                    this.copyAxons(dna.brain, DNAAxon.FLAG_OUTPUT, output + i, output + dna.appendages[appendage].inputs + i);
             }
         }
 
         if (outputsDelta !== 0) {
             if (outputsDelta < 0) {
-                // Half outputs
+                for (let i = 0; i < -outputsDelta; ++i)
+                    this.removeNeuron(dna.brain, DNAAxon.FLAG_INPUT, input + dna.appendages[appendage].outputs + i);
             }
             else {
-                // Double outputs
+                dna.brain.inputs += outputsDelta;
+
+                for (let i = 0; i < outputsDelta; ++i)
+                    this.copyAxons(dna.brain, DNAAxon.FLAG_INPUT, input + i, input + dna.appendages[appendage].outputs + i);
             }
         }
 
         input += inputs;
         output += outputs;
 
-        switch (appendage.object) {
+        switch (dna.appendages[appendage].object) {
             case DNATentacle:
-                this.mutateTentacle(appendage);
+                this.mutateTentacle(dna.appendages[appendage]);
 
                 break;
         }
     }
+
+    if (Math.random() < Mutator.APPENDAGE_CREATE_CHANCE * dna.appendages.length)
+        this.addAppendage(dna, this.createAppendage());
 };

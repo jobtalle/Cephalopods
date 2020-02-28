@@ -11,9 +11,9 @@ const DNATentacle = function(
 };
 
 DNATentacle.DEFAULT_ANGLE = 0;
-DNATentacle.DEFAULT_LENGTH = 8;
-DNATentacle.DEFAULT_SPRING = .5;
-DNATentacle.DEFAULT_SPRING_POWER = 3;
+DNATentacle.DEFAULT_LENGTH = 3;
+DNATentacle.DEFAULT_SPRING = .7;
+DNATentacle.DEFAULT_SPRING_POWER = 2;
 
 DNATentacle.prototype = Object.create(DNAAppendage.prototype);
 
