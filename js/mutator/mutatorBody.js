@@ -41,6 +41,7 @@ Mutator.prototype.mutateBody = function(dna) {
 
     for (let appendage = 0; appendage < dna.appendages.length; ++appendage) {
         if (Math.random() < Mutator.APPENDAGE_REMOVE_CHANCE) {
+            // TODO: This doesn't work right. Some axons not connected to the removed appendage are lost.
             for (let i = dna.appendages[appendage].getRequiredInputs(); i-- > 0;)
                 this.removeNeuron(dna.brain, DNAAxon.FLAG_OUTPUT, output + i);
 
