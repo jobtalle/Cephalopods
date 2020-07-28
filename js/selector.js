@@ -20,6 +20,9 @@ Selector.prototype.createNextGeneration = function(
         }
     }
 
+    Environment.changeMaxScore(bestScore);
+    Environment.maxScore = Math.max(bestScore, Environment.maxScore);
+
     const nextGeneration = new Array(agents.length);
     const spawnOffset = Math.floor(Math.random() * agents.length);
 

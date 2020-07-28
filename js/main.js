@@ -2,19 +2,25 @@ let timePerGenBox = null;
 let foodCoefBox = null;
 let agentCntBox = null;
 
-let simTime = Environment.DEFAULT_SIM_TIME
-let foodCoef = Environment.DEFAULT_FOOD_COEF
-let agentsCnt = Environment.DEFAULT_AGENT_COUNT
 
 window.onload = function() {
     let form = document.forms[0];
+
     timePerGenBox = form.elements["perGenTime"];
     foodCoefBox = form.elements["foodCoef"];
     agentCntBox = form.elements["agentsCnt"];
+    axonMutChanceBox = form.elements["axonMutChance"];
+    axonMutAmplBox = form.elements["axonMutAmpl"];
+    axonCreateChanceBox = form.elements["axonCreateChance"];
+    axonRemoveChanceBox = form.elements["axonRemoveChance"];
 
-    timePerGenBox.value = simTime;
-    foodCoefBox.value = foodCoef;
-    agentCntBox.value = agentsCnt;
+    timePerGenBox.value = Environment.DEFAULT_SIM_TIME;
+    foodCoefBox.value = Environment.DEFAULT_FOOD_COEF;
+    agentCntBox.value = Environment.DEFAULT_AGENT_COUNT;
+    axonMutChanceBox.value = Mutator.AXON_MODIFY_CHANCE;
+    axonMutAmplBox.value = Mutator.AXON_MODIFY_AMPLITUDE;
+    axonCreateChanceBox.value = Mutator.AXON_CREATE_CHANCE;
+    axonRemoveChanceBox.value = Mutator.AXON_REMOVE_CHANCE;
 }
 
 const TIME_STEP_MAX = 0.1;
@@ -31,6 +37,10 @@ function ValidateVariables() {
     simTime = timePerGenBox.value;
     foodCoef = foodCoefBox.value;
     agentsCnt = agentCntBox.value;
+    Mutator.AXON_MODIFY_CHANCE = axonMutChanceBox.value;
+    Mutator.AXON_MODIFY_AMPLITUDE = axonMutAmplBox.value;
+    Mutator.AXON_CREATE_CHANCE = axonCreateChanceBox.value;
+    Mutator.AXON_REMOVE_CHANCE = axonRemoveChanceBox.value;
 
     function getMousePos(canvas, evt) {
         let rect = canvas.getBoundingClientRect();
@@ -66,6 +76,8 @@ function ValidateVariables() {
     }, false);
 
     const reset = () => {
+        Environment.maxScore = -1;
+        Environment.maxScores = [];
         document.getElementById("startMenu").style.display = "none";
 
         cephalopods = new Cephalopods(canvas.width, canvas.height, agentsCnt, simTime, foodCoef);

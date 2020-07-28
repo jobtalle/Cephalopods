@@ -25,9 +25,14 @@ const Environment = function(
     this.paused = false;
     this.selected = null;
     this.timeToFrame = 0;
+    this.bestResult = 0;
 
     this.initialize(this.agentCount);
+
+    Environment.instance = this;
 };
+
+Environment.instance = null
 
 Environment.FRAME_TIME = .065;
 Environment.SPAWN_INSET = .05;
@@ -38,6 +43,20 @@ Environment.WARP_STEP = Environment.FRAME_TIME * 10;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
 Environment.DEFAULT_FOOD_COEF = 1;
+
+Environment.maxScore = -1;
+
+Environment.maxScores = []
+Environment.changeMaxScore = function(score) {
+    if (Environment.maxScore < score) {
+        Environment.maxScore = score;
+        let gen = Environment.instance.generation;
+        Environment.maxScores.push({score, gen});
+    }
+}
+Environment.getScores = function() {
+    console.log(Environment.maxScores);
+}
 
 Environment.prototype.getFrameProgression = function() {
     return this.timeToFrame / Environment.FRAME_TIME;
