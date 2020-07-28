@@ -60,15 +60,13 @@ Environment.changeMaxScore = function(score) {
 Environment.changeAverageScore = function(score) {
     if (Environment.avrgMaxScore < score) {
         Environment.avrgMaxScore = score;
-        let gen = Environment.instance.generation;
-        Environment.maxScores.push({score, gen});
     }
+    let gen = Environment.instance.generation;
+    Environment.averageScores.push({score, gen});
 }
 Environment.getScores = function() {
-    console.log("Max scores");
-    console.log(Environment.maxScores);
-    console.log("Max average scores");
-    console.log(Environment.averageScores);
+    console.log("Max scores", Environment.maxScores);
+    console.log("Max average scores", Environment.averageScores);
 }
 
 Environment.prototype.getFrameProgression = function() {
