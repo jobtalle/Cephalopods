@@ -10,9 +10,11 @@ Selector.prototype.createNextGeneration = function(
     getInitialDirection) {
     let bestAgent = null;
     let bestScore = -1;
+    let sum = 0;
 
     for (const agent of agents) {
         const score = rater.rate(agent);
+        sum += score;
 
         if (score > bestScore) {
             bestScore = score;
@@ -21,7 +23,7 @@ Selector.prototype.createNextGeneration = function(
     }
 
     Environment.changeMaxScore(bestScore);
-    Environment.maxScore = Math.max(bestScore, Environment.maxScore);
+    Environment.changeAverageScore(sum / agents.length);
 
     const nextGeneration = new Array(agents.length);
     const spawnOffset = Math.floor(Math.random() * agents.length);

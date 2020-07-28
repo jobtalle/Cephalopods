@@ -45,8 +45,11 @@ Environment.SELECT_RADIUS_MULTIPLIER = 3;
 Environment.DEFAULT_FOOD_COEF = 1;
 
 Environment.maxScore = -1;
+Environment.avrgMaxScore = -1;
 
 Environment.maxScores = []
+Environment.averageScores = []
+
 Environment.changeMaxScore = function(score) {
     if (Environment.maxScore < score) {
         Environment.maxScore = score;
@@ -54,8 +57,18 @@ Environment.changeMaxScore = function(score) {
         Environment.maxScores.push({score, gen});
     }
 }
+Environment.changeAverageScore = function(score) {
+    if (Environment.avrgMaxScore < score) {
+        Environment.avrgMaxScore = score;
+        let gen = Environment.instance.generation;
+        Environment.maxScores.push({score, gen});
+    }
+}
 Environment.getScores = function() {
+    console.log("Max scores");
     console.log(Environment.maxScores);
+    console.log("Max average scores");
+    console.log(Environment.averageScores);
 }
 
 Environment.prototype.getFrameProgression = function() {

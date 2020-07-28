@@ -78,6 +78,8 @@ function ValidateVariables() {
     const reset = () => {
         Environment.maxScore = -1;
         Environment.maxScores = [];
+        Environment.avrgMaxScore = -1;
+        Environment.averageScores = [];
         document.getElementById("startMenu").style.display = "none";
 
         cephalopods = new Cephalopods(canvas.width, canvas.height, agentsCnt, simTime, foodCoef);
