@@ -13,7 +13,6 @@ const Cephalopods = function(width, height, agentsCount, simTime) {
         x: this.width * 0.5,
         y: this.height * 0.5
     }
-    this.isStarted = false;
 };
 
 Cephalopods.prototype.update = function(timeStep) {
@@ -41,8 +40,8 @@ Cephalopods.prototype.resize = function(width, height) {
 };
 
 Cephalopods.prototype.click = function(x, y) {
-    x -= this.width * .5;
-    y -= this.height * .5;
+    x -= this.translate.x;
+    y -= this.translate.y;
     x /= this.zoom;
     y /= this.zoom;
 
