@@ -6,6 +6,41 @@ let cephalopods = null;
 let gui = null;
 let lastDate = new Date();
 
+let previousMousePos = null;
+
+function getMousePos(canvas, evt) {
+    let rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
+canvas.addEventListener('mousedown', function (evt) {
+    let mousePos = getMousePos(canvas, evt);
+    if ((evt.buttons & 4) !== 0) {
+        previousMousePos = mousePos;
+    }
+}, false);
+
+canvas.addEventListener('mousemove', function (evt) {
+    let mousePos = getMousePos(canvas, evt);
+    if ((evt.buttons & 4) !== 0) {
+        if (cephalopods !== null) {
+            cephalopods.translate.x += mousePos.x - previousMousePos.x;
+            cephalopods.translate.y += mousePos.y - previousMousePos.y;
+        }
+    }
+    previousMousePos = mousePos;
+}, false);
+
+canvas.addEventListener('wheel', function (evt) {
+    if (cephalopods !== null) {
+        cephalopods.zoom -= evt.deltaY * 0.001;
+        cephalopods.zoom = Math.min(Math.max(cephalopods.zoom, 0.25), 2.0)
+    }
+}, false);
+
 const reset = () => {
     cephalopods = new Cephalopods(canvas.width, canvas.height);
     gui = new Gui(cephalopods, reset);

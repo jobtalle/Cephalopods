@@ -7,6 +7,10 @@ const Cephalopods = function(width, height) {
         new Rater(),
         new Mutator());
     this.zoom = .7;
+    this.translate = {
+        x: this.width * 0.5,
+        y: this.height * 0.5
+    }
 };
 
 Cephalopods.prototype.update = function(timeStep) {
@@ -15,7 +19,7 @@ Cephalopods.prototype.update = function(timeStep) {
 
 Cephalopods.prototype.draw = function(context) {
     context.save();
-    context.translate(this.width * .5, this.height * .5);
+    context.translate(this.translate.x, this.translate.y);
     context.scale(this.zoom, this.zoom);
     context.lineWidth = 3;
 
@@ -27,6 +31,10 @@ Cephalopods.prototype.draw = function(context) {
 Cephalopods.prototype.resize = function(width, height) {
     this.width = width;
     this.height = height;
+    this.translate = {
+        x: this.width * 0.5,
+        y: this.height * 0.5
+    }
 };
 
 Cephalopods.prototype.click = function(x, y) {
