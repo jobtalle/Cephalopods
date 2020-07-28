@@ -35,6 +35,8 @@ Environment.MAX_FRAME_TIME = 1 / 60;
 Environment.WARP_STEP = Environment.FRAME_TIME * 10;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
+Environment.FOOD_COEF = 1;
+
 Environment.prototype.getFrameProgression = function() {
     return this.timeToFrame / Environment.FRAME_TIME;
 };

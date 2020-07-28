@@ -1,16 +1,19 @@
-const Cephalopods = function(width, height) {
+const Cephalopods = function(width, height, agentsCount, simTime) {
     this.width = width;
     this.height = height;
     this.environment = new Environment(
         1200,
         new Selector(),
         new Rater(),
-        new Mutator());
+        new Mutator(),
+        agentsCount,
+        simTime);
     this.zoom = .7;
     this.translate = {
         x: this.width * 0.5,
         y: this.height * 0.5
     }
+    this.isStarted = false;
 };
 
 Cephalopods.prototype.update = function(timeStep) {

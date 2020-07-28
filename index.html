@@ -11,6 +11,30 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+    <div id="startMenu" class="outerMenu">
+        <div class="middleMenu">
+            <div class="innerMenu">
+                <form class="form">
+                    <div class="formDiv">
+                        <label for="perGenTime" class="text formContent">Per generation time</label>
+                        <input id="perGenTime" class="formContent" type="number" name="perGenTime">
+                    </div>
+                    <div class="formDiv">
+                        <label for="foodCoef" class="text formContent">Food coef</label>
+                        <input id="foodCoef" class="formContent" type="number" name="foodCoef">
+                    </div>
+                    <div class="formDiv">
+                        <label for="agentsCnt" class="text formContent">Cephalopods count</label>
+                        <input id="agentsCnt" class="formContent" type="number" name="agentsCnt">
+                    </div>
+                    <div class="formDiv">
+                        <input type="button" onclick="ValidateVariables()" class="formContent" value="Start!">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div id="wrapper">
         <div id="viewport">
             <canvas id="renderer"></canvas>
