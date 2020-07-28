@@ -1,9 +1,9 @@
-const Food = function(environmentRadius) {
+const Food = function(environmentRadius, foodCoef) {
     this.environmentRadius = environmentRadius;
     this.gridSize = Math.ceil(environmentRadius * 2 / Food.GRID_SPACING);
     this.grid = new Array(this.gridSize * this.gridSize);
 
-    const foods = new Array(Math.round(Math.PI * Math.pow(environmentRadius * (1 - Food.DISTRIBUTION_DEADZONE), 2) * Food.UNITS_PER_PIXEL));
+    const foods = new Array(Math.round(Math.PI * Math.pow(environmentRadius * (1 - Food.DISTRIBUTION_DEADZONE), 2) * Food.UNITS_PER_PIXEL * foodCoef));
 
     for (let food = 0; food < foods.length; ++food) {
         const angle = Math.random() * (Math.PI + Math.PI);

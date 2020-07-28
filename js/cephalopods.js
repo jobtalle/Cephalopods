@@ -1,11 +1,14 @@
-const Cephalopods = function(width, height) {
+const Cephalopods = function(width, height, agentsCount, simTime, foodCoef) {
     this.width = width;
     this.height = height;
     this.environment = new Environment(
         Cephalopods.DEFAULT_ENVIRONMENT_RADIUS,
         new Selector(),
         new Rater(),
-        new Mutator());
+        new Mutator(),
+        agentsCount,
+        simTime,
+        foodCoef);
     this.zoom = .7;
     this.translate = {
         x: this.width * 0.5,
