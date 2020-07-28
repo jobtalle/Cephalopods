@@ -4,12 +4,14 @@ const Environment = function(
     rater,
     mutator,
     agentCount = Environment.DEFAULT_AGENT_COUNT,
-    simTime = Environment.DEFAULT_SIM_TIME) {
+    simTime = Environment.DEFAULT_SIM_TIME,
+    foodCoef = Environment.DEFAULT_FOOD_COEF) {
     this.onUpdate = null;
     this.onNextGen = null;
     this.onSelect = null;
+    this.foodCoef = foodCoef;
 
-    this.food = new Food(radius);
+    this.food = new Food(radius, this.foodCoef);
     this.radius = radius;
     this.selector = selector;
     this.rater = rater;
@@ -35,7 +37,7 @@ Environment.MAX_FRAME_TIME = 1 / 60;
 Environment.WARP_STEP = Environment.FRAME_TIME * 10;
 Environment.SELECT_RADIUS_MULTIPLIER = 3;
 
-Environment.FOOD_COEF = 1;
+Environment.DEFAULT_FOOD_COEF = 1;
 
 Environment.prototype.getFrameProgression = function() {
     return this.timeToFrame / Environment.FRAME_TIME;
@@ -147,7 +149,7 @@ Environment.prototype.getInitialDirection = function(index) {
 
 Environment.prototype.nextGeneration = function() {
     this.selected = null;
-    this.food = new Food(this.radius);
+    this.food = new Food(this.radius, this.foodCoef);
 
     if (this.onSelect)
         this.onSelect(this);

@@ -3,7 +3,7 @@ let foodCoefBox = null;
 let agentCntBox = null;
 
 let simTime = Environment.DEFAULT_SIM_TIME
-let foodCoef = Environment.FOOD_COEF
+let foodCoef = Environment.DEFAULT_FOOD_COEF
 let agentsCnt = Environment.DEFAULT_AGENT_COUNT
 
 window.onload = function() {
@@ -68,7 +68,7 @@ function ValidateVariables() {
     const reset = () => {
         document.getElementById("startMenu").style.display = "none";
 
-        cephalopods = new Cephalopods(canvas.width, canvas.height, agentsCnt, simTime);
+        cephalopods = new Cephalopods(canvas.width, canvas.height, agentsCnt, simTime, foodCoef);
         gui = new Gui(cephalopods, reset);
     };
 
