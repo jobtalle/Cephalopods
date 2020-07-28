@@ -44,6 +44,10 @@ Vector.prototype.normalize = function() {
     return this;
 };
 
+Vector.prototype.lengthSqr = function() {
+    return this.dot(this);
+};
+
 Vector.prototype.length = function() {
     return Math.sqrt(this.dot(this));
 };

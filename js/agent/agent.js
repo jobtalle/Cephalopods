@@ -9,13 +9,29 @@ const Agent = function(dna, position, direction) {
     this.impulse = new Vector();
     this.mass = this.body.getMass();
     this.eaten = 0;
+    this.damage = 0
+
+    this.positionSaved = this.position.copy()
+    this.positionPreviousSaved = this.positionPrevious.copy()
 };
 
 Agent.FRICTION = .88;
 Agent.TORQUE = .8;
 Agent.IMPULSE = 20;
 
+Agent.prototype.collision = function () {
+    this.position.set(this.positionSaved)
+    this.positionPrevious.set(this.positionPreviousSaved)
+    this.impulse.negate()
+    this.velocity.zero()
+
+    this.damage++;
+}
+
 Agent.prototype.update = function() {
+    this.positionSaved = this.position.copy()
+    this.positionPreviousSaved = this.positionPrevious.copy()
+
     this.positionPrevious.set(this.position);
     this.directionPrevious.set(this.direction);
 

@@ -40,8 +40,13 @@ Environment.prototype.getFrameProgression = function() {
 };
 
 Environment.prototype.step = function() {
-    for (const agent of this.agents)
+    for (const agent of this.agents) {
         agent.update();
+
+        if (agent.position.lengthSqr() >= Math.pow(this.radius - agent.body.radius, 2)) {
+            agent.collision()
+        }
+    }
 
     this.food.update(this.agents);
 

@@ -2,7 +2,7 @@ const Cephalopods = function(width, height) {
     this.width = width;
     this.height = height;
     this.environment = new Environment(
-        1200,
+        Cephalopods.DEFAULT_ENVIRONMENT_RADIUS,
         new Selector(),
         new Rater(),
         new Mutator());
@@ -12,6 +12,8 @@ const Cephalopods = function(width, height) {
         y: this.height * 0.5
     }
 };
+
+Cephalopods.DEFAULT_ENVIRONMENT_RADIUS = 1200
 
 Cephalopods.prototype.update = function(timeStep) {
     this.environment.update(timeStep);
