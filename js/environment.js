@@ -50,19 +50,21 @@ Environment.avrgMaxScore = -1;
 Environment.maxScores = []
 Environment.averageScores = []
 
-Environment.changeMaxScore = function(score) {
+Environment.changeMaxScore = function(score, agent) {
     if (Environment.maxScore < score) {
         Environment.maxScore = score;
         let gen = Environment.instance.generation;
-        Environment.maxScores.push({score, gen});
+        let agentMass = agent.body.getMass();
+        let agentSpeed = agent.avrgSpeed / agent.ticks;
+        Environment.maxScores.push({score, gen, agentMass, agentSpeed});
     }
 }
-Environment.changeAverageScore = function(score) {
+Environment.changeAverageScore = function(score, avrgSpeed, avrgMass) {
     if (Environment.avrgMaxScore < score) {
         Environment.avrgMaxScore = score;
     }
     let gen = Environment.instance.generation;
-    Environment.averageScores.push({score, gen});
+    Environment.averageScores.push({"score": score, "generation":gen, "avrg mass":avrgMass, "avrg speed":avrgSpeed});
 }
 Environment.getScores = function() {
     console.log("Max scores", Environment.maxScores);
