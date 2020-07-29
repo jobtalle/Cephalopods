@@ -41,16 +41,16 @@ Body.prototype.update = function(impulse) {
         for (let i = 0; i < appendage.inputs; ++i)
             appendage.setInput(this.brain.outputs[output++].output, i);
 
-        let normalizedDirection = this.direction.copy().normalize()
-        let circlePoint = normalizedDirection.copy().multiply(Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
-
-        this.brain.inputs[0].activation = this.position.copy().subtract(circlePoint).lengthSqr() * 30 /
-            (4.0 * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
-        this.brain.inputs[1].activation = normalizedDirection.x * 10
-        this.brain.inputs[2].activation = normalizedDirection.y * 10
-
-        for (let i = 0; i < appendage.outputs; ++i)
-            this.brain.inputs[input++].activation += appendage.getOutput(i);
+        // let normalizedDirection = this.direction.copy().normalize()
+        // let circlePoint = normalizedDirection.copy().multiply(Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
+        //
+        // this.brain.inputs[0].activation = this.position.copy().subtract(circlePoint).lengthSqr() * 30 /
+        //     (4.0 * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
+        // this.brain.inputs[1].activation = normalizedDirection.x * 10
+        // this.brain.inputs[2].activation = normalizedDirection.y * 10
+        //
+        // for (let i = 0; i < appendage.outputs; ++i)
+        //     this.brain.inputs[input++].activation += appendage.getOutput(i);
 
         appendage.update(impulse);
     }
