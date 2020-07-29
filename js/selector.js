@@ -16,13 +16,17 @@ Selector.prototype.createNextGeneration = function(
     let bestAgent = agents[0];
     let bestScore = rater.rate(bestAgent);
     let sum = 0;
+    let avrgSpeed = 0;
+    let avrgMass = 0;
 
     for (const agent of agents) {
+        avrgSpeed += agent.avrgSpeed / agent.ticks;
+        avrgMass += agent.body.getMass()
         sum += rater.rate(agent);
     }
 
-    Environment.changeMaxScore(bestScore);
-    Environment.changeAverageScore(sum / agents.length);
+    Environment.changeMaxScore(bestScore, bestAgent);
+    Environment.changeAverageScore(sum / agents.length, avrgSpeed / agents.length, avrgMass / agents.length);
 
     const nextGeneration = new Array(agents.length);
     const spawnOffset = Math.floor(Math.random() * agents.length);
