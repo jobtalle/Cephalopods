@@ -7,6 +7,7 @@ let axonCreateChanceBox = null;
 let axonRemoveChanceBox = null;
 let bodyMassPerAreaBox = null;
 let bodyNeuronPerAreaBox = null;
+let agentsToNextGenBox = null;
 
 
 window.onload = function() {
@@ -21,6 +22,7 @@ window.onload = function() {
     axonRemoveChanceBox = form.elements["axonRemoveChance"];
     bodyMassPerAreaBox = form.elements["bodyMassPerArea"];
     bodyNeuronPerAreaBox = form.elements["bodyNeuronPerArea"];
+    agentsToNextGenBox = form.elements["agentsToNextGen"];
 
     timePerGenBox.value = Environment.DEFAULT_SIM_TIME;
     foodCoefBox.value = Environment.DEFAULT_FOOD_COEF;
@@ -31,6 +33,7 @@ window.onload = function() {
     axonRemoveChanceBox.value = Mutator.AXON_REMOVE_CHANCE;
     bodyMassPerAreaBox.value = Body.MASS_PER_AREA;
     bodyNeuronPerAreaBox.value = Body.NEURONS_PER_AREA;
+    agentsToNextGenBox.value = Selector.SELECTOR_CEPHALOPODS_COEF;
 }
 
 const TIME_STEP_MAX = 0.1;
@@ -53,6 +56,7 @@ function ValidateVariables() {
     Mutator.AXON_REMOVE_CHANCE = axonRemoveChanceBox.value;
     Body.MASS_PER_AREA = bodyMassPerAreaBox.value;
     Body.NEURONS_PER_AREA = bodyNeuronPerAreaBox.value;
+    Selector.SELECTOR_CEPHALOPODS_COEF = parseFloat(agentsToNextGenBox.value);
 
     function getMousePos(canvas, evt) {
         let rect = canvas.getBoundingClientRect();
