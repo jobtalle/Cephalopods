@@ -23,7 +23,7 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
 };
 
 Body.MASS_PER_AREA = .025;
-Body.NEURONS_PER_AREA = .007;
+Body.NEURONS_PER_AREA = .03;
 Body.RADIUS_MIN = 16.5;
 Body.RADIUS_MAX = 100;
 
@@ -34,20 +34,17 @@ Body.getAllowedNeurons = function(radius) {
 Body.prototype.update = function(impulse) {
     this.brain.update();
 
-    let input = 3;
+    let input = 2;
     let output = 0;
 
     for (const appendage of this.appendages) {
         for (let i = 0; i < appendage.inputs; ++i)
             appendage.setInput(this.brain.outputs[output++].output, i);
 
-        let normalizedDirection = this.direction.copy().normalize()
-        let circlePoint = normalizedDirection.copy().multiply(Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
-
-        this.brain.inputs[0].activation = this.position.copy().subtract(circlePoint).lengthSqr() * 30 /
-            (4.0 * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS * Cephalopods.DEFAULT_ENVIRONMENT_RADIUS)
-        this.brain.inputs[1].activation = normalizedDirection.x * 10
-        this.brain.inputs[2].activation = normalizedDirection.y * 10
+        let idealVector = this.position.copy().normalize().negate()
+        let errorVector = idealVector.subtract(this.direction).normalize()
+        this.brain.inputs[0].output = errorVector.x
+        this.brain.inputs[1].output = errorVector.y
 
         for (let i = 0; i < appendage.outputs; ++i)
             this.brain.inputs[input++].activation += appendage.getOutput(i);
@@ -65,15 +62,15 @@ Body.prototype.draw = function(context, f) {
     for (const appendage of this.appendages)
         appendage.draw(context, f);
 
-    context.strokeStyle = "red";
-    context.beginPath();
-    context.moveTo(
-        x - dx * this.radius,
-        y - dy * this.radius);
-    context.lineTo(
-        x + dx * this.radius,
-        y + dy * this.radius);
-    context.stroke();
+    // context.strokeStyle = "red";
+    // context.beginPath();
+    // context.moveTo(
+    //     x - dx * this.radius,
+    //     y - dy * this.radius);
+    // context.lineTo(
+    //     x + dx * this.radius,
+    //     y + dy * this.radius);
+    // context.stroke();
 
     context.strokeStyle = "white";
     context.beginPath();

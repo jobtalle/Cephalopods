@@ -10,6 +10,7 @@ const Agent = function(dna, position, direction) {
     this.mass = this.body.getMass();
     this.eaten = 0;
     this.damage = 0
+    this.distance = 0
 
     this.positionSaved = this.position.copy()
     this.positionPreviousSaved = this.positionPrevious.copy()
@@ -34,6 +35,8 @@ Agent.prototype.update = function() {
 
     this.positionPrevious.set(this.position);
     this.directionPrevious.set(this.direction);
+
+    this.distance += this.positionPrevious.copy().subtract(this.position).length()
 
     this.velocity.multiply(Agent.FRICTION);
 
