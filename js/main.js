@@ -1,6 +1,12 @@
 let timePerGenBox = null;
 let foodCoefBox = null;
 let agentCntBox = null;
+let axonMutChanceBox = null;
+let axonMutAmplBox = null;
+let axonCreateChanceBox = null;
+let axonRemoveChanceBox = null;
+let bodyMassPerAreaBox = null;
+let bodyNeuronPerAreaBox = null;
 
 
 window.onload = function() {
@@ -13,6 +19,8 @@ window.onload = function() {
     axonMutAmplBox = form.elements["axonMutAmpl"];
     axonCreateChanceBox = form.elements["axonCreateChance"];
     axonRemoveChanceBox = form.elements["axonRemoveChance"];
+    bodyMassPerAreaBox = form.elements["bodyMassPerArea"];
+    bodyNeuronPerAreaBox = form.elements["bodyNeuronPerArea"];
 
     timePerGenBox.value = Environment.DEFAULT_SIM_TIME;
     foodCoefBox.value = Environment.DEFAULT_FOOD_COEF;
@@ -21,6 +29,8 @@ window.onload = function() {
     axonMutAmplBox.value = Mutator.AXON_MODIFY_AMPLITUDE;
     axonCreateChanceBox.value = Mutator.AXON_CREATE_CHANCE;
     axonRemoveChanceBox.value = Mutator.AXON_REMOVE_CHANCE;
+    bodyMassPerAreaBox.value = Body.MASS_PER_AREA;
+    bodyNeuronPerAreaBox.value = Body.NEURONS_PER_AREA;
 }
 
 const TIME_STEP_MAX = 0.1;
@@ -41,6 +51,8 @@ function ValidateVariables() {
     Mutator.AXON_MODIFY_AMPLITUDE = axonMutAmplBox.value;
     Mutator.AXON_CREATE_CHANCE = axonCreateChanceBox.value;
     Mutator.AXON_REMOVE_CHANCE = axonRemoveChanceBox.value;
+    Body.MASS_PER_AREA = bodyMassPerAreaBox.value;
+    Body.NEURONS_PER_AREA = bodyNeuronPerAreaBox.value;
 
     function getMousePos(canvas, evt) {
         let rect = canvas.getBoundingClientRect();

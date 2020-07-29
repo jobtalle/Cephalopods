@@ -58,16 +58,16 @@ Mutator.prototype.mutateBrain = function(dna, bodyRadius) {
                 other | DNAAxon.FLAG_NEURON));
         }
 
-        for (let input = 0; input < dna.inputs; input++) {
-            if (this.hasAxon(dna, input | DNAAxon.FLAG_INPUT, neuron | DNAAxon.FLAG_NEURON) ||
-                Math.random() > Mutator.AXON_CREATE_CHANCE)
-                continue;
-
-            newAxons.push(new DNAAxon(
-                input | DNAAxon.FLAG_INPUT,
-                neuron | DNAAxon.FLAG_NEURON
-            ));
-        }
+        // for (let input = 0; input < dna.inputs; input++) {
+        //     if (this.hasAxon(dna, input | DNAAxon.FLAG_INPUT, neuron | DNAAxon.FLAG_NEURON) ||
+        //         Math.random() > Mutator.AXON_CREATE_CHANCE)
+        //         continue;
+        //
+        //     newAxons.push(new DNAAxon(
+        //         input | DNAAxon.FLAG_INPUT,
+        //         neuron | DNAAxon.FLAG_NEURON
+        //     ));
+        // }
 
         for (let output = 0; output < dna.outputs; ++output) {
             if (this.hasAxon(dna, neuron | DNAAxon.FLAG_NEURON, output | DNAAxon.FLAG_OUTPUT) ||
