@@ -1,6 +1,6 @@
 Mutator.BODY_RADIUS_MODIFY_POWER = 3;
 Mutator.BODY_RADIUS_MODIFY_AMPLITUDE = 3;
-Mutator.BODY_RADIUS_MUTATION_CHANCE = 0.1
+Mutator.BODY_RADIUS_MUTATION_CHANCE = 0.05
 
 Mutator.prototype.mutateBody = function(dna) {
     if (Math.random() < Mutator.BODY_RADIUS_MUTATION_CHANCE) {

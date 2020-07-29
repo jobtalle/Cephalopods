@@ -2,6 +2,23 @@ const Selector = function() {
 
 };
 
+Selector.SELECTOR_CEPHALOPODS_COEF = 4
+
+function shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 Selector.prototype.createNextGeneration = function(
     agents,
     rater,
@@ -29,34 +46,27 @@ Selector.prototype.createNextGeneration = function(
     Environment.changeAverageScore(sum / agents.length, avrgSpeed / agents.length, avrgMass / agents.length);
 
     const nextGeneration = new Array(agents.length);
-    const spawnOffset = Math.floor(Math.random() * agents.length);
+    const nextDna = new Array(agents.length);
 
-    let copyAgents = Math.floor((agents.length + 3) / 4);
+    let copyAgents = Math.floor((agents.length + Selector.SELECTOR_CEPHALOPODS_COEF - 1) / Selector.SELECTOR_CEPHALOPODS_COEF);
     for (let i = 0; i < copyAgents; i++) {
-        const index = (i + spawnOffset) % agents.length;
+        nextDna[i] = agents[i].dna.copy()
 
-        nextGeneration[index] = new Agent(
-            agents[i].dna.copy(),
-            getInitialPosition(index),
-            getInitialDirection(index));
+        for (let j = 1; j < Selector.SELECTOR_CEPHALOPODS_COEF; j++) {
+            const index = i + j * copyAgents;
+            if (index < agents.length) {
+                nextDna[index] = mutator.mutate(agents[i].dna.copy())
+            }
+        }
+    }
 
-        const index1 = (i + spawnOffset + copyAgents) % agents.length;
-        nextGeneration[index1] = new Agent(
-            mutator.mutate(agents[i].dna.copy()),
-            getInitialPosition(index1),
-            getInitialDirection(index1));
+    shuffle(nextDna);
 
-        const index2 = (i + spawnOffset + 2 * copyAgents) % agents.length;
-        nextGeneration[index2] = new Agent(
-            mutator.mutate(agents[i].dna.copy()),
-            getInitialPosition(index2),
-            getInitialDirection(index2));
-
-        const index3 = (i + spawnOffset + 3 * copyAgents) % agents.length;
-        nextGeneration[index3] = new Agent(
-            mutator.mutate(agents[i].dna.copy()),
-            getInitialPosition(index3),
-            getInitialDirection(index3));
+    for (let i = 0; i < agents.length; i++) {
+        nextGeneration[i] = new Agent(
+            mutator.mutate(nextDna[i]),
+            getInitialPosition(i),
+            getInitialDirection(i));
     }
 
     return nextGeneration;
