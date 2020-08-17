@@ -26,7 +26,7 @@ Agent.prototype.collision = function () {
     this.position.set(this.positionSaved)
     this.positionPrevious.set(this.positionPreviousSaved)
     this.impulse.negate()
-    this.velocity.zero()
+    this.velocity.negate()
 
     this.damage++;
 }

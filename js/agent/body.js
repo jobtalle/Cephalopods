@@ -34,17 +34,12 @@ Body.getAllowedNeurons = function(radius) {
 Body.prototype.update = function(impulse) {
     this.brain.update();
 
-    let input = 2;
+    let input = 0;
     let output = 0;
 
     for (const appendage of this.appendages) {
         for (let i = 0; i < appendage.inputs; ++i)
             appendage.setInput(this.brain.outputs[output++].output, i);
-
-        let idealVector = this.position.copy().normalize().negate()
-        let errorVector = idealVector.subtract(this.direction).normalize()
-        this.brain.inputs[0].output = errorVector.x
-        this.brain.inputs[1].output = errorVector.y
 
         for (let i = 0; i < appendage.outputs; ++i)
             this.brain.inputs[input++].activation += appendage.getOutput(i);
@@ -61,16 +56,6 @@ Body.prototype.draw = function(context, f) {
 
     for (const appendage of this.appendages)
         appendage.draw(context, f);
-
-    // context.strokeStyle = "red";
-    // context.beginPath();
-    // context.moveTo(
-    //     x - dx * this.radius,
-    //     y - dy * this.radius);
-    // context.lineTo(
-    //     x + dx * this.radius,
-    //     y + dy * this.radius);
-    // context.stroke();
 
     context.strokeStyle = "white";
     context.beginPath();
