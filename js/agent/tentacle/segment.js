@@ -95,10 +95,10 @@ Segment.prototype.draw = function(context, f) {
     context.arc(x, y, 3, 0, Math.PI * 2);
     context.stroke();
 
-    context.strokeStyle = "red";
-
-    context.beginPath();
-    context.moveTo(x, y);
-    context.lineTo(x - dx * 40, y - dy * 40);
-    context.stroke();
+    // context.strokeStyle = "red";
+    //
+    // context.beginPath();
+    // context.moveTo(x, y);
+    // context.lineTo(x - dx * 40, y - dy * 40);
+    // context.stroke();
 };

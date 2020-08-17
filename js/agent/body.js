@@ -22,8 +22,8 @@ const Body = function(dna, position, positionPrevious, direction, directionPrevi
         }
 };
 
-Body.MASS_PER_AREA = .025;
-Body.NEURONS_PER_AREA = .007;
+Body.MASS_PER_AREA = .04;
+Body.NEURONS_PER_AREA = Body.MASS_PER_AREA / 4.0;
 Body.RADIUS_MIN = 16.5;
 Body.RADIUS_MAX = 100;
 
@@ -56,16 +56,6 @@ Body.prototype.draw = function(context, f) {
 
     for (const appendage of this.appendages)
         appendage.draw(context, f);
-
-    context.strokeStyle = "red";
-    context.beginPath();
-    context.moveTo(
-        x - dx * this.radius,
-        y - dy * this.radius);
-    context.lineTo(
-        x + dx * this.radius,
-        y + dy * this.radius);
-    context.stroke();
 
     context.strokeStyle = "white";
     context.beginPath();

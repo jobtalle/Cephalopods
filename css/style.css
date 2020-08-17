@@ -65,3 +65,38 @@ body {
     left: var(--gui-padding);
     top: var(--gui-padding);
 }
+
+
+.outerMenu {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.middleMenu {
+    display: table-cell;
+    vertical-align: middle;
+}
+.innerMenu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+.text {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-family: monospace;
+    font-size: 12pt;
+    padding: 4px;
+}
+.form {
+    display: table;
+}
+.formDiv {
+    display:table-row;
+}
+.formContent {
+    display: table-cell;
+}

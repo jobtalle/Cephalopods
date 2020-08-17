@@ -1,13 +1,22 @@
-const Cephalopods = function(width, height) {
+const Cephalopods = function(width, height, agentsCount, simTime, foodCoef) {
     this.width = width;
     this.height = height;
     this.environment = new Environment(
-        1200,
+        Cephalopods.DEFAULT_ENVIRONMENT_RADIUS,
         new Selector(),
         new Rater(),
-        new Mutator());
+        new Mutator(),
+        agentsCount,
+        simTime,
+        foodCoef);
     this.zoom = .7;
+    this.translate = {
+        x: this.width * 0.5,
+        y: this.height * 0.5
+    }
 };
+
+Cephalopods.DEFAULT_ENVIRONMENT_RADIUS = 1200
 
 Cephalopods.prototype.update = function(timeStep) {
     this.environment.update(timeStep);
@@ -15,7 +24,7 @@ Cephalopods.prototype.update = function(timeStep) {
 
 Cephalopods.prototype.draw = function(context) {
     context.save();
-    context.translate(this.width * .5, this.height * .5);
+    context.translate(this.translate.x, this.translate.y);
     context.scale(this.zoom, this.zoom);
     context.lineWidth = 3;
 
@@ -27,11 +36,15 @@ Cephalopods.prototype.draw = function(context) {
 Cephalopods.prototype.resize = function(width, height) {
     this.width = width;
     this.height = height;
+    this.translate = {
+        x: this.width * 0.5,
+        y: this.height * 0.5
+    }
 };
 
 Cephalopods.prototype.click = function(x, y) {
-    x -= this.width * .5;
-    y -= this.height * .5;
+    x -= this.translate.x;
+    y -= this.translate.y;
     x /= this.zoom;
     y /= this.zoom;
 
